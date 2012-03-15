@@ -3,12 +3,24 @@
 <head>
   <title>Pawned</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "bootstrap", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "bootstrap" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body style="padding-top: 60px">
 
-<%= yield %>
+  <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">Pawned</a>
+        </div>
+      </div>
+    </div>
+
+  <div class="container">
+    <%= yield %>
+  </div>
 
 </body>
 </html>
