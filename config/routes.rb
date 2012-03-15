@@ -1,4 +1,6 @@
 Pawned::Application.routes.draw do
+  devise_for :players
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

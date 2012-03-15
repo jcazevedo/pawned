@@ -14,3 +14,7 @@
 /log/*.log
 /tmp
 *~
+
+# Ignore all (or the majority of the) vim swap files
+.*swp
+.*swo
