@@ -4,6 +4,7 @@ gem 'rails', '3.2.2'
 
 group :development, :test do
   gem 'sqlite3'
+  # gem 'ruby-debug19', :require => 'ruby-debug'
 end
 
 group :production do
@@ -38,4 +39,3 @@ gem 'devise'
 # gem 'capistrano'
 
 # To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'

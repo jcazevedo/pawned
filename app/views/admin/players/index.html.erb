@@ -1,0 +1,17 @@
+<h1>Le table of players</h1>
+
+<table class="table">
+  <tr>
+    <th>Email</th>
+    <th>Name</th>
+    <th></th>
+  </tr>
+
+  <% @players.each do |p| %>
+    <tr>
+      <td><%= p.email %></td>
+      <td><%= p.name %></td>
+      <td></td>
+    </tr>
+  <% end %>
+</table>

@@ -11,14 +11,14 @@
   <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <%= link_to 'Pawned', root_path, class: "brand" %>
+          <%= link_to "Pawned", root_path, class: "brand" %>
           <% if player_signed_in? %>
-            <p class="navbar-text pull-right">
+            <p id="user-bar" class="navbar-text pull-right">
               Logged in as <a href="#"><%= current_player.email %></a>
-              (<%= link_to('Logout', destroy_player_session_path, :method => :delete) %>)
+              (<%= link_to('Logout', destroy_player_session_path, method: :delete) %>)
             </p>
           <% else %>
-            <%= form_tag(player_session_path, class: "navbar-form pull-right") do %>
+            <%= form_tag(player_session_path, class: "navbar-form pull-right", id: "signin-form") do %>
               <%= text_field_tag('player[email]', '', class: "input-small span3", placeholder: "Email") %>
               <%= password_field_tag('player[password]', '', class: "input-small", placeholder: "Password") %>
               <button type="submit" class="btn">Sign in</button>
