@@ -1,2 +1,14 @@
-<h1>Admin::Players#show</h1>
-<p>Find me in app/views/admin/players/show.html.erb</p>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong><br />
+  <%= @player.name %>
+</p>
+
+<p>
+  <strong>Email:</strong><br />
+  <%= @player.email %>
+</p>
+
+<%= link_to 'Edit', edit_admin_player_path(@player) %> |
+<%= link_to 'Back', admin_players_path %>

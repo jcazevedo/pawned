@@ -4,6 +4,8 @@ gem 'rails', '3.2.2'
 
 group :development, :test do
   gem 'sqlite3'
+
+  # doesn't seem to be working in ruby 1.9.3p0:
   # gem 'ruby-debug19', :require => 'ruby-debug'
 end
 
@@ -37,5 +39,3 @@ gem 'devise'
 
 # Deploy with Capistrano
 # gem 'capistrano'
-
-# To use debugger
