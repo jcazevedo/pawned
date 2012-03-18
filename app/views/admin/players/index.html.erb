@@ -4,7 +4,6 @@
   <tr>
     <th>Name</th>
     <th>Email</th>
-    <th>Confirmed?</th>
     <th></th>
     <th></th>
     <th></th>
@@ -14,7 +13,6 @@
   <tr>
     <td><%= player.name %></td>
     <td><%= player.email %></td>
-    <td><%= player.confirmed?.to_s %></td>
     <td><%= link_to 'Show', admin_player_path(player) %></td>
     <td><%= link_to 'Edit', edit_admin_player_path(player) %></td>
     <td><%= link_to 'Destroy', admin_player_path(player), confirm: 'Are you sure?', method: :delete %></td>
