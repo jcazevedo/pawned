@@ -5,12 +5,13 @@
     <%= f.error_notification %>
   <% end %>
 
+  <%= f.input :name %>
   <%= f.input :email %>
   <%= f.input :password, :as => :password %>
   <%= f.input :password_confirmation, :as => :password %>
 
   <div class="form-actions">
-    <%= f.button :submit, "Sign in", :class => "btn-primary" %>
+    <%= f.button :submit, "Submit", :class => "btn-primary" %>
     <%= submit_tag 'Cancel', :type => :reset, :class => "btn btn-danger" %>
   </div>
 <% end %>

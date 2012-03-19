@@ -13,10 +13,24 @@
         <div class="container">
           <%= link_to "Pawned", root_path, class: "brand" %>
           <% if player_signed_in? %>
-            <p id="user-bar" class="navbar-text pull-right">
-              Logged in as <a href="#"><%= current_player.email %></a>
-              (<%= link_to('Logout', destroy_player_session_path, method: :delete) %>)
-            </p>
+            <div class="navbar-btn btn-group pull-right">
+              <%= link_to(admin_player_path(current_player.id), class: "btn btn-primary") do %>
+                <%= current_player.email %>
+              <% end %>
+              <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
+                <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
+                <li><a href="#"><i class="icon-ban-circle"></i> Ban</a></li>
+                <li class="divider"></li>
+                <li>
+                <%= link_to(destroy_player_session_path, method: :delete) do %>
+                  <i class="icon-off"></i>
+                  Logout
+                <% end %>
+                </li>
+              </ul>
+            </div>
           <% else %>
             <%= form_tag(player_session_path, class: "navbar-form pull-right", id: "signin-form") do %>
               <%= text_field_tag('player[email]', '', class: "input-small span3", placeholder: "Email") %>
