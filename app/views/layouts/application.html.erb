@@ -15,13 +15,18 @@
           <% if player_signed_in? %>
             <div class="navbar-btn btn-group pull-right">
               <%= link_to(admin_player_path(current_player.id), class: "btn btn-primary") do %>
-                <%= current_player.email %>
+                <%= current_player.name %>
               <% end %>
               <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
-                <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
-                <li><a href="#"><i class="icon-ban-circle"></i> Ban</a></li>
+                <li>
+                <%= link_to(edit_admin_player_path(current_player.id)) do %>
+                  <i class="icon-pencil"></i>
+                  Edit
+                <% end %>
+                </li>
+                <li><a href="#"><i class="icon-trash"></i> Some Option</a></li>
+                <li><a href="#"><i class="icon-ban-circle"></i> Other Option</a></li>
                 <li class="divider"></li>
                 <li>
                 <%= link_to(destroy_player_session_path, method: :delete) do %>
@@ -31,19 +36,69 @@
                 </li>
               </ul>
             </div>
-          <% else %>
-            <%= form_tag(player_session_path, class: "navbar-form pull-right", id: "signin-form") do %>
-              <%= text_field_tag('player[email]', '', class: "input-small span3", placeholder: "Email") %>
-              <%= password_field_tag('player[password]', '', class: "input-small", placeholder: "Password") %>
-              <button type="submit" class="btn">Sign in</button>
-            <% end %>
           <% end %>
         </div>
       </div>
     </div>
 
   <div class="container">
-    <%= yield %>
+    <% if player_signed_in? %>
+    <div class="row">
+      <div class="span3">
+        <h2>Here could be your calendar</h2>
+        <p>Next level biodiesel sartorial, keffiyeh selvage synth shoreditch yr pitchfork mixtape fap cardigan lo-fi hoodie. Sriracha wes anderson terry richardson sustainable, jean shorts pour-over mlkshk wolf occupy. Beard small batch farm-to-table aesthetic. Wayfarers synth high life seitan irony. Portland lo-fi brunch, shoreditch bespoke letterpress cardigan. Hoodie squid fixie food truck. Retro quinoa readymade trust fund, mlkshk banh mi vegan.</p>
+        <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
+        <script>
+        new TWTR.Widget({
+          version: 2,
+          type: 'search',
+          search: 'chess',
+          rpp: 10,
+          interval: 5000,
+          title: 'Some of the world\'s',
+          subject: 'Chess Titans',
+          width: 'auto',
+          height: 300,
+          theme: {
+            shell: {
+              background: '#0074cc',
+              color: '#ffffff'
+            },
+            tweets: {
+              background: '#ffffff',
+              color: '#444444',
+              links: '#0088cc'
+            }
+          },
+          features: {
+            scrollbar: false,
+            loop: true,
+            live: true,
+            behavior: 'default'
+          }
+        }).render().start();
+        </script>
+      </div>
+
+      <div class="span9">
+          <%= yield %>
+      </div>
+    </div>
+
+    <% else %>
+      <%= yield %>
+    <% end %>
+
+    <hr>
+
+    <footer>
+      &copy; Pawnage Software 2012
+      <!-- Social icons by: http://www.elegantthemes.com/blog/resources/free-social-media-icon-set -->
+      <a><img src="img/facebook.png" class="pull-right" /></a>
+      <a><img src="img/twitter.png" class="pull-right" /></a>
+      <a><img src="img/google.png" class="pull-right" /></a>
+    </footer>
+
   </div>
 
 </body>

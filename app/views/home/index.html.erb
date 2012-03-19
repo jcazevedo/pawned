@@ -1,6 +1,69 @@
+<% if player_signed_in? %>
+    <h2>Your dashboard goes here</h2>
+    <p>Jean shorts skateboard etsy fanny pack kale chips 3 wolf moon, butcher single-origin coffee letterpress vice. Biodiesel portland pork belly, typewriter tattooed flexitarian fixie. Occupy retro butcher iphone stumptown, american apparel next level VHS. Farm-to-table tattooed aesthetic, cardigan portland pour-over gluten-free. Squid terry richardson cardigan, gentrify pickled quinoa biodiesel craft beer cred wolf gastropub Austin odd future before they sold out etsy. Fixie portland wes anderson, squid chillwave jean shorts whatever put a bird on it cray kale chips. Fingerstache umami mumblecore, trust fund stumptown chillwave chambray 3 wolf moon photo booth cardigan bicycle rights gluten-free 8-bit yr.</p>
+
+    <div class="row">
+      <div class="span6">
+        <h3>Here's a very nice chess board</h3>
+  <!-- Chess board photo from: http://www.flickr.com/photos/eivindw/4876863646/in/photostream/ -->
+        <img class="thumbnail span2" src="img/another_board.jpg" style="margin-right:15px;" />
+        <h5><p>Some Title</p></h5>
+        <p>Artisan flexitarian helvetica, vice locavore umami jean shorts chillwave mcsweeney's cred seitan mustache irony marfa hoodie. Cardigan skateboard williamsburg umami, tattooed wayfarers DIY squid bicycle rights wolf bespoke keytar cray odd future. Chillwave organic salvia dreamcatcher whatever 3 wolf moon, fanny pack viral fingerstache american apparel cred art party readymade marfa. Chillwave godard cray forage butcher, polaroid wayfarers letterpress small batch fixie pickled helvetica williamsburg cosby sweater fanny pack.</p>
+      </div>
+
+      <div class="span3">
+        <h3>Exclusive news</h3>
+        <p>Artisan flexitarian helvetica, vice locavore umami jean shorts chillwave mcsweeney's cred seitan mustache irony marfa hoodie. Cardigan skateboard williamsburg umami, tattooed wayfarers DIY squid bicycle. Vegan kale chips mlkshk 3 wolf moon kogi chambray. Typewriter bespoke gastropub biodiesel. Whatever bespoke post-ironic, messenger bag irony next level pour-over master cleanse.</p>
+      </div>
+    </div>
+
+    <h3>I'm here to put up titles and chew bubble gum</h3>
+    <p>Artisan flexitarian helvetica, vice locavore umami jean shorts chillwave mcsweeney's cred seitan mustache irony marfa hoodie. Cardigan skateboard williamsburg umami, tattooed wayfarers DIY squid bicycle rights wolf bespoke keytar cray odd future. Chillwave organic salvia dreamcatcher whatever 3 wolf moon, fanny pack viral fingerstache american apparel cred art party readymade marfa. Chillwave godard cray forage butcher, polaroid wayfarers letterpress small batch fixie pickled helvetica williamsburg cosby sweater fanny pack. Vegan kale chips mlkshk 3 wolf moon kogi chambray. Typewriter bespoke gastropub biodiesel. Whatever bespoke post-ironic, messenger bag irony next level pour-over master cleanse.</p>
+
+    <p>Sustainable freegan organic, gluten-free fanny pack squid pork belly salvia leggings kogi PBR godard bicycle rights trust fund narwhal. Hoodie vegan master cleanse, tattooed organic vinyl thundercats street art. Swag yr thundercats, bushwick organic VHS freegan tofu mustache vinyl carles tattooed artisan. Tumblr readymade locavore, terry richardson echo park vice mlkshk quinoa iphone thundercats direct trade pork belly. Synth messenger bag sartorial, trust fund lo-fi truffaut you probably haven't heard of them hoodie authentic fixie master cleanse. Thundercats chillwave single-origin coffee flexitarian, vinyl ennui pickled banksy cardigan mumblecore freegan 3 wolf moon ethnic. Yr before they sold out thundercats fixie, PBR keffiyeh chambray portland viral ethical wes anderson marfa.</p>
+<% else %>
 <div class="hero-unit">
+  <!-- Chess board photo from: http://www.flickr.com/photos/eivindw/4873333202/ -->
+  <img class="thumbnail span3" style="margin-right:20px;" src="img/board_small.jpg" style="margin-right:15px;" />
   <h1>Pawned</h1>
-  <p>Coming soon...</p>
-  <p><a class="btn btn-primary btn-large" href="https://github.com/jcazevedo/pawned">Check source on github</a></p>
+  <p>Also known as “<a>I can’t believe it’s not an online chess club manager</a>”.</p><br/>
+
+  <h2>Welcome</h2>
+  <p>Get your chess skills to exciting new hights. We're here to help you manage your climb to the top!</p>
 </div>
+
+<div class="row">
+  <div class="span4">
+    <h2>Sign in here</h2>
+    <%= form_tag(player_session_path, class: "well", id: "signin-form") do %>
+      <div><%= text_field_tag('player[email]', '', class: "input-small span3", placeholder: "Your e-mail goes here...") %></div>
+      <%= password_field_tag('player[password]', '', class: "input-small span2", placeholder: "Your password, here.") %>
+      <button type="submit" class="btn btn-success" style="margin: 0 10px 9px;">Submit</button>
+      <label class="checkbox">
+        <input type="checkbox">Remember me</input>
+     </label>
+     <%= link_to "Forgot your password?", new_password_path('player') %>
+    <% end %>
+  </div>
+
+<div class="row">
+  <div class="span4">
+    <h2>Free and Open</h2>
+    <p>Pawned is an open-source community project. We are always waiting for enthusiastic new people to help out. Are going to miss this chance? Get your paws on the code now!</p>
+    <p><a class="btn btn-primary" href="https://github.com/jcazevedo/pawned">Check source on github</a></p>
+  </div>
+
+<div class="row">
+  <div class="span4">
+    <h2>New to Pawned?</h2>
+    <%= form_tag(player_registration_path, class: "well", id: "signin-form") do %>
+      <div><%= text_field_tag('player[name]', '', class: "input-small span3", placeholder: "Tell us your name") %></div>
+      <div><%= text_field_tag('player[email]', '', class: "input-small span3", placeholder: "Your e-mail goes here...") %></div>
+      <%= password_field_tag('player[password]', '', class: "input-small span2", placeholder: "Your password, here.") %>
+      <button type="submit" class="btn btn-danger" style="margin: 0 10px 9px;">Submit</button>
+    <% end %>
+  </div>
+
+</div>
+<% end %>
 
