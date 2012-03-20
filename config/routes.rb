@@ -1,4 +1,12 @@
 Pawned::Application.routes.draw do
+  resources :tournament_players
+
+  resources :tournaments
+
+  resources :rounds
+
+  resources :matches
+
   devise_for :players
 
   namespace :admin do

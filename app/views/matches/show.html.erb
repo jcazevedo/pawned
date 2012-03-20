@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Date inserted:</b>
+  <%= @match.date_inserted %>
+</p>
+
+<p>
+  <b>Date played:</b>
+  <%= @match.date_played %>
+</p>
+
+<p>
+  <b>White:</b>
+  <%= @match.white_id %>
+</p>
+
+<p>
+  <b>Black:</b>
+  <%= @match.black_id %>
+</p>
+
+<p>
+  <b>White result:</b>
+  <%= @match.white_result %>
+</p>
+
+<p>
+  <b>Black result:</b>
+  <%= @match.black_result %>
+</p>
+
+<p>
+  <b>Round:</b>
+  <%= @match.round_id %>
+</p>
+
+<p>
+  <b>Png text:</b>
+  <%= @match.png_text %>
+</p>
+
+
+<%= link_to 'Edit', edit_match_path(@match) %> |
+<%= link_to 'Back', matches_path %>
