@@ -39,9 +39,7 @@
       <div><%= text_field_tag('player[email]', '', class: "input-small span3", placeholder: "Your e-mail goes here...") %></div>
       <%= password_field_tag('player[password]', '', class: "input-small span2", placeholder: "Your password, here.") %>
       <button type="submit" class="btn btn-success" style="margin: 0 10px 9px;">Submit</button>
-      <label class="checkbox">
-        <input type="checkbox">Remember me</input>
-     </label>
+      <label class="checkbox"><%= check_box_tag('player[remember_me]', '', false, class: "checkbox") %> Remember me</label>
      <%= link_to "Forgot your password?", new_password_path('player') %>
     <% end %>
   </div>
@@ -64,4 +62,3 @@
 
 </div>
 <% end %>
-
