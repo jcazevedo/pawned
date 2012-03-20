@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  date_started: 2012-03-20
+  date_finished: 2012-03-20
+  status: 1
+  admin_id: 1
+
+two:
+  name: MyString
+  date_started: 2012-03-20
+  date_finished: 2012-03-20
+  status: 1
+  admin_id: 1

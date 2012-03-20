@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120315223153) do
+ActiveRecord::Schema.define(:version => 20120320185849) do
+
+  create_table "matches", :force => true do |t|
+    t.date     "date_inserted"
+    t.date     "date_played"
+    t.integer  "white_id"
+    t.integer  "black_id"
+    t.float    "white_result"
+    t.float    "black_result"
+    t.integer  "round_id"
+    t.text     "png_text"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "players", :force => true do |t|
     t.string   "email",                                  :null => false
@@ -42,5 +55,30 @@ ActiveRecord::Schema.define(:version => 20120315223153) do
   add_index "players", ["email"], :name => "index_players_on_email", :unique => true
   add_index "players", ["reset_password_token"], :name => "index_players_on_reset_password_token", :unique => true
   add_index "players", ["unlock_token"], :name => "index_players_on_unlock_token", :unique => true
+
+  create_table "rounds", :force => true do |t|
+    t.integer  "tournament_id"
+    t.integer  "tournament_round_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "status"
+  end
+
+  create_table "tournament_players", :force => true do |t|
+    t.integer  "player_id"
+    t.integer  "tournament_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "tournaments", :force => true do |t|
+    t.string   "name"
+    t.date     "date_started"
+    t.date     "date_finished"
+    t.integer  "status"
+    t.integer  "admin_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
 end

@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tournament_id: 1
+  tournament_round_id: 1
+
+two:
+  tournament_id: 1
+  tournament_round_id: 1
