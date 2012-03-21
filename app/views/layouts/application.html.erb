@@ -13,29 +13,28 @@
         <div class="container">
           <%= link_to "Pawned", root_path, class: "brand" %>
           <% if player_signed_in? %>
-            <div class="navbar-btn btn-group pull-right">
-              <%= link_to(admin_player_path(current_player.id), class: "btn btn-primary") do %>
-                <%= current_player.name %>
-              <% end %>
-              <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li>
-                <%= link_to(edit_admin_player_path(current_player.id)) do %>
-                  <i class="icon-pencil"></i>
-                  Edit
-                <% end %>
-                </li>
-                <li><a href="#"><i class="icon-trash"></i> Some Option</a></li>
-                <li><a href="#"><i class="icon-ban-circle"></i> Other Option</a></li>
-                <li class="divider"></li>
-                <li>
-                <%= link_to(destroy_player_session_path, method: :delete) do %>
-                  <i class="icon-off"></i>
-                  Logout
-                <% end %>
-                </li>
-              </ul>
-            </div>
+            <ul class="nav pull-right">
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= current_player.name %> <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li>
+                  <%= link_to(edit_admin_player_path(current_player.id)) do %>
+                    <i class="icon-pencil"></i>
+                    Edit
+                  <% end %>
+                  </li>
+                  <li><a href="#"><i class="icon-trash"></i> Some Option</a></li>
+                  <li><a href="#"><i class="icon-ban-circle"></i> Other Option</a></li>
+                  <li class="divider"></li>
+                  <li>
+                  <%= link_to(destroy_player_session_path, method: :delete) do %>
+                    <i class="icon-off"></i>
+                    Logout
+                  <% end %>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           <% end %>
         </div>
       </div>
@@ -45,8 +44,8 @@
     <% if player_signed_in? %>
     <div class="row">
       <div class="span3">
-        <h2>Here could be your calendar</h2>
-        <p>Next level biodiesel sartorial, keffiyeh selvage synth shoreditch yr pitchfork mixtape fap cardigan lo-fi hoodie. Sriracha wes anderson terry richardson sustainable, jean shorts pour-over mlkshk wolf occupy. Beard small batch farm-to-table aesthetic. Wayfarers synth high life seitan irony. Portland lo-fi brunch, shoreditch bespoke letterpress cardigan. Hoodie squid fixie food truck. Retro quinoa readymade trust fund, mlkshk banh mi vegan.</p>
+        <h2>Your mom</h2>
+        <p>Artisan flexitarian helvetica, vice locavore umami jean shorts chillwave mcsweeney's cred seitan mustache irony marfa hoodie. Cardigan skateboard williamsburg umami, tattooed wayfarers DIY squid bicycle. Vegan kale chips mlkshk 3 wolf moon kogi chambray. Typewriter bespoke gastropub biodiesel. Whatever bespoke post-ironic, messenger bag irony next level pour-over master cleanse.</p>
         <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
         <script>
         new TWTR.Widget({
