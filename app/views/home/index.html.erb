@@ -1,26 +1,86 @@
 <% if player_signed_in? %>
-    <h2>Your dashboard goes here</h2>
-    <p>Jean shorts skateboard etsy fanny pack kale chips 3 wolf moon, butcher single-origin coffee letterpress vice. Biodiesel portland pork belly, typewriter tattooed flexitarian fixie. Occupy retro butcher iphone stumptown, american apparel next level VHS. Farm-to-table tattooed aesthetic, cardigan portland pour-over gluten-free. Squid terry richardson cardigan, gentrify pickled quinoa biodiesel craft beer cred wolf gastropub Austin odd future before they sold out etsy. Fixie portland wes anderson, squid chillwave jean shorts whatever put a bird on it cray kale chips. Fingerstache umami mumblecore, trust fund stumptown chillwave chambray 3 wolf moon photo booth cardigan bicycle rights gluten-free 8-bit yr.</p>
-
     <div class="row">
-      <div class="span6">
-        <h3>Here's a very nice chess board</h3>
-  <!-- Chess board photo from: http://www.flickr.com/photos/eivindw/4876863646/in/photostream/ -->
-        <img class="thumbnail span2" src="img/another_board.jpg" style="margin-right:15px;" />
-        <h5><p>Some Title</p></h5>
-        <p>Artisan flexitarian helvetica, vice locavore umami jean shorts chillwave mcsweeney's cred seitan mustache irony marfa hoodie. Cardigan skateboard williamsburg umami, tattooed wayfarers DIY squid bicycle rights wolf bespoke keytar cray odd future. Chillwave organic salvia dreamcatcher whatever 3 wolf moon, fanny pack viral fingerstache american apparel cred art party readymade marfa. Chillwave godard cray forage butcher, polaroid wayfarers letterpress small batch fixie pickled helvetica williamsburg cosby sweater fanny pack.</p>
-      </div>
+      <div class="span9">
+        <h3>Your Ranking Evolution</h3>
+        <div style="text-align:center;"><img src="img/highgraph.png" /></div>
 
-      <div class="span3">
-        <h3>Exclusive news</h3>
-        <p>Artisan flexitarian helvetica, vice locavore umami jean shorts chillwave mcsweeney's cred seitan mustache irony marfa hoodie. Cardigan skateboard williamsburg umami, tattooed wayfarers DIY squid bicycle. Vegan kale chips mlkshk 3 wolf moon kogi chambray. Typewriter bespoke gastropub biodiesel. Whatever bespoke post-ironic, messenger bag irony next level pour-over master cleanse.</p>
+        <br/>
+
+        <div class="row">
+          <div class="span4">
+            <a class="btn btn-success pull-right" href="#">See your last games</a>
+          </div>
+
+          <div class="span4 offset1">
+            <a class="btn btn-danger" href="#">Go to your ranking</a>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <h3>I'm here to put up titles and chew bubble gum</h3>
-    <p>Artisan flexitarian helvetica, vice locavore umami jean shorts chillwave mcsweeney's cred seitan mustache irony marfa hoodie. Cardigan skateboard williamsburg umami, tattooed wayfarers DIY squid bicycle rights wolf bespoke keytar cray odd future. Chillwave organic salvia dreamcatcher whatever 3 wolf moon, fanny pack viral fingerstache american apparel cred art party readymade marfa. Chillwave godard cray forage butcher, polaroid wayfarers letterpress small batch fixie pickled helvetica williamsburg cosby sweater fanny pack. Vegan kale chips mlkshk 3 wolf moon kogi chambray. Typewriter bespoke gastropub biodiesel. Whatever bespoke post-ironic, messenger bag irony next level pour-over master cleanse.</p>
+    <hr>
 
-    <p>Sustainable freegan organic, gluten-free fanny pack squid pork belly salvia leggings kogi PBR godard bicycle rights trust fund narwhal. Hoodie vegan master cleanse, tattooed organic vinyl thundercats street art. Swag yr thundercats, bushwick organic VHS freegan tofu mustache vinyl carles tattooed artisan. Tumblr readymade locavore, terry richardson echo park vice mlkshk quinoa iphone thundercats direct trade pork belly. Synth messenger bag sartorial, trust fund lo-fi truffaut you probably haven't heard of them hoodie authentic fixie master cleanse. Thundercats chillwave single-origin coffee flexitarian, vinyl ennui pickled banksy cardigan mumblecore freegan 3 wolf moon ethnic. Yr before they sold out thundercats fixie, PBR keffiyeh chambray portland viral ethical wes anderson marfa.</p>
+    <div class="row">
+      <div class="span3">
+        <h3>Ongoing tournaments</h3>
+        <br/>
+        <ul>
+          <li><a href="#">Big-ass tournament</a></li>
+          <li><a href="#">Queens and pawns</a></li>
+          <li><a href="#">FhP league 2012</a></li>
+          <li><a href="#">Fianchetto III</a></li>
+        </ul>
+
+        <hr>
+
+        <a class="btn btn-primary" href="#">Tournament manager</a>
+      </div>
+
+      <div class="span6">
+        <h3>Latest Round Results of <a>Big-ass tournament</a></h3>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th><span class="pull-right">White</span></th>
+              <th></th>
+              <th></th>
+              <th>Black</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="pull-right">Pedro Saleiro<span></td>
+              <td><span class="pull-right">0</span></td>
+              <td>1</td>
+              <td>Luís Carvalho</th>
+            </tr>
+            <tr>
+              <td><span class="pull-right">Filipe Sousa<span></td>
+              <td><span class="pull-right">0</span></td>
+              <td>1</td>
+              <td>João Azevedo</th>
+            </tr>
+            <tr>
+              <td><span class="pull-right">David Ribeiro<span></td>
+              <td><span class="pull-right">1</span></td>
+              <td>0</td>
+              <td>Manuel (?)</th>
+            </tr>
+            <tr>
+              <td><span class="pull-right">Rui Castro<span></td>
+              <td><span class="pull-right">1</span></td>
+              <td>0</td>
+              <td>Pedro Coelho</th>
+            </tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+        <a class="btn btn-primary" href="#">Tournament manager</a>
+      </div>
+    </div>
 <% else %>
 <div class="hero-unit">
   <!-- Chess board photo from: http://www.flickr.com/photos/eivindw/4873333202/ -->

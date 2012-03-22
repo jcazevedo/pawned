@@ -5,6 +5,73 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+
+  <script>
+  $(document).ready(function() {
+
+    var date = new Date();
+    var d = date.getDate();
+    var m = date.getMonth();
+    var y = date.getFullYear();
+
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title'
+      },
+      theme: true,
+      editable: true,
+      events: [
+        {
+          title: 'All Day Event',
+          start: new Date(y, m, 1)
+        },
+        {
+          title: 'Long Event',
+          start: new Date(y, m, d-5),
+          end: new Date(y, m, d-2)
+        },
+        {
+          id: 999,
+          title: 'Repeating Event',
+          start: new Date(y, m, d-3, 16, 0),
+          allDay: false
+        },
+        {
+          id: 999,
+          title: 'Repeating Event',
+          start: new Date(y, m, d+4, 16, 0),
+          allDay: false
+        },
+        {
+          title: 'Meeting',
+          start: new Date(y, m, d, 10, 30),
+          allDay: false
+        },
+        {
+          title: 'Lunch',
+          start: new Date(y, m, d, 12, 0),
+          end: new Date(y, m, d, 14, 0),
+          allDay: false
+        },
+        {
+          title: 'Birthday Party',
+          start: new Date(y, m, d+1, 19, 0),
+          end: new Date(y, m, d+1, 22, 30),
+          allDay: false
+        },
+        {
+          title: 'Click for Google',
+          start: new Date(y, m, 28),
+          end: new Date(y, m, 29),
+          url: 'http://google.com/'
+        }
+      ]
+    });
+
+  });
+  </script>
+
 </head>
 <body style="padding-top: 60px">
 
@@ -13,14 +80,99 @@
         <div class="container">
           <%= link_to "Pawned", root_path, class: "brand" %>
           <% if player_signed_in? %>
+            <ul class="nav">
+
+              <li class="active"><a href="/">Home</a></li>
+
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Standings <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Global Standings</a></li>
+                </ul>
+              </li>
+
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tournaments <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Your Tournaments</a></li>
+                  <li><a href="#">Active Tournaments</a></li>
+                  <li>
+                  <%= link_to(tournaments_path()) do %>
+                    All Tournaments
+                  <% end %>
+                  </li>
+                  <li>
+                  <%= link_to(new_tournament_path()) do %>
+                    Create Tournament
+                  <% end %>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Matches <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Match Calendar</a></li>
+                  <li><a href="#">Your Latest Matches</a></li>
+                  <li>
+                  <%= link_to(new_match_path()) do %>
+                    Schedule Match
+                  <% end %>
+                  </li>
+                  <li>
+                  <%= link_to(matches_path()) do %>
+                    All Matches
+                  <% end %>
+                  </li>
+                </ul>
+              </li>
+
+            </ul>
+
             <ul class="nav pull-right">
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li>
+                  <%= link_to(admin_players_path()) do %>
+                    Players
+                  <% end %>
+                  </li>
+                  <li>
+                  <%= link_to(tournaments_path()) do %>
+                    Tournaments
+                  <% end %>
+                  </li>
+                  <li>
+                  <%= link_to(rounds_path()) do %>
+                    Rounds
+                  <% end %>
+                  </li>
+                  <li>
+                  <%= link_to(matches_path()) do %>
+                    Matches
+                  <% end %>
+                  </li>
+                  <li>
+                  <%= link_to(new_admin_player_path()) do %>
+                    Create Player
+                  <% end %>
+                  </li>
+                  <li>
+                  <%= link_to(new_tournament_path()) do %>
+                    Create Tournament
+                  <% end %>
+                  </li>
+                </ul>
+              </li>
+
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= current_player.name %> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li>
                   <%= link_to(edit_admin_player_path(current_player.id)) do %>
                     <i class="icon-pencil"></i>
-                    Edit
+                    Settings
                   <% end %>
                   </li>
                   <li><a href="#"><i class="icon-trash"></i> Some Option</a></li>
@@ -34,6 +186,7 @@
                   </li>
                 </ul>
               </li>
+
             </ul>
           <% end %>
         </div>
@@ -44,8 +197,21 @@
     <% if player_signed_in? %>
     <div class="row">
       <div class="span3">
-        <h2>Your mom</h2>
-        <p>Artisan flexitarian helvetica, vice locavore umami jean shorts chillwave mcsweeney's cred seitan mustache irony marfa hoodie. Cardigan skateboard williamsburg umami, tattooed wayfarers DIY squid bicycle. Vegan kale chips mlkshk 3 wolf moon kogi chambray. Typewriter bespoke gastropub biodiesel. Whatever bespoke post-ironic, messenger bag irony next level pour-over master cleanse.</p>
+        <div class="alert alert-error">
+          <a class="close" data-dismiss="alert">×</a>
+          <strong>Achtung!</strong> This box is red, so check it out carefully.
+        </div>
+        <div class="alert">
+          <a class="close" data-dismiss="alert">×</a>
+          <strong>New message!</strong> You have a new message from :orig_player.name
+        </div>
+        <div class="alert alert-info">
+          <a class="close" data-dismiss="alert">×</a>
+          <strong>Oh, hi!</strong> I just passed by to say hello.
+        </div>
+
+        <hr>
+
         <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
         <script>
         new TWTR.Widget({
