@@ -6,8 +6,7 @@
     <%= f.input :date_played %>
     <%= f.association :white_player %>
     <%= f.association :black_player %>
-    <%= f.input :white_result %>
-    <%= f.input :black_result %>
+    <%= f.input :result, :as => :select, :collection => ["", "1-0", "0-1", "0.5-0.5"], :selected => "" %>
     <%= f.input :round_id %>
     <%= f.input :png_text %>
   </div>
