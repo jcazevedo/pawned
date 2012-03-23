@@ -16,6 +16,7 @@ class Admin::PlayersController < ApplicationController
   # GET /admin/players/1.json
   def show
     @player = Player.find(params[:id])
+    @ratings = @player.ratings
 
     respond_to do |format|
       format.html # show.html.erb

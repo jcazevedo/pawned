@@ -1,5 +1,42 @@
 <p id="notice"><%= notice %></p>
 
+<div id="container" style="width: 100%; height:400px"></div>
+
+<script type="text/javascript">
+var chart1; // globally available
+$(document).ready(function() {
+      chart1 = new Highcharts.Chart({
+         chart: {
+            renderTo: 'container',
+            type: 'line'
+         },
+         title: {
+            text: 'Rating evolution'
+         },
+         xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                    month: '%e. %b',
+                    year: '%b'
+            }
+         },
+         yAxis: {
+            title: {
+               text: 'Rating value'
+            }
+         },
+         series: [{
+            name: 'Rating',
+            data: [
+              <% @ratings.each do |rating| %>
+                <%= '[' + (rating.date.to_time.to_i * 1000).to_s(10) + ', ' + rating.value.to_s + '],' %>
+              <% end %>
+            ]
+         }]
+      });
+   });
+</script>
+
 <p>
   <strong>Name:</strong><br />
   <%= @player.name %>
