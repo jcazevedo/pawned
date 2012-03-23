@@ -4,8 +4,8 @@
   <div class="form-inputs">
     <%= f.input :date_inserted %>
     <%= f.input :date_played %>
-    <%= f.input :white_id %>
-    <%= f.input :black_id %>
+    <%= f.association :white_player %>
+    <%= f.association :black_player %>
     <%= f.input :white_result %>
     <%= f.input :black_result %>
     <%= f.input :round_id %>
