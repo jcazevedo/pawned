@@ -1,19 +1,101 @@
 <% if player_signed_in? %>
     <div class="row">
-      <div class="span9">
-        <h3>Your Ranking Evolution</h3>
-        <div style="text-align:center;"><img src="img/highgraph.png" /></div>
+      <div class="span6">
+        <div id="container"></div>
+        <script type="text/javascript">
+        var chart1; // globally available
+        $(document).ready(function() {
+              chart1 = new Highcharts.Chart({
+                 chart: {
+                    renderTo: 'container',
+                    type: 'line'
+                 },
+                 title: {
+                    text: 'Rating evolution'
+                 },
+                 xAxis: {
+                    type: 'datetime',
+                    dateTimeLabelFormats: {
+                            month: '%e. %b',
+                            year: '%b'
+                    }
+                 },
+                 yAxis: {
+                    title: {
+                       text: 'Rating value'
+                    }
+                 },
+                 series: [{
+                    name: 'Rating',
+                    data: [
+                      <% @ratings.each do |rating| %>
+                        <%= '[' + (rating.date.to_time.to_i * 1000).to_s(10) + ', ' + rating.value.to_s + '],' %>
+                      <% end %>
+                    ]
+                 }]
+              });
+           });
+        </script>
 
-        <br/>
+      </div>
 
-        <div class="row">
-          <div class="span4">
-            <a class="btn btn-success pull-right" href="#">See your last games</a>
-          </div>
+      <div class="span3">
+        <h6>Statistics</h6>
+        <table class="table">
+          <thead>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="3"><b>Rating</b></td>
+              <td>min</td>
+              <td><%= @ratings.min || 0 %></td>
+            </tr>
+            <tr>
+              <td>max</td>
+              <td><%= @ratings.max || 0 %></td>
+            </tr>
+            <tr>
+              <td>percentile</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td rowspan="2"><b>Streaks</b></td>
+              <td>winning</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>losing</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td rowspan="2"><b>Opponents</b></td>
+              <td>strongest</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>weakest</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td rowspan="2"><b>Tournaments</b></td>
+              <td>wins</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>total</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-          <div class="span4 offset1">
-            <a class="btn btn-danger" href="#">Go to your ranking</a>
-          </div>
+      <div class="row">
+        <div class="span4">
+          <a class="btn btn-success pull-right" href="#">See your last games</a>
+        </div>
+
+        <div class="span4 offset1">
+          <a class="btn btn-danger" href="#">Go to your ranking</a>
         </div>
 
       </div>
@@ -26,10 +108,9 @@
         <h3>Ongoing tournaments</h3>
         <br/>
         <ul>
-          <li><a href="#">Big-ass tournament</a></li>
-          <li><a href="#">Queens and pawns</a></li>
-          <li><a href="#">FhP league 2012</a></li>
-          <li><a href="#">Fianchetto III</a></li>
+          <% @tournaments.each do |tournament| %>
+            <li><%= link_to tournament.name, tournament_path(tournament.id) %></li>
+          <% end %>
         </ul>
 
         <hr>
@@ -65,7 +146,7 @@
               <td><span class="pull-right">David Ribeiro<span></td>
               <td><span class="pull-right">1</span></td>
               <td>0</td>
-              <td>Manuel (?)</th>
+              <td>Manuel Silva</th>
             </tr>
             <tr>
               <td><span class="pull-right">Rui Castro<span></td>

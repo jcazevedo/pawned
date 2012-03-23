@@ -1,6 +1,8 @@
-<h1>Listing tournaments</h1>
+<h1>Listing Tournaments</h1>
 
-<table>
+<hr>
+
+<table class="table table-striped">
   <tr>
     <th>Name</th>
     <th>Date started</th>
@@ -26,6 +28,6 @@
 <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New Tournament', new_tournament_path %>
+<div class="form-actions">
+  <%= link_to 'New Tournament', new_tournament_path, :class => "btn btn-primary" %>
+</div>

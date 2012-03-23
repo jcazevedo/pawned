@@ -1,30 +1,41 @@
+<h1>Tournament Details</h1>
+
+<hr>
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @tournament.name %>
-</p>
+<div class="row">
+  <div class="span6">
+    <table class="table">
+      <thead>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Name</b></td>
+          <td><%= @tournament.name %></td>
+        </tr>
+        <tr>
+          <td><b>Date started</b></td>
+          <td><%= @tournament.date_started %></td>
+        </tr>
+        <tr>
+          <td><b>Date finished</b></td>
+          <td><%= @tournament.date_finished %></td>
+        </tr>
+        <tr>
+          <td><b>Status</b></td>
+          <td><%= @tournament.status %></td>
+        </tr>
+        <tr>
+          <td><b>Admin</b></td>
+          <td><%= @tournament.admin_id %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-<p>
-  <b>Date started:</b>
-  <%= @tournament.date_started %>
-</p>
-
-<p>
-  <b>Date finished:</b>
-  <%= @tournament.date_finished %>
-</p>
-
-<p>
-  <b>Status:</b>
-  <%= @tournament.status %>
-</p>
-
-<p>
-  <b>Admin:</b>
-  <%= @tournament.admin_id %>
-</p>
-
-
-<%= link_to 'Edit', edit_tournament_path(@tournament) %> |
-<%= link_to 'Back', tournaments_path %>
+<div class="form-actions">
+  <%= link_to 'Edit', edit_tournament_path(@tournament), :class => "btn" %>
+  <%= link_to 'Back', tournaments_path, :class => "btn btn-danger" %>
+</div>
