@@ -1,6 +1,12 @@
 <% if player_signed_in? %>
+    <h1>Dashboard</h1>
+
+    <hr>
+
+    <p id="notice"><%= notice %></p>
+
     <div class="row">
-      <div class="span6">
+      <div class="span8">
         <div id="container"></div>
         <script type="text/javascript">
         var chart1; // globally available
@@ -39,127 +45,148 @@
 
       </div>
 
-      <div class="span3">
-        <h6>Statistics</h6>
-        <table class="table">
-          <thead>
-          </thead>
-          <tbody>
-            <tr>
-              <td rowspan="3"><b>Rating</b></td>
-              <td>min</td>
-              <td><%= @ratings.min || 0 %></td>
-            </tr>
-            <tr>
-              <td>max</td>
-              <td><%= @ratings.max || 0 %></td>
-            </tr>
-            <tr>
-              <td>percentile</td>
-              <td>1</td>
-            </tr>
-            <tr>
-              <td rowspan="2"><b>Streaks</b></td>
-              <td>winning</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>losing</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td rowspan="2"><b>Opponents</b></td>
-              <td>strongest</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>weakest</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td rowspan="2"><b>Tournaments</b></td>
-              <td>wins</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>total</td>
-              <td>0</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="row">
-        <div class="span4">
-          <a class="btn btn-success pull-right" href="#">See your last games</a>
+      <div class="span4">
+        <div class="well">
+          <h6>Statistics</h6>
+          <table class="table">
+            <thead>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="2"><b>Rating</b></td>
+                <td>min</td>
+                <td><%= @ratings.min_by {|m| m.value}.value || 0 %></td>
+              </tr>
+              <tr>
+                <td>max</td>
+                <td><%= @ratings.max_by {|m| m.value}.value || 0 %></td>
+              </tr>
+              <tr>
+                <td rowspan="2"><b>Streaks</b></td>
+                <td>winning</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>losing</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td rowspan="2"><b>Opponents</b></td>
+                <td>strongest</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>weakest</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td rowspan="3"><b>Matches</b></td>
+                <td>won</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>lost</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>draw</td>
+                <td>0</td>
+              </tr>
+            </tbody>
+          </table>
+          <a href="#">Go to your rating</a>
+          <a class="pull-right" href="#">See your last games</a>
         </div>
-
-        <div class="span4 offset1">
-          <a class="btn btn-danger" href="#">Go to your ranking</a>
-        </div>
-
       </div>
     </div>
 
     <hr>
 
     <div class="row">
-      <div class="span3">
-        <h3>Ongoing tournaments</h3>
-        <br/>
-        <ul>
-          <% @tournaments.each do |tournament| %>
-            <li><%= link_to tournament.name, tournament_path(tournament.id) %></li>
-          <% end %>
-        </ul>
-
-        <hr>
-
-        <a class="btn btn-primary" href="#">Tournament manager</a>
+      <div class="span4">
+        <div class="well">
+          <h6>Tournament Stats</h6>
+          <table class="table">
+            <thead>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="2"><b>Played</b></td>
+                <td>won</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>total</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td rowspan="3"><b>Standings</b></td>
+                <td>best</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>worst</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>latest</td>
+                <td>0</td>
+              </tr>
+            </tbody>
+          </table>
+          <a href="#">Available tournaments</a>
+          <a class="pull-right" href="#">New tournament</a>
+        </div>
       </div>
 
-      <div class="span6">
-        <h3>Latest Round Results of <a>Big-ass tournament</a></h3>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th><span class="pull-right">White</span></th>
-              <th></th>
-              <th></th>
-              <th>Black</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="pull-right">Pedro Saleiro<span></td>
-              <td><span class="pull-right">0</span></td>
-              <td>1</td>
-              <td>Luís Carvalho</th>
-            </tr>
-            <tr>
-              <td><span class="pull-right">Filipe Sousa<span></td>
-              <td><span class="pull-right">0</span></td>
-              <td>1</td>
-              <td>João Azevedo</th>
-            </tr>
-            <tr>
-              <td><span class="pull-right">David Ribeiro<span></td>
-              <td><span class="pull-right">1</span></td>
-              <td>0</td>
-              <td>Manuel Silva</th>
-            </tr>
-            <tr>
-              <td><span class="pull-right">Rui Castro<span></td>
-              <td><span class="pull-right">1</span></td>
-              <td>0</td>
-              <td>Pedro Coelho</th>
-            </tr>
-          </tbody>
-        </table>
+      <div class="span8">
+        <h3>Ongoing Tournaments</h3>
 
         <hr>
 
-        <a class="btn btn-primary" href="#">Tournament manager</a>
+        <div class="accordion" id="tournament-accordion">
+          <% @tournaments.each_with_index do |tournament, i| %>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#tournament-accordion" href="#collapse<%= i %>"><%= tournament.name %></a>
+            </div>
+            <div id="collapse<%= i %>" class="accordion-body collapse <%= 'in' if i == 0 %>">
+              <div class="accordion-inner">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th><span class="pull-right">White</span></th>
+                      <th></th>
+                      <th></th>
+                      <th>Black</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% round = tournament.rounds.max_by {|r| r.tournament_round_id} %>
+                    <% round.matches.each do |match| %>
+                    <tr>
+                      <td><span class="pull-right"><%= match.white_player.name %></span></td>
+                      <td><span class="pull-right"><%= match.white_result %></span></td>
+                      <td><%= match.black_result %></td>
+                      <td><%= match.black_player.name %></td>
+                      <td><%= link_to "View", match_path(match) %></td>
+                    </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+                <div class="row">
+                  <div class="span3">
+                    <%= link_to "View tournament", tournament_path(tournament.id) %>
+                    <%= link_to "View round", round_path(round), :class => "pull-right" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% end %>
+        </div>
+
       </div>
     </div>
 <% else %>
@@ -178,8 +205,10 @@
     <h2>Sign in here</h2>
     <%= form_tag(player_session_path, class: "well", id: "signin-form") do %>
       <div><%= text_field_tag('player[email]', '', class: "input-small span3", placeholder: "Your e-mail goes here...") %></div>
-      <%= password_field_tag('player[password]', '', class: "input-small span2", placeholder: "Your password, here.") %>
-      <button type="submit" class="btn btn-success" style="margin: 0 10px 9px;">Submit</button>
+      <div class="input-append">
+        <%= password_field_tag('player[password]', '', class: "input-small span2", placeholder: "Your password, here.") %>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
       <label class="checkbox"><%= check_box_tag('player[remember_me]', '', false, class: "checkbox") %> Remember me</label>
      <%= link_to "Forgot your password?", new_password_path('player') %>
     <% end %>

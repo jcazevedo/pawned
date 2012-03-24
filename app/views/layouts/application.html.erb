@@ -83,6 +83,12 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= current_player.name %> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li>
+                  <%= link_to(admin_player_path(current_player.id)) do %>
+                    <i class="icon-picture"></i>
+                    View Profile
+                  <% end %>
+                  </li>
+                  <li>
                   <%= link_to(edit_admin_player_path(current_player.id)) do %>
                     <i class="icon-pencil"></i>
                     Settings
@@ -107,65 +113,7 @@
     </div>
 
   <div class="container">
-    <% if player_signed_in? %>
-    <div class="row">
-      <div class="span3">
-        <div class="alert alert-error">
-          <a class="close" data-dismiss="alert">×</a>
-          <strong>Achtung!</strong> This box is red, so check it out carefully.
-        </div>
-        <div class="alert">
-          <a class="close" data-dismiss="alert">×</a>
-          <strong>New message!</strong> You have a new message from :orig_player.name
-        </div>
-        <div class="alert alert-info">
-          <a class="close" data-dismiss="alert">×</a>
-          <strong>Oh, hi!</strong> I just passed by to say hello.
-        </div>
-
-        <hr>
-
-        <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
-        <script>
-        new TWTR.Widget({
-          version: 2,
-          type: 'search',
-          search: 'chess',
-          rpp: 10,
-          interval: 5000,
-          title: 'Some of the world\'s',
-          subject: 'Chess Titans',
-          width: 'auto',
-          height: 300,
-          theme: {
-            shell: {
-              background: '#0074cc',
-              color: '#ffffff'
-            },
-            tweets: {
-              background: '#ffffff',
-              color: '#444444',
-              links: '#0088cc'
-            }
-          },
-          features: {
-            scrollbar: false,
-            loop: true,
-            live: true,
-            behavior: 'default'
-          }
-        }).render().start();
-        </script>
-      </div>
-
-      <div class="span9">
-          <%= yield %>
-      </div>
-    </div>
-
-    <% else %>
       <%= yield %>
-    <% end %>
 
     <hr>
 
