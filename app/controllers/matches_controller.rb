@@ -1,4 +1,6 @@
 class MatchesController < ApplicationController
+  before_filter :authenticate_player!
+
   # GET /matches
   # GET /matches.json
   def index

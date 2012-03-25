@@ -55,11 +55,11 @@
               <tr>
                 <td rowspan="2"><b>Rating</b></td>
                 <td>min</td>
-                <td><%= @ratings.min_by {|m| m.value}.value || 0 %></td>
+                <td><%= min_rating(@ratings) %></td>
               </tr>
               <tr>
                 <td>max</td>
-                <td><%= @ratings.max_by {|m| m.value}.value || 0 %></td>
+                <td><%= max_rating(@ratings) %></td>
               </tr>
               <tr>
                 <td rowspan="2"><b>Streaks</b></td>

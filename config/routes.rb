@@ -1,4 +1,6 @@
 Pawned::Application.routes.draw do
+  match "profile" => "profile#show", :as => :profile
+
   resources :tournament_players
 
   resources :tournaments

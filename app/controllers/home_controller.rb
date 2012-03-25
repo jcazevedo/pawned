@@ -1,13 +1,13 @@
 class HomeController < ApplicationController
   def index
-    @player = Player.find(current_player.id) if current_player != nil
-    @ratings = @player.ratings if @player != nil
-
-    @tournaments = @player.tournaments if @player != nil
+    if current_player
+      @player = current_player
+      @ratings = @player.ratings
+      @tournaments = @player.tournaments
+    end
 
     respond_to do |format|
       format.html # index.html.erb
-#      format.json { render json: @player }
     end
   end
 end
