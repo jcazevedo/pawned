@@ -2,8 +2,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments
   # GET /tournaments.json
   def index
-    @tournaments = Tournament.all
-    authorize! :read, @tournaments
+    @tournaments = Tournament.accessible_by(current_ability)
 
     respond_to do |format|
       format.html # index.html.erb

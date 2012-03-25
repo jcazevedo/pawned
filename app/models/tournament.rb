@@ -3,5 +3,5 @@ class Tournament < ActiveRecord::Base
 	has_many :tournament_players
 	has_many :players, :through => :tournament_players
 
-  belongs_to :administrator, :class_name => "Player", :foreign_key => "admin_id"
+  belongs_to :admin, :class_name => "Player", :foreign_key => "admin_id"
 end

@@ -10,10 +10,10 @@ class Ability
       can :manage, Tournament, :admin_id => user.id
       can :manage, Player, :id => user.id
       can :manage, Round do |r|
-        r.tournament.administrator.id.eql?(user.id)
+        r.tournament.admin.id.eql?(user.id)
       end
       can :manage, Match do |m|
-        m.round.tournament.administrator.id.eql?(user.id)
+        m.round.tournament.admin.id.eql?(user.id)
       end
 
       can [:read, :create], Tournament

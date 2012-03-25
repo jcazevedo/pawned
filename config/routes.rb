@@ -1,19 +1,24 @@
 Pawned::Application.routes.draw do
+  # route for the user profile
   match "profile" => "profile#show", :as => :profile
 
-  resources :tournament_players
+  # route for the user's upcoming matches
+  match "matches" => "upcoming_matches#show", :as => :profile
 
-  resources :tournaments
+  # nested routing for tournaments > rounds > matches
+  resources :tournaments do
+    resources :rounds do
+      resources :matches
+    end
+  end
 
-  resources :rounds
-
-  resources :matches
-
-  devise_for :players
-
+  # the admin namespace: players administration, app settings, etc..
   namespace :admin do
     resources :players
   end
+
+  # devise authentication for players
+  devise_for :players
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -11,5 +11,39 @@
 </p>
 
 
-<%= link_to 'Edit', edit_round_path(@round) %> |
-<%= link_to 'Back', rounds_path %>
+<table class="table">
+  <tr>
+    <th>Date inserted</th>
+    <th>Date played</th>
+    <th>White</th>
+    <th>Black</th>
+    <th>White result</th>
+    <th>Black result</th>
+    <th>Round</th>
+    <th>Png text</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @round.matches.each do |match| %>
+  <tr>
+    <td><%= match.date_inserted %></td>
+    <td><%= match.date_played %></td>
+    <td><%= match.white_id %></td>
+    <td><%= match.black_id %></td>
+    <td><%= match.white_result %></td>
+    <td><%= match.black_result %></td>
+    <td><%= match.round_id %></td>
+    <td><%= match.png_text %></td>
+    <td><%= link_to 'Show', tournament_round_match_path(@tournament, @round, match) %></td>
+    <td><%= link_to 'Edit', edit_tournament_round_match_path(@tournament, @round, match) %></td>
+    <td><%= link_to 'Destroy', tournament_round_match_path(@tournament, @round, match), confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+
+<%= link_to 'Create new match', new_tournament_round_match_path(@tournament, @round) %> |
+<%= link_to 'Edit', edit_tournament_round_path(@tournament, @round) %> |
+<%= link_to 'Back', tournament_path(@tournament) %>

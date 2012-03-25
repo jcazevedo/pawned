@@ -35,7 +35,32 @@
   </div>
 </div>
 
+<div class="row">
+  <div id="span12">
+    <table class="table">
+      <tr>
+        <th>Id</th>
+        <th>Tournament Round Id</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+
+      <% @tournament.rounds.each do |round| %>
+        <tr>
+          <td><%= round.id %></td>
+          <td><%= round.tournament_round_id %></td>
+          <td><%= link_to 'Show', tournament_round_path(@tournament, round) %></td>
+          <td><%= link_to 'Edit', edit_tournament_round_path(@tournament, round) %></td>
+          <td><%= link_to 'Destroy', [@tournament, round], confirm: 'Are you sure?', method: :delete %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
 <div class="form-actions">
+  <%= link_to 'Create new round', new_tournament_round_path(@tournament), :class => "btn btn-primary" %>
   <%= link_to 'Edit', edit_tournament_path(@tournament), :class => "btn" %>
-  <%= link_to 'Back', tournaments_path, :class => "btn btn-danger" %>
+  <%= link_to 'Back', tournaments_path, :class => "btn" %>
 </div>

@@ -1,6 +1,6 @@
 <h1>Listing rounds</h1>
 
-<table>
+<table class="table">
   <tr>
     <th>Tournament</th>
     <th>Tournament round</th>
@@ -16,6 +16,38 @@
     <td><%= link_to 'Show', round %></td>
     <td><%= link_to 'Edit', edit_round_path(round) %></td>
     <td><%= link_to 'Destroy', round, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<table class="table">
+  <tr>
+    <th>Date inserted</th>
+    <th>Date played</th>
+    <th>White</th>
+    <th>Black</th>
+    <th>White result</th>
+    <th>Black result</th>
+    <th>Round</th>
+    <th>Png text</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @matches.each do |match| %>
+  <tr>
+    <td><%= match.date_inserted %></td>
+    <td><%= match.date_played %></td>
+    <td><%= match.white_id %></td>
+    <td><%= match.black_id %></td>
+    <td><%= match.white_result %></td>
+    <td><%= match.black_result %></td>
+    <td><%= match.round_id %></td>
+    <td><%= match.png_text %></td>
+    <td><%= link_to 'Show', match %></td>
+    <td><%= link_to 'Edit', edit_match_path(match) %></td>
+    <td><%= link_to 'Destroy', match, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
