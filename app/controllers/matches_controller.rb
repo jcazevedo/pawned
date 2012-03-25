@@ -100,7 +100,7 @@ class MatchesController < ApplicationController
     @match.destroy
 
     respond_to do |format|
-      format.html { redirect_to tournament_round__path(@tournament, @round) }
+      format.html { redirect_to tournament_round_path(@tournament, @round) }
       format.json { head :no_content }
     end
   end
