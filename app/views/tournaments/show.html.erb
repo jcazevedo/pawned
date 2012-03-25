@@ -42,8 +42,10 @@
         <th>Id</th>
         <th>Tournament Round Id</th>
         <th></th>
-        <th></th>
-        <th></th>
+        <% if can? :manage, @tournament %>
+          <th></th>
+          <th></th>
+        <% end %>
       </tr>
 
       <% @tournament.rounds.each do |round| %>
@@ -51,8 +53,10 @@
           <td><%= round.id %></td>
           <td><%= round.tournament_round_id %></td>
           <td><%= link_to 'Show', tournament_round_path(@tournament, round) %></td>
-          <td><%= link_to 'Edit', edit_tournament_round_path(@tournament, round) %></td>
-          <td><%= link_to 'Destroy', [@tournament, round], confirm: 'Are you sure?', method: :delete %></td>
+          <% if can? :manage, @tournament %>
+            <td><%= link_to 'Edit', edit_tournament_round_path(@tournament, round) %></td>
+            <td><%= link_to 'Destroy', [@tournament, round], confirm: 'Are you sure?', method: :delete %></td>
+          <% end %>
         </tr>
       <% end %>
     </table>
@@ -60,7 +64,9 @@
 </div>
 
 <div class="form-actions">
-  <%= link_to 'Create new round', new_tournament_round_path(@tournament), :class => "btn btn-primary" %>
-  <%= link_to 'Edit', edit_tournament_path(@tournament), :class => "btn" %>
+  <% if can? :manage, @tournament %>
+    <%= link_to 'Create new round', new_tournament_round_path(@tournament), :class => "btn btn-primary" %>
+    <%= link_to 'Edit', edit_tournament_path(@tournament), :class => "btn" %>
+  <% end %>
   <%= link_to 'Back', tournaments_path, :class => "btn" %>
 </div>
