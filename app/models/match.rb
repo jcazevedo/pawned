@@ -7,6 +7,7 @@ class Match < ActiveRecord::Base
 
   validates :white_id, :black_id, :presence => true
   validates_with MatchDateValidator
+  validates_with MatchPlayersValidator
 
   def result
     [white_result.to_s, black_result.to_s].join('-')
