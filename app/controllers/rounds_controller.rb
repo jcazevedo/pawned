@@ -1,8 +1,8 @@
 class RoundsController < ApplicationController
   before_filter :authenticate_player!
 
-  # GET /rounds
-  # GET /rounds.json
+  # GET /tournament/:tournament_id/rounds
+  # GET /tournament/:tournament_id/rounds.json
   def index
     # TODO THIS DOESN'T WORK ATM
     # @tournament = Tournament.find(params[:tournament_id])
@@ -16,8 +16,8 @@ class RoundsController < ApplicationController
     render :nothing => true
   end
 
-  # GET /rounds/1
-  # GET /rounds/1.json
+  # GET /tournament/:tournament_id/rounds/1
+  # GET /tournament/:tournament_id/rounds/1.json
   def show
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.find(params[:id])
@@ -29,8 +29,8 @@ class RoundsController < ApplicationController
     end
   end
 
-  # GET /rounds/new
-  # GET /rounds/new.json
+  # GET /tournament/:tournament_id/rounds/new
+  # GET /tournament/:tournament_id/rounds/new.json
   def new
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.build
@@ -42,15 +42,15 @@ class RoundsController < ApplicationController
     end
   end
 
-  # GET /rounds/1/edit
+  # GET /tournament/:tournament_id/rounds/1/edit
   def edit
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.find(params[:id])
     authorize! :manage, @round
   end
 
-  # POST /rounds
-  # POST /rounds.json
+  # POST /tournament/:tournament_id/rounds
+  # POST /tournament/:tournament_id/rounds.json
   def create
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.build(params[:round])
@@ -67,8 +67,8 @@ class RoundsController < ApplicationController
     end
   end
 
-  # PUT /rounds/1
-  # PUT /rounds/1.json
+  # PUT /tournament/:tournament_id/rounds/1
+  # PUT /tournament/:tournament_id/rounds/1.json
   def update
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.find(params[:id])
@@ -85,8 +85,8 @@ class RoundsController < ApplicationController
     end
   end
 
-  # DELETE /rounds/1
-  # DELETE /rounds/1.json
+  # DELETE /tournament/:tournament_id/rounds/1
+  # DELETE /tournament/:tournament_id/rounds/1.json
   def destroy
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.find(params[:id])
