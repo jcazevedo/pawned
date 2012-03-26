@@ -4,6 +4,8 @@
 
 <p id="notice"><%= notice %></p>
 
+<h2>Tournament details</h2>
+
 <div class="row">
   <div class="span6">
     <table class="table">
@@ -35,6 +37,8 @@
   </div>
 </div>
 
+<h2>Rounds</h2>
+
 <div class="row">
   <div id="span12">
     <table class="table">
@@ -62,6 +66,45 @@
     </table>
   </div>
 </div>
+
+<h2>Players (and maybe live standings, later)</h2>
+
+<div class="row">
+  <div id="span12">
+    <table class="table">
+      <tr>
+        <th>Player name</th>
+        <th>Player email</th>
+      </tr>
+
+      <% @tournament.players.each do |p| %>
+        <tr>
+          <td><%= p.name %></td>
+          <td><%= p.email %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<% if @tournament.players.include?(current_player) %>
+  <!-- this is one of the ugliest things I've ever seen, seconded perhaps only by your momma.. -->
+  <%= link_to participation_path(TournamentPlayer.find(current_player.tournament_players(:tournament_id => @tournament.id).first.id)),
+    confirm: 'Are you sure?', method: :delete, :class => "btn btn-warning" do %>
+    <i class="icon-white icon-remove-sign"></i>
+    Withdraw this tournament
+  <% end %>
+<% else %>
+  <%= form_for TournamentPlayer.new, :url => participations_path do |f| %>
+    <%= f.hidden_field :tournament_id, :value => @tournament.id %>
+    <%= f.hidden_field :player_id, :value => current_player.id %>
+    <button type="submit" class="btn btn-success">
+      <i class="icon-white icon-ok-sign"></i>
+      Sign up for this tournament
+    </button>
+  <% end %>
+<% end %>
+
 
 <div class="form-actions">
   <% if can? :manage, @tournament %>

@@ -12,6 +12,8 @@ Pawned::Application.routes.draw do
     end
   end
 
+  resources :participations, :only => [:create, :destroy]
+
   # the admin namespace: players administration, app settings, etc..
   namespace :admin do
     resources :players

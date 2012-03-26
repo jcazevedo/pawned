@@ -170,15 +170,15 @@
                       <td><span class="pull-right"><%= match.white_result %></span></td>
                       <td><%= match.black_result %></td>
                       <td><%= match.black_player.name %></td>
-                      <td><%= link_to "View", match_path(match) %></td>
+                      <td><%= link_to "View", tournament_round_match_path(tournament, round, match) %></td>
                     </tr>
                     <% end %>
                   </tbody>
                 </table>
                 <div class="row">
                   <div class="span3">
-                    <%= link_to "View tournament", tournament_path(tournament.id) %>
-                    <%= link_to "View round", round_path(round), :class => "pull-right" %>
+                    <%= link_to "View tournament", tournament_path(tournament) %>
+                    <%= link_to "View round", tournament_round_path(tournament, round), :class => "pull-right" %>
                   </div>
                 </div>
               </div>
