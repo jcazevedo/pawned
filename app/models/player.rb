@@ -14,6 +14,8 @@ class Player < ActiveRecord::Base
   has_many :matches_as_black, :class_name => "Match", :foreign_key => "black_id"
   has_many :ratings, :order => "date ASC"
 
+  after_create :set_initial_rating
+
   def matches
     matches_as_white + matches_as_black
   end
@@ -34,5 +36,12 @@ class Player < ActiveRecord::Base
 
   def admin?
     roles.include?("admin")
+  end
+
+  private
+
+  def set_initial_rating
+    self.ratings << Rating.create(:date => created_at,
+                                  :value => 1300)
   end
 end
