@@ -40,7 +40,7 @@ class Match < ActiveRecord::Base
 
   def update_ratings
     if white_result_changed? or black_result_changed?
-      self.ratings.delete_all
+      self.ratings.destroy_all
       # FIXME this assumes that this is the last added game
       new_white_rating = Rating.new_rating(white_player.matches.length - 1, 
                                            white_player.ratings.last.value,
