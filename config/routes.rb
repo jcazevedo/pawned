@@ -12,6 +12,7 @@ Pawned::Application.routes.draw do
     end
   end
 
+  # participations routes so players can ingress tournaments
   resources :participations, :only => [:create, :destroy]
 
   # the admin namespace: players administration, app settings, etc..

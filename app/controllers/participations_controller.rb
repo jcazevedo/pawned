@@ -8,7 +8,7 @@ class ParticipationsController < ApplicationController
         format.html { redirect_to @participation.tournament, notice: 'Successfully signed up to the tournament.' }
         format.json { render json: @participation, status: :created, location: @participation }
       else
-        format.html { redirect_to :back, :alert => "Can't sign up for this tournament." }
+        format.html { redirect_to @participation.tournament, :alert => "Can't sign up for this tournament." }
         format.json { render json: @participation.errors, status: :unprocessable_entity }
       end
     end
@@ -19,11 +19,14 @@ class ParticipationsController < ApplicationController
     @tournament = @participation.tournament
     authorize! :manage, @participation
 
-    @participation.destroy
-
     respond_to do |format|
-      format.html { redirect_to @tournament, :notice => "Successfully withdrew from tournament." }
-      format.json { head :no_content }
+      if(@participation.destroy)
+        format.html { redirect_to @tournament, :notice => "Successfully withdrew from tournament." }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to @tournament, :alert => "Couldn't withdraw from tournament." }
+        format.json { head :no_content }
+      end
     end
   end
 end
