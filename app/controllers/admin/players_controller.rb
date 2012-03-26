@@ -1,6 +1,4 @@
-class Admin::PlayersController < ApplicationController
-  before_filter :authenticate_player!
-
+class Admin::PlayersController < Admin::BaseController
   # GET /admin/players
   # GET /admin/players.json
   def index

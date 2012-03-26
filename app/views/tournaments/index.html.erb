@@ -20,10 +20,18 @@
     <td><%= tournament.date_started %></td>
     <td><%= tournament.date_finished %></td>
     <td><%= tournament.status %></td>
-    <td><%= tournament.admin_id %></td>
+    <td><%= tournament.admin.name %></td>
     <td><%= link_to 'Show', tournament %></td>
-    <td><%= link_to 'Edit', edit_tournament_path(tournament) %></td>
-    <td><%= link_to 'Destroy', tournament, confirm: 'Are you sure?', method: :delete %></td>
+    <td>
+      <% if can? :manage, tournament %>
+        <%= link_to 'Edit', edit_tournament_path(tournament) %>
+      <% end %>
+    </td>
+    <td>
+      <% if can? :manage, tournament %>
+        <%= link_to 'Destroy', tournament, confirm: 'Are you sure?', method: :delete %>
+      <% end %>
+    </td>
   </tr>
 <% end %>
 </table>

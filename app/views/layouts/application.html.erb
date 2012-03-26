@@ -12,6 +12,7 @@
       <div class="navbar-inner">
         <div class="container">
           <%= link_to "Pawned", root_path, class: "brand" %>
+
           <% if player_signed_in? %>
             <ul class="nav">
 
@@ -48,21 +49,21 @@
                   <li><a href="#">Match Calendar</a></li>
                   <li><a href="#">Your Latest Matches</a></li>
                   <li>
-                  <%= link_to(new_match_path()) do %>
+                  <%= link_to("#") do %>
                     Schedule Match
                   <% end %>
                   </li>
                   <li>
-                  <%= link_to(matches_path()) do %>
+                  <%= link_to("#") do %>
                     All Matches
                   <% end %>
                   </li>
                 </ul>
               </li>
-
             </ul>
 
             <ul class="nav pull-right">
+              <% if current_player.admin? %>
               <li class="dropdown <%= current_controller('admin') %>">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -78,18 +79,19 @@
                   </li>
                 </ul>
               </li>
+              <% end %>
 
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= current_player.name %> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li>
-                  <%= link_to(admin_player_path(current_player.id)) do %>
+                  <%= link_to(profile_path) do %>
                     <i class="icon-picture"></i>
                     View Profile
                   <% end %>
                   </li>
                   <li>
-                  <%= link_to(edit_admin_player_path(current_player.id)) do %>
+                  <%= link_to(edit_player_registration_path) do %>
                     <i class="icon-pencil"></i>
                     Settings
                   <% end %>
@@ -113,16 +115,16 @@
     </div>
 
   <div class="container">
-      <%= yield %>
-
+    <%= yield %>
     <hr>
 
     <footer>
       &copy; Pawnage Software 2012
       <!-- Social icons by: http://www.elegantthemes.com/blog/resources/free-social-media-icon-set -->
-      <a><img src="/img/facebook.png" class="pull-right" /></a>
-      <a><img src="/img/twitter.png" class="pull-right" /></a>
-      <a><img src="/img/google.png" class="pull-right" /></a>
+      <a href="#"><img src="/img/orkut.png" class="pull-right" /></a>
+      <a href="#"><img src="/img/facebook.png" class="pull-right" /></a>
+      <a href="#"><img src="/img/twitter.png" class="pull-right" /></a>
+      <a href="#"><img src="/img/google.png" class="pull-right" /></a>
     </footer>
 
   </div>

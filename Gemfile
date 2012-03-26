@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+# Our framework
 gem 'rails', '3.2.2'
 
 group :development, :test do
@@ -25,19 +26,13 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+# The all purpose dom manipulation javascript library
 gem 'jquery-rails'
+
+# Authentication and authorization, respectively
 gem 'devise'
+gem 'cancan'
+
+# Simple forms and awesome graphs
 gem 'simple_form'
 gem 'highcharts-rails'
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'

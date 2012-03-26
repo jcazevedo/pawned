@@ -55,11 +55,11 @@
               <tr>
                 <td rowspan="2"><b>Rating</b></td>
                 <td>min</td>
-                <td><%= @ratings.min_by {|m| m.value}.value || 0 %></td>
+                <td><%= min_rating(@ratings) %></td>
               </tr>
               <tr>
                 <td>max</td>
-                <td><%= @ratings.max_by {|m| m.value}.value || 0 %></td>
+                <td><%= max_rating(@ratings) %></td>
               </tr>
               <tr>
                 <td rowspan="2"><b>Streaks</b></td>
@@ -134,8 +134,8 @@
               </tr>
             </tbody>
           </table>
-          <a href="#">Available tournaments</a>
-          <a class="pull-right" href="#">New tournament</a>
+          <%= link_to "Available tournaments", tournaments_path %>
+          <%= link_to "New tournament", new_tournament_path, :class => "pull-right" %>
         </div>
       </div>
 
@@ -164,21 +164,25 @@
                   </thead>
                   <tbody>
                     <% round = tournament.rounds.max_by {|r| r.tournament_round_id} %>
+                    <% if round %>
                     <% round.matches.each do |match| %>
                     <tr>
                       <td><span class="pull-right"><%= match.white_player.name %></span></td>
                       <td><span class="pull-right"><%= match.white_result %></span></td>
                       <td><%= match.black_result %></td>
                       <td><%= match.black_player.name %></td>
-                      <td><%= link_to "View", match_path(match) %></td>
+                      <td><%= link_to "View", tournament_round_match_path(tournament, round, match) %></td>
                     </tr>
+                    <% end %>
                     <% end %>
                   </tbody>
                 </table>
                 <div class="row">
                   <div class="span3">
-                    <%= link_to "View tournament", tournament_path(tournament.id) %>
-                    <%= link_to "View round", round_path(round), :class => "pull-right" %>
+                    <%= link_to "View tournament", tournament_path(tournament) %>
+                    <% if round %>
+                    <%= link_to "View round", tournament_round_path(tournament, round), :class => "pull-right" %>
+                    <% end %>
                   </div>
                 </div>
               </div>

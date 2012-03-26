@@ -41,5 +41,7 @@
 </p>
 
 
-<%= link_to 'Edit', edit_match_path(@match) %> |
-<%= link_to 'Back', matches_path %>
+<% if can? :manage, @tournament %>
+  <%= link_to 'Edit', edit_tournament_round_match_path(@tournament, @round, @match) %> |
+<% end %>
+<%= link_to 'Back', tournament_round_path(@tournament, @round) %>
