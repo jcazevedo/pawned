@@ -1,4 +1,6 @@
 class ParticipationsController < ApplicationController
+  # POST /participations
+  # POST /participations.json
   def create
     @participation = TournamentPlayer.new(params[:tournament_player])
     authorize! :create, @participation
@@ -14,6 +16,8 @@ class ParticipationsController < ApplicationController
     end
   end
 
+  # DELETE /participations/:id
+  # DELETE /participations/:id.json
   def destroy
     @participation = TournamentPlayer.find(params[:id])
     @tournament = @participation.tournament
