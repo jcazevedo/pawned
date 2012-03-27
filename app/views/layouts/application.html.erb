@@ -6,35 +6,48 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
+<% if player_signed_in? %>
 <body style="padding-top: 60px">
+<% else %>
+<body style="padding-top: 30px">
+<% end %>
 
+  <% if player_signed_in? %>
   <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <%= link_to "Pawned", root_path, class: "brand" %>
 
-          <% if player_signed_in? %>
             <ul class="nav">
 
               <li class="<%= current_controller('home') %>"><a href="/">Home</a></li>
 
-              <li class="dropdown <%= current_controller('standings') %>">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Standings <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Global Standings</a></li>
-                </ul>
-              </li>
+              <li class="<%= current_controller('standings') %>"><a href="#">Standings</a></li>
 
               <li class="dropdown <%= current_controller('tournaments') %>">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tournaments <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Your Tournaments</a></li>
-                  <li><a href="#">Active Tournaments</a></li>
+                  <li>
+                  <%= link_to(player_tournaments_path(current_player)) do %>
+                    Your Tournaments
+                  <% end %>
+                  </li>
+                  <li>
+                  <%= link_to(open_tournaments_path()) do %>
+                    Open Tournaments
+                  <% end %>
+                  </li>
+                  <li>
+                  <%= link_to(ongoing_tournaments_path()) do %>
+                    Ongoing Tournaments
+                  <% end %>
+                  </li>
                   <li>
                   <%= link_to(tournaments_path()) do %>
                     All Tournaments
                   <% end %>
                   </li>
+                  <li class="divider"></li>
                   <li>
                   <%= link_to(new_tournament_path()) do %>
                     Create Tournament
@@ -109,10 +122,10 @@
               </li>
 
             </ul>
-          <% end %>
         </div>
       </div>
     </div>
+  <% end %>
 
   <div class="container">
     <%= yield %>

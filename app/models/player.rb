@@ -38,6 +38,38 @@ class Player < ActiveRecord::Base
     roles.include?("admin")
   end
 
+  def matches_won
+    (matches.map { |m| m if m.winner == self }).reject { |r| r.nil? }
+  end
+
+  def matches_lost
+    (matches.map { |m| m if !m.winner.nil? and m.winner != self }).reject { |r| r.nil? }
+  end
+
+  def matches_drawn
+    matches - (matches_won + matches_lost)
+  end
+
+  def streak_winning
+    ((matches.map { |m| 1 if m.winner == self }).reject { |r| r.nil? }).split(0).max_by { |s| s.count }.count
+  end
+
+  def streak_losing
+    ((matches.map { |m| 1 if !m.winner.nil? and m.winner != self }).reject { |r| r.nil? }).split(0).max_by { |s| s.count }.count
+  end
+
+  def wins_strongest
+    m = matches_won.max_by { |m| m.white_player == self ? m.black_rating.value : m.white_rating.value }
+    return 0 if m.nil?
+    (m.white_player == self ? m.black_rating : m.white_rating).value
+  end
+
+  def wins_weakest
+    m = matches_won.min_by { |m| m.white_player == self ? m.black_rating.value : m.white_rating.value }
+    return 0 if m.nil?
+    (m.white_player == self ? m.black_rating : m.white_rating).value
+  end
+
   private
 
   def set_initial_rating

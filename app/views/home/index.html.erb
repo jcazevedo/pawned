@@ -64,33 +64,33 @@
               <tr>
                 <td rowspan="2"><b>Streaks</b></td>
                 <td>winning</td>
-                <td>0</td>
+                <td><%= @player.streak_winning %></td>
               </tr>
               <tr>
                 <td>losing</td>
-                <td>0</td>
+                <td><%= @player.streak_losing %></td>
               </tr>
               <tr>
-                <td rowspan="2"><b>Opponents</b></td>
+                <td rowspan="2"><b>Wins</b></td>
                 <td>strongest</td>
-                <td>0</td>
+                <td><%= @player.wins_strongest %></td>
               </tr>
               <tr>
                 <td>weakest</td>
-                <td>0</td>
+                <td><%= @player.wins_weakest %></td>
               </tr>
               <tr>
                 <td rowspan="3"><b>Matches</b></td>
                 <td>won</td>
-                <td>0</td>
+                <td><%= @player.matches_won.count %></td>
               </tr>
               <tr>
                 <td>lost</td>
-                <td>0</td>
+                <td><%= @player.matches_lost.count %></td>
               </tr>
               <tr>
                 <td>draw</td>
-                <td>0</td>
+                <td><%= @player.matches_drawn.count %></td>
               </tr>
             </tbody>
           </table>
@@ -117,7 +117,7 @@
               </tr>
               <tr>
                 <td>total</td>
-                <td>0</td>
+                <td><% @player.tournaments.count %></td>
               </tr>
               <tr>
                 <td rowspan="3"><b>Standings</b></td>

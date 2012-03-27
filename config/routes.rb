@@ -3,7 +3,15 @@ Pawned::Application.routes.draw do
   match "profile" => "profile#show", :as => :profile
 
   # route for the user's upcoming matches
-  match "matches" => "upcoming_matches#show", :as => :profile
+  match "matches" => "upcoming_matches#show"
+
+  # route for all open, ongoing tournaments
+  match "tournaments/open" => "tournaments#open", :as => :open_tournaments
+  match "tournaments/ongoing" => "tournaments#ongoing", :as => :ongoing_tournaments
+
+  # I don't know what the hell I'm doing
+  # But still: players > tournaments (they admin)
+  match "players/:id/tournaments" => "players#tournaments", :as => :player_tournaments
 
   # nested routing for tournaments > rounds > matches
   resources :tournaments do

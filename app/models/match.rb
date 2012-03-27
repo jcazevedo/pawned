@@ -29,11 +29,17 @@ class Match < ActiveRecord::Base
   end
 
   def white_rating
-    ratings.where(:player_id => self.white_id)
+    ratings.where(:player_id => self.white_id).last
   end
 
   def black_rating
-    ratings.where(:player_id => self.black_id)
+    ratings.where(:player_id => self.black_id).last
+  end
+
+  # TODO The winner might be determined by something other than this comparison
+  def winner
+    return nil if white_result == black_result
+    white_result > black_result ? white_player : black_player
   end
 
   private
@@ -42,20 +48,20 @@ class Match < ActiveRecord::Base
     if white_result_changed? or black_result_changed?
       self.ratings.destroy_all
       # FIXME this assumes that this is the last added game
-      new_white_rating = Rating.new_rating(white_player.matches.length - 1, 
-                                           white_player.ratings.last.value,
-                                           black_player.ratings.last.value,
+      new_white_rating = Rating.new_rating(white_player.matches.length - 1,
+                                           white_player.ratings.value,
+                                           black_player.ratings.value,
                                            white_result)
       new_black_rating = Rating.new_rating(black_player.matches.length - 1,
-                                           black_player.ratings.last.value,
-                                           white_player.ratings.last.value,
+                                           black_player.ratings.value,
+                                           white_player.ratings.value,
                                            black_result)
       self.ratings << Rating.create(:player_id => white_id,
                                     :value => new_white_rating,
                                     :date => self.date_played)
       self.ratings << Rating.create(:player_id => black_id,
                                     :value => new_black_rating,
-                                    :date => self.date_played)                                    
+                                    :date => self.date_played)
     end
   end
 end

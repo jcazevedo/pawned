@@ -5,6 +5,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments.json
   def index
     @tournaments = Tournament.accessible_by(current_ability)
+    @index_type = "All"
 
     respond_to do |format|
       format.html # index.html.erb
@@ -87,6 +88,30 @@ class TournamentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to tournaments_url }
       format.json { head :no_content }
+    end
+  end
+
+  # GET /tournaments/open
+  # GET /tournaments/open.json
+  def open
+    @tournaments = Tournament.open
+    @index_type = "Open"
+
+    respond_to do |format|
+      format.html { render action: "index" } # index.html.erb
+      format.json { render json: @tournament }
+    end
+  end
+
+  # GET /tournaments/open
+  # GET /tournaments/open.json
+  def ongoing
+    @tournaments = Tournament.ongoing
+    @index_type = "Ongoing"
+
+    respond_to do |format|
+      format.html { render action: "index" } # index.html.erb
+      format.json { render json: @tournament }
     end
   end
 end
