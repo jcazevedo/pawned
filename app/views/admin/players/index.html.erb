@@ -1,4 +1,6 @@
-<h1>Listing players</h1>
+<h1>Listing Players</h1>
+
+<hr>
 
 <table class="table">
   <tr>
@@ -20,6 +22,6 @@
 <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New Player', new_admin_player_path %>
+<div class="form-actions">
+  <%= link_to 'New Player', new_admin_player_path, :class => "btn btn-primary" %>
+</div>

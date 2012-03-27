@@ -1,8 +1,10 @@
 class TournamentsController < ApplicationController
+  before_filter :authenticate_player!
+
   # GET /tournaments
   # GET /tournaments.json
   def index
-    @tournaments = Tournament.all
+    @tournaments = Tournament.accessible_by(current_ability)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,6 +16,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments/1.json
   def show
     @tournament = Tournament.find(params[:id])
+    authorize! :read, @tournament
 
     respond_to do |format|
       format.html # show.html.erb
@@ -25,6 +28,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments/new.json
   def new
     @tournament = Tournament.new
+    authorize! :create, @tournament
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,12 +39,14 @@ class TournamentsController < ApplicationController
   # GET /tournaments/1/edit
   def edit
     @tournament = Tournament.find(params[:id])
+    authorize! :manage, @tournament
   end
 
   # POST /tournaments
   # POST /tournaments.json
   def create
     @tournament = Tournament.new(params[:tournament])
+    authorize! :create, @tournament
 
     respond_to do |format|
       if @tournament.save
@@ -57,6 +63,7 @@ class TournamentsController < ApplicationController
   # PUT /tournaments/1.json
   def update
     @tournament = Tournament.find(params[:id])
+    authorize! :manage, @tournament
 
     respond_to do |format|
       if @tournament.update_attributes(params[:tournament])
@@ -73,6 +80,8 @@ class TournamentsController < ApplicationController
   # DELETE /tournaments/1.json
   def destroy
     @tournament = Tournament.find(params[:id])
+    authorize! :manage, @tournament
+
     @tournament.destroy
 
     respond_to do |format|

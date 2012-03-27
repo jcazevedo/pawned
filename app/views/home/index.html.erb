@@ -1,26 +1,198 @@
 <% if player_signed_in? %>
-    <h2>Your dashboard goes here</h2>
-    <p>Jean shorts skateboard etsy fanny pack kale chips 3 wolf moon, butcher single-origin coffee letterpress vice. Biodiesel portland pork belly, typewriter tattooed flexitarian fixie. Occupy retro butcher iphone stumptown, american apparel next level VHS. Farm-to-table tattooed aesthetic, cardigan portland pour-over gluten-free. Squid terry richardson cardigan, gentrify pickled quinoa biodiesel craft beer cred wolf gastropub Austin odd future before they sold out etsy. Fixie portland wes anderson, squid chillwave jean shorts whatever put a bird on it cray kale chips. Fingerstache umami mumblecore, trust fund stumptown chillwave chambray 3 wolf moon photo booth cardigan bicycle rights gluten-free 8-bit yr.</p>
+    <h1>Dashboard</h1>
+
+    <hr>
+
+    <p id="notice"><%= notice %></p>
 
     <div class="row">
-      <div class="span6">
-        <h3>Here's a very nice chess board</h3>
-  <!-- Chess board photo from: http://www.flickr.com/photos/eivindw/4876863646/in/photostream/ -->
-        <img class="thumbnail span2" src="img/another_board.jpg" style="margin-right:15px;" />
-        <h5><p>Some Title</p></h5>
-        <p>Artisan flexitarian helvetica, vice locavore umami jean shorts chillwave mcsweeney's cred seitan mustache irony marfa hoodie. Cardigan skateboard williamsburg umami, tattooed wayfarers DIY squid bicycle rights wolf bespoke keytar cray odd future. Chillwave organic salvia dreamcatcher whatever 3 wolf moon, fanny pack viral fingerstache american apparel cred art party readymade marfa. Chillwave godard cray forage butcher, polaroid wayfarers letterpress small batch fixie pickled helvetica williamsburg cosby sweater fanny pack.</p>
+      <div class="span8">
+        <div id="container"></div>
+        <script type="text/javascript">
+        var chart1; // globally available
+        $(document).ready(function() {
+              chart1 = new Highcharts.Chart({
+                 chart: {
+                    renderTo: 'container',
+                    type: 'line'
+                 },
+                 title: {
+                    text: 'Rating evolution'
+                 },
+                 xAxis: {
+                    type: 'datetime',
+                    dateTimeLabelFormats: {
+                            month: '%e. %b',
+                            year: '%b'
+                    }
+                 },
+                 yAxis: {
+                    title: {
+                       text: 'Rating value'
+                    }
+                 },
+                 series: [{
+                    name: 'Rating',
+                    data: [
+                      <% @ratings.each do |rating| %>
+                        <%= '[' + (rating.date.to_time.to_i * 1000).to_s(10) + ', ' + rating.value.to_s + '],' %>
+                      <% end %>
+                    ]
+                 }]
+              });
+           });
+        </script>
+
       </div>
 
-      <div class="span3">
-        <h3>Exclusive news</h3>
-        <p>Artisan flexitarian helvetica, vice locavore umami jean shorts chillwave mcsweeney's cred seitan mustache irony marfa hoodie. Cardigan skateboard williamsburg umami, tattooed wayfarers DIY squid bicycle. Vegan kale chips mlkshk 3 wolf moon kogi chambray. Typewriter bespoke gastropub biodiesel. Whatever bespoke post-ironic, messenger bag irony next level pour-over master cleanse.</p>
+      <div class="span4">
+        <div class="well">
+          <h6>Statistics</h6>
+          <table class="table">
+            <thead>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="2"><b>Rating</b></td>
+                <td>min</td>
+                <td><%= min_rating(@ratings) %></td>
+              </tr>
+              <tr>
+                <td>max</td>
+                <td><%= max_rating(@ratings) %></td>
+              </tr>
+              <tr>
+                <td rowspan="2"><b>Streaks</b></td>
+                <td>winning</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>losing</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td rowspan="2"><b>Opponents</b></td>
+                <td>strongest</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>weakest</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td rowspan="3"><b>Matches</b></td>
+                <td>won</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>lost</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>draw</td>
+                <td>0</td>
+              </tr>
+            </tbody>
+          </table>
+          <a href="#">Go to your rating</a>
+          <a class="pull-right" href="#">See your last games</a>
+        </div>
       </div>
     </div>
 
-    <h3>I'm here to put up titles and chew bubble gum</h3>
-    <p>Artisan flexitarian helvetica, vice locavore umami jean shorts chillwave mcsweeney's cred seitan mustache irony marfa hoodie. Cardigan skateboard williamsburg umami, tattooed wayfarers DIY squid bicycle rights wolf bespoke keytar cray odd future. Chillwave organic salvia dreamcatcher whatever 3 wolf moon, fanny pack viral fingerstache american apparel cred art party readymade marfa. Chillwave godard cray forage butcher, polaroid wayfarers letterpress small batch fixie pickled helvetica williamsburg cosby sweater fanny pack. Vegan kale chips mlkshk 3 wolf moon kogi chambray. Typewriter bespoke gastropub biodiesel. Whatever bespoke post-ironic, messenger bag irony next level pour-over master cleanse.</p>
+    <hr>
 
-    <p>Sustainable freegan organic, gluten-free fanny pack squid pork belly salvia leggings kogi PBR godard bicycle rights trust fund narwhal. Hoodie vegan master cleanse, tattooed organic vinyl thundercats street art. Swag yr thundercats, bushwick organic VHS freegan tofu mustache vinyl carles tattooed artisan. Tumblr readymade locavore, terry richardson echo park vice mlkshk quinoa iphone thundercats direct trade pork belly. Synth messenger bag sartorial, trust fund lo-fi truffaut you probably haven't heard of them hoodie authentic fixie master cleanse. Thundercats chillwave single-origin coffee flexitarian, vinyl ennui pickled banksy cardigan mumblecore freegan 3 wolf moon ethnic. Yr before they sold out thundercats fixie, PBR keffiyeh chambray portland viral ethical wes anderson marfa.</p>
+    <div class="row">
+      <div class="span4">
+        <div class="well">
+          <h6>Tournament Stats</h6>
+          <table class="table">
+            <thead>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="2"><b>Played</b></td>
+                <td>won</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>total</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td rowspan="3"><b>Standings</b></td>
+                <td>best</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>worst</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>latest</td>
+                <td>0</td>
+              </tr>
+            </tbody>
+          </table>
+          <%= link_to "Available tournaments", tournaments_path %>
+          <%= link_to "New tournament", new_tournament_path, :class => "pull-right" %>
+        </div>
+      </div>
+
+      <div class="span8">
+        <h3>Ongoing Tournaments</h3>
+
+        <hr>
+
+        <div class="accordion" id="tournament-accordion">
+          <% @tournaments.each_with_index do |tournament, i| %>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#tournament-accordion" href="#collapse<%= i %>"><%= tournament.name %></a>
+            </div>
+            <div id="collapse<%= i %>" class="accordion-body collapse <%= 'in' if i == 0 %>">
+              <div class="accordion-inner">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th><span class="pull-right">White</span></th>
+                      <th></th>
+                      <th></th>
+                      <th>Black</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% round = tournament.rounds.max_by {|r| r.tournament_round_id} %>
+                    <% if round %>
+                    <% round.matches.each do |match| %>
+                    <tr>
+                      <td><span class="pull-right"><%= match.white_player.name %></span></td>
+                      <td><span class="pull-right"><%= match.white_result %></span></td>
+                      <td><%= match.black_result %></td>
+                      <td><%= match.black_player.name %></td>
+                      <td><%= link_to "View", tournament_round_match_path(tournament, round, match) %></td>
+                    </tr>
+                    <% end %>
+                    <% end %>
+                  </tbody>
+                </table>
+                <div class="row">
+                  <div class="span3">
+                    <%= link_to "View tournament", tournament_path(tournament) %>
+                    <% if round %>
+                    <%= link_to "View round", tournament_round_path(tournament, round), :class => "pull-right" %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
 <% else %>
 <div class="hero-unit">
   <!-- Chess board photo from: http://www.flickr.com/photos/eivindw/4873333202/ -->
@@ -37,8 +209,10 @@
     <h2>Sign in here</h2>
     <%= form_tag(player_session_path, class: "well", id: "signin-form") do %>
       <div><%= text_field_tag('player[email]', '', class: "input-small span3", placeholder: "Your e-mail goes here...") %></div>
-      <%= password_field_tag('player[password]', '', class: "input-small span2", placeholder: "Your password, here.") %>
-      <button type="submit" class="btn btn-success" style="margin: 0 10px 9px;">Submit</button>
+      <div>
+        <%= password_field_tag('player[password]', '', class: "input-small span2", placeholder: "Your password, here.") %>
+        <button type="submit" class="btn btn-success" style="margin: 0 10px 9px;" >Submit</button>
+      </div>
       <label class="checkbox"><%= check_box_tag('player[remember_me]', '', false, class: "checkbox") %> Remember me</label>
      <%= link_to "Forgot your password?", new_password_path('player') %>
     <% end %>

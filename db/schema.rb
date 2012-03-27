@@ -56,6 +56,15 @@ ActiveRecord::Schema.define(:version => 20120320185849) do
   add_index "players", ["reset_password_token"], :name => "index_players_on_reset_password_token", :unique => true
   add_index "players", ["unlock_token"], :name => "index_players_on_unlock_token", :unique => true
 
+  create_table "ratings", :force => true do |t|
+    t.integer  "player_id"
+    t.integer  "value"
+    t.datetime "date"
+    t.integer  "match_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "rounds", :force => true do |t|
     t.integer  "tournament_id"
     t.integer  "tournament_round_id"

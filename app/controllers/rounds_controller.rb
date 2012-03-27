@@ -1,19 +1,27 @@
 class RoundsController < ApplicationController
-  # GET /rounds
-  # GET /rounds.json
-  def index
-    @rounds = Round.all
+  before_filter :authenticate_player!
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @rounds }
-    end
+  # GET /tournament/:tournament_id/rounds
+  # GET /tournament/:tournament_id/rounds.json
+  def index
+    # TODO THIS DOESN'T WORK ATM
+    # @tournament = Tournament.find(params[:tournament_id])
+    # @rounds = @tournament.rounds
+
+    # respond_to do |format|
+    #   format.html # index.html.erb
+    #   format.json { render json: @rounds }
+    # end
+
+    render :nothing => true
   end
 
-  # GET /rounds/1
-  # GET /rounds/1.json
+  # GET /tournament/:tournament_id/rounds/1
+  # GET /tournament/:tournament_id/rounds/1.json
   def show
-    @round = Round.find(params[:id])
+    @tournament = Tournament.find(params[:tournament_id])
+    @round = @tournament.rounds.find(params[:id])
+    authorize! :read, @round
 
     respond_to do |format|
       format.html # show.html.erb
@@ -21,10 +29,12 @@ class RoundsController < ApplicationController
     end
   end
 
-  # GET /rounds/new
-  # GET /rounds/new.json
+  # GET /tournament/:tournament_id/rounds/new
+  # GET /tournament/:tournament_id/rounds/new.json
   def new
-    @round = Round.new
+    @tournament = Tournament.find(params[:tournament_id])
+    @round = @tournament.rounds.build
+    authorize! :create, @round
 
     respond_to do |format|
       format.html # new.html.erb
@@ -32,19 +42,23 @@ class RoundsController < ApplicationController
     end
   end
 
-  # GET /rounds/1/edit
+  # GET /tournament/:tournament_id/rounds/1/edit
   def edit
-    @round = Round.find(params[:id])
+    @tournament = Tournament.find(params[:tournament_id])
+    @round = @tournament.rounds.find(params[:id])
+    authorize! :manage, @round
   end
 
-  # POST /rounds
-  # POST /rounds.json
+  # POST /tournament/:tournament_id/rounds
+  # POST /tournament/:tournament_id/rounds.json
   def create
-    @round = Round.new(params[:round])
+    @tournament = Tournament.find(params[:tournament_id])
+    @round = @tournament.rounds.build(params[:round])
+    authorize! :create, @round
 
     respond_to do |format|
       if @round.save
-        format.html { redirect_to @round, notice: 'Round was successfully created.' }
+        format.html { redirect_to tournament_round_url(@tournament, @round), notice: 'Round was successfully created.' }
         format.json { render json: @round, status: :created, location: @round }
       else
         format.html { render action: "new" }
@@ -53,14 +67,16 @@ class RoundsController < ApplicationController
     end
   end
 
-  # PUT /rounds/1
-  # PUT /rounds/1.json
+  # PUT /tournament/:tournament_id/rounds/1
+  # PUT /tournament/:tournament_id/rounds/1.json
   def update
-    @round = Round.find(params[:id])
+    @tournament = Tournament.find(params[:tournament_id])
+    @round = @tournament.rounds.find(params[:id])
+    authorize! :manage, @round
 
     respond_to do |format|
       if @round.update_attributes(params[:round])
-        format.html { redirect_to @round, notice: 'Round was successfully updated.' }
+        format.html { redirect_to tournament_round_url(@tournament, @round), notice: 'Round was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -69,14 +85,17 @@ class RoundsController < ApplicationController
     end
   end
 
-  # DELETE /rounds/1
-  # DELETE /rounds/1.json
+  # DELETE /tournament/:tournament_id/rounds/1
+  # DELETE /tournament/:tournament_id/rounds/1.json
   def destroy
-    @round = Round.find(params[:id])
+    @tournament = Tournament.find(params[:tournament_id])
+    @round = @tournament.rounds.find(params[:id])
+    authorize! :manage, @round
+
     @round.destroy
 
     respond_to do |format|
-      format.html { redirect_to rounds_url }
+      format.html { redirect_to tournament_url(@tournament) }
       format.json { head :no_content }
     end
   end

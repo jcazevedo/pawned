@@ -3,11 +3,30 @@
 
   <div class="form-inputs">
     <%= f.input :name %>
-    <%= f.input :date_started %>
-    <%= f.input :date_finished %>
+    <%= f.input :date_started, :as => :string, :input_html => { :value => (
+      if @tournament.date_started != nil then
+        @tournament.date_started
+      else
+        Time.now.strftime("%d-%m-%Y")
+      end )} %>
+    <%= f.input :date_finished, :as => :string, :input_html => { :value => (
+      if @tournament.date_finished != nil then
+        @tournament.date_finished
+      else
+        Time.now.strftime("%d-%m-%Y")
+      end )} %>
     <%= f.input :status %>
-    <%= f.input :admin_id %>
+    <%= f.input :admin_id, :collection => Player.all %>
   </div>
+
+  <script>
+    $('#tournament_date_started').datepicker({
+      format: 'dd-mm-yyyy'
+    })
+    $('#tournament_date_finished').datepicker({
+      format: 'dd-mm-yyyy'
+    })
+  </script>
 
   <div class="form-actions">
     <%= f.button :submit %>
