@@ -5,7 +5,7 @@
     <%= f.input :name %>
     <%= f.input :date_started, :as => :string, :input_html => { :value => (
       if @tournament.date_started != nil then
-        @tournament.date_started
+        @tournament.date_started.strftime("%d-%m-%Y")
       else
         Time.now.strftime("%d-%m-%Y")
       end )} %>
@@ -14,7 +14,7 @@
 
     <%= f.input :date_finished, :as => :string, :input_html => { :value => (
       if @tournament.date_finished != nil then
-        @tournament.date_finished
+        @tournament.date_finished.strftime("%d-%m-%Y")
       else
         Time.now.strftime("%d-%m-%Y")
       end )} %>
@@ -39,5 +39,7 @@
 
   <div class="form-actions">
     <%= f.button :submit %>
+
+    <%= link_to 'Back', URI(request.referer).path, :class => "btn" %>
   </div>
 <% end %>

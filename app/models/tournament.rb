@@ -12,5 +12,5 @@ class Tournament < ActiveRecord::Base
   default_scope order('date_started desc')
 
   scope :open, where('date_started >= ?', Date.today)
-  scope :ongoing, where('date_started >= ? AND date_finished <= ?', Date.today, Date.today)
+  scope :ongoing, where('date_started <= ? AND date_finished >= ?', Date.today, Date.today)
 end
