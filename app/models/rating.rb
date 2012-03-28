@@ -31,6 +31,6 @@ class Rating < ActiveRecord::Base
   end
 
   def self.winning_expectancy(player_rating, opponent_rating)
-    1.0 / (10**((opponent_rating - rating) / 400) + 1.0)
+    1.0 / (10**((opponent_rating - player_rating) / 400) + 1.0)
   end
 end

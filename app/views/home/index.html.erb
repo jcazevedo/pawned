@@ -7,38 +7,38 @@
       <div class="span8">
         <div id="container"></div>
         <script type="text/javascript">
-        var chart1; // globally available
-        $(document).ready(function() {
-              chart1 = new Highcharts.Chart({
-                 chart: {
-                    renderTo: 'container',
-                    type: 'line'
-                 },
-                 title: {
-                    text: 'Rating evolution'
-                 },
-                 xAxis: {
-                    type: 'datetime',
-                    dateTimeLabelFormats: {
-                            month: '%e. %b',
-                            year: '%b'
-                    }
-                 },
-                 yAxis: {
-                    title: {
-                       text: 'Rating value'
-                    }
-                 },
-                 series: [{
-                    name: 'Rating',
-                    data: [
-                      <% @ratings.each do |rating| %>
-                        <%= '[' + (rating.date.to_time.to_i * 1000).to_s(10) + ', ' + rating.value.to_s + '],' %>
-                      <% end %>
-                    ]
-                 }]
-              });
-           });
+var chart1; // globally available
+$(document).ready(function() {
+      chart1 = new Highcharts.Chart({
+         chart: {
+            renderTo: 'container',
+            type: 'line'
+         },
+         title: {
+            text: 'Rating evolution'
+         },
+         xAxis: {
+            categories: [
+              <% @ratings.each do |rating| %>
+              <%= '\'' + rating.date.to_date.to_s + '\', ' %>
+              <% end %>
+            ]
+         },
+         yAxis: {
+            title: {
+               text: 'Rating value'
+            }
+         },
+         series: [{
+            name: 'Rating',
+            data: [
+              <% @ratings.each do |rating| %>
+              <%= rating.value.to_s + ', ' %>
+              <% end %>
+            ]
+         }]
+      });
+   });
         </script>
 
       </div>

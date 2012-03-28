@@ -39,11 +39,11 @@ $(document).ready(function() {
             text: 'Rating evolution'
          },
          xAxis: {
-            type: 'datetime',
-            dateTimeLabelFormats: {
-                    month: '%e. %b',
-                    year: '%b'
-            }
+            categories: [
+              <% @ratings.each do |rating| %>
+              <%= '\'' + rating.date.to_date.to_s + '\', ' %>
+              <% end %>
+            ]
          },
          yAxis: {
             title: {
@@ -54,7 +54,7 @@ $(document).ready(function() {
             name: 'Rating',
             data: [
               <% @ratings.each do |rating| %>
-                <%= '[' + (rating.date.to_time.to_i * 1000).to_s(10) + ', ' + rating.value.to_s + '],' %>
+              <%= rating.value.to_s + ', ' %>
               <% end %>
             ]
          }]

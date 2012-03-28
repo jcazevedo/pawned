@@ -57,10 +57,10 @@ class Match < ActiveRecord::Base
                                            black_result)
       ratings << Rating.create(:player_id => white_id,
                                :value => new_white_rating,
-                               :date => date_played.to_date)
+                               :date => date_played.to_s)
       ratings << Rating.create(:player_id => black_id,
                                :value => new_black_rating,
-                               :date => date_played.to_date)
+                               :date => date_played.to_s)
     end
   end
 end
