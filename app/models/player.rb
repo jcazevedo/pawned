@@ -59,15 +59,15 @@ class Player < ActiveRecord::Base
   end
 
   def wins_strongest
-    m = matches_won.max_by { |m| m.white_player == self ? m.black_rating.previous.value : m.white_rating.previous.value }
+    m = matches_won.max_by { |m| m.white_player == self ? m.black_rating.value : m.white_rating.value }
     return 0 if m.nil?
-    (m.white_player == self ? m.black_rating : m.white_rating).previous.value
+    (m.white_player == self ? m.black_rating : m.white_rating).value
   end
 
   def wins_weakest
-    m = matches_won.min_by { |m| m.white_player == self ? m.black_rating.previous.value : m.white_rating.previous.value }
+    m = matches_won.min_by { |m| m.white_player == self ? m.black_rating.value : m.white_rating.value }
     return 0 if m.nil?
-    (m.white_player == self ? m.black_rating : m.white_rating).previous.value
+    (m.white_player == self ? m.black_rating : m.white_rating).value
   end
 
   private
