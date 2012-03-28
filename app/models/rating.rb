@@ -10,6 +10,14 @@ class Rating < ActiveRecord::Base
     end
   end
 
+  def previous
+    player.ratings.where("created_at < ?", created_at).max_by { |r| r.created_at }
+  end
+
+  def next
+    player.ratings.where("created_at > ?", created_at).min_by { |r| r.created_at }
+  end
+
   private
   
   def self.special_rating(n_previous_games, player_rating, opponent_rating, player_result)
