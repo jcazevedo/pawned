@@ -46,21 +46,37 @@ class Match < ActiveRecord::Base
 
   def update_ratings
     if white_result_changed? or black_result_changed?
-      ratings.destroy_all
+      old_white_rating = ratings.empty? ? white_player.ratings[-1].value : white_player.ratings[-2].value
+      old_black_rating = ratings.empty? ? black_player.ratings[-1].value : black_player.ratings[-2].value
+
       new_white_rating = Rating.new_rating(white_player.matches.length - 1,
-                                           white_player.ratings.last.value,
-                                           black_player.ratings.last.value,
+                                           old_white_rating,
+                                           old_black_rating,
                                            white_result)
       new_black_rating = Rating.new_rating(black_player.matches.length - 1,
-                                           black_player.ratings.last.value,
-                                           white_player.ratings.last.value,
+                                           old_black_rating,
+                                           old_white_rating,
                                            black_result)
-      ratings << Rating.create(:player_id => white_id,
-                               :value => new_white_rating,
-                               :date => date_played.to_s)
-      ratings << Rating.create(:player_id => black_id,
-                               :value => new_black_rating,
-                               :date => date_played.to_s)
+      if ratings.empty?
+        ratings << Rating.create(:player_id => white_id,
+                                 :value => new_white_rating,
+                                 :date => date_played.to_s)
+        ratings << Rating.create(:player_id => black_id,
+                                 :value => new_black_rating,
+                                 :date => date_played.to_s)
+      else
+        ratings.each do |rating|
+          if rating.player == white_player
+            rating.value = new_white_rating
+            rating.date = date_played.to_s
+            rating.save
+          elsif rating.player == black_player
+            rating.value = new_black_rating
+            rating.date = date_played.to_s
+            rating.save
+          end
+        end
+      end
     end
   end
 end
