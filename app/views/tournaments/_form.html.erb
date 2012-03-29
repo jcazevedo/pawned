@@ -21,6 +21,8 @@
 
     <% end %>
 
+    <%= f.input :status, :collection => Tournament::STATUSES %>
+
     <% if current_player.admin? %>
     <%= f.input :admin_id, :collection => Player.all %>
     <% else %>
