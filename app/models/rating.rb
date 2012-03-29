@@ -11,13 +11,11 @@ class Rating < ActiveRecord::Base
   end
 
   def previous
-#    player.ratings.where("created_at < ?", created_at).max_by { |r| r.created_at } || self
-    Rating.find(:all, :order => 'created_at DESC', :limit => 1, :conditions => ["created_at < ? AND player_id = ?", created_at, player ]).presence || self
+    Rating.find(:first, :order => 'created_at DESC', :limit => 1, :conditions => ["created_at < ? AND player_id = ?", created_at, player ]).presence || self
   end
 
   def next
-#    player.ratings.where("created_at > ?", created_at).limit(1).presence || self
-    Rating.find(:all, :order => 'created_at ASC', :limit => 1, :conditions => ["created_at > ? AND player_id = ?", created_at, player ]).presence || self
+    Rating.find(:first, :order => 'created_at ASC', :limit => 1, :conditions => ["created_at > ? AND player_id = ?", created_at, player ]).presence || self
   end
 
   private
