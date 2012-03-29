@@ -11,11 +11,17 @@ class Rating < ActiveRecord::Base
   end
 
   def previous
-    Rating.find(:first, :order => 'created_at DESC', :limit => 1, :conditions => ["created_at < ? AND player_id = ?", created_at, player ]).presence || self
+    Rating.find(:first, 
+                :order => 'created_at DESC', 
+                :limit => 1, 
+                :conditions => ["created_at < ? AND player_id = ?", created_at, player]).presence || self
   end
 
   def next
-    Rating.find(:first, :order => 'created_at ASC', :limit => 1, :conditions => ["created_at > ? AND player_id = ?", created_at, player ]).presence || self
+    Rating.find(:first, 
+                :order => 'created_at ASC', 
+                :limit => 1, 
+                :conditions => ["created_at > ? AND player_id = ?", created_at, player ]).presence || self
   end
 
   private
