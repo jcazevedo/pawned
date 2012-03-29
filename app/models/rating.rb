@@ -4,7 +4,8 @@ class Rating < ActiveRecord::Base
 
   def self.new_rating(n_previous_games, player_rating, opponent_rating, player_result)
     if (n_previous_games <= 8)
-      self.special_rating(n_previous_games, player_rating, opponent_rating, player_result)
+      rating = self.special_rating(n_previous_games, player_rating, opponent_rating, player_result)
+      rating
     else
       self.standard_rating(n_previous_games, player_rating, opponent_rating, player_result)
     end
@@ -14,21 +15,21 @@ class Rating < ActiveRecord::Base
     Rating.find(:first, 
                 :order => 'created_at DESC', 
                 :limit => 1, 
-                :conditions => ["created_at < ? AND player_id = ?", created_at, player]).presence || self
+                :conditions => ["created_at < ? AND player_id = ?", created_at, player]).presence
   end
 
   def next
     Rating.find(:first, 
                 :order => 'created_at ASC', 
                 :limit => 1, 
-                :conditions => ["created_at > ? AND player_id = ?", created_at, player ]).presence || self
+                :conditions => ["created_at > ? AND player_id = ?", created_at, player ]).presence
   end
 
   private
   
   def self.special_rating(n_previous_games, player_rating, opponent_rating, player_result)
     coef = {1.0 => 1, 0.5 => 0, 0.0 => -1}[player_result]
-    ((n_previous_games * player_rating + opponent_rating + coef * 400) / (n_previous_games + 1)).round
+    ((n_previous_games * player_rating + opponent_rating + coef * 400.0) / (n_previous_games + 1.0)).round
   end
 
   def self.standard_rating(n_previous_games, player_rating, opponent_rating, player_result)
@@ -41,7 +42,7 @@ class Rating < ActiveRecord::Base
     prior_games = 50
     prior_games /= Math.sqrt((1 + (2200 - rating)**2) / 100000) if rating < 2200
     prior_games = [prior_games, n_previous_games].min
-    800 / (prior_games + 1)
+    800.0 / (prior_games + 1)
   end
 
   def self.winning_expectancy(player_rating, opponent_rating)

@@ -43,8 +43,8 @@ class Match < ActiveRecord::Base
   end
 
   def update_ratings
-    old_white_rating = ratings.empty? ? white_player.ratings[-1].value : white_player.ratings[-2].value
-    old_black_rating = ratings.empty? ? black_player.ratings[-1].value : black_player.ratings[-2].value
+    old_white_rating = white_player.ratings[-1 - (ratings.empty? ? 0 : 1)].value
+    old_black_rating = black_player.ratings[-1 - (ratings.empty? ? 0 : 1)].value
 
     new_white_rating = Rating.new_rating(white_player.matches.find_all { |match| match.date_played <= date_played }.length - 1,
                                          old_white_rating,
@@ -87,9 +87,9 @@ class Match < ActiveRecord::Base
   private
 
   def check_for_rating_update
-    if (white_result_changed? or black_result_changed?) and 
-        !white_result.nil? and 
-        !black_result.nil?
+    if (white_result_changed? or black_result_changed?) and
+        !white_result.nil? and
+        !black_result.nil?      
       update_ratings
     end
   end
