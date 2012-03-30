@@ -13,6 +13,7 @@ class Player < ActiveRecord::Base
   has_many :matches_as_white, :class_name => "Match", :foreign_key => "white_id"
   has_many :matches_as_black, :class_name => "Match", :foreign_key => "black_id"
   has_many :ratings, :order => "created_at ASC"
+  has_many :standings
 
   after_create :set_initial_rating
 

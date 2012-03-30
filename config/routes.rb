@@ -14,9 +14,11 @@ Pawned::Application.routes.draw do
   match "players/:id/tournaments" => "players#tournaments", :as => :player_tournaments
 
   # nested routing for tournaments > rounds > matches
+  # and routing for tournaments > rounds > standings
   resources :tournaments do
     resources :rounds do
       resources :matches
+      resources :standings
     end
   end
 
