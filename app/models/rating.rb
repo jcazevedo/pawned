@@ -25,6 +25,18 @@ class Rating < ActiveRecord::Base
                 :conditions => ["created_at > ? AND player_id = ?", created_at, player ]).presence
   end
 
+  def self.rankings(date = nil)
+    ranking = []
+    Player.find(:all).each do |player|
+      if date.nil?
+        ranking << player.ratings.last
+      else
+        ranking << player.ratings.where("Date(date) <= ?", date).last
+      end
+    end
+    ranking.sort_by{ |rating| rating.value }.reverse
+  end
+
   private
   
   def self.special_rating(n_previous_games, player_rating, opponent_rating, player_result)

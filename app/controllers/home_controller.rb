@@ -6,6 +6,8 @@ class HomeController < ApplicationController
       @tournaments = @player.tournaments
     end
 
+    @rankings = Rating.rankings
+
     respond_to do |format|
       format.html # index.html.erb
     end
