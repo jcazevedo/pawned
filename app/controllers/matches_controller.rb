@@ -20,7 +20,8 @@ class MatchesController < ApplicationController
   def show
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.find(params[:round_id])
-    @match = @round.matches.find(params[:id])
+    @duel = @round.duels.find(params[:duel_id])
+    @match = @duel.matches.find(params[:id])
     authorize! :read, @match
 
     respond_to do |format|
@@ -34,7 +35,9 @@ class MatchesController < ApplicationController
   def new
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.find(params[:round_id])
-    @match = @round.matches.build
+    @duel = @round.duels.find(params[:duel_id])
+    @match = @duel.matches.build
+    
     authorize! :create, @match
 
     respond_to do |format|
@@ -47,7 +50,9 @@ class MatchesController < ApplicationController
   def edit
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.find(params[:round_id])
-    @match = @round.matches.find(params[:id])
+    @duel = @round.duels.find(params[:duel_id])
+    @match = @duel.matches.find(params[:id])
+
     authorize! :manage, @match
   end
 
@@ -56,7 +61,9 @@ class MatchesController < ApplicationController
   def create
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.find(params[:round_id])
-    @match = @round.matches.build(params[:match])
+    @duel = @round.duels.find(params[:duel_id])
+    @match = @duel.matches.find(params[:id])
+
     authorize! :create, @match
 
     respond_to do |format|
@@ -75,7 +82,9 @@ class MatchesController < ApplicationController
   def update
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.find(params[:round_id])
-    @match = @round.matches.find(params[:id])
+    @duel = @round.duels.find(params[:duel_id])
+    @match = @duel.matches.find(params[:id])
+
     authorize! :manage, @match
 
     respond_to do |format|
@@ -94,7 +103,9 @@ class MatchesController < ApplicationController
   def destroy
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.find(params[:round_id])
-    @match = @round.matches.find(params[:id])
+    @duel = @round.duels.find(params[:duel_id])
+    @match = @duel.matches.find(params[:id])
+
     authorize! :manage, @match
 
     @match.destroy

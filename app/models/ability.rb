@@ -21,9 +21,14 @@ class Ability
         r.tournament.admin.id.eql?(user.id)
       end
 
-      # can manage a match if that match belongs to a round that belongs to a whatveryougettheidea
+      # can manage a duel if that match belongs to a round that belongs to a whatveryougettheidea
+      can :manage, Duel do |d|
+        d.round.tournament.admin.id.eql?(user.id)
+      end
+      
+      # can manage a match if that match belongs to a duel that belongs to a whatveryougettheidea
       can :manage, Match do |m|
-        m.round.tournament.admin.id.eql?(user.id)
+        m.duel.round.tournament.admin.id.eql?(user.id)
       end
 
       # can manage its own sign-ups to tournaments or the signings of tournaments it owns
@@ -35,6 +40,7 @@ class Ability
       can [:read, :create], Tournament
       can :read, Player
       can :read, Round
+      can :read, Duel
       can :read, Match
       can :read, TournamentPlayer # not sure if this is necessary
       can :read, Rating

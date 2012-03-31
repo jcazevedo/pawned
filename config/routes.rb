@@ -1,4 +1,6 @@
 Pawned::Application.routes.draw do
+
+
   # route for the user profile
   match "profile" => "profile#show", :as => :profile
 
@@ -15,11 +17,13 @@ Pawned::Application.routes.draw do
   # But still: players > tournaments (they admin)
   match "players/:id/tournaments" => "players#tournaments", :as => :player_tournaments
 
-  # nested routing for tournaments > rounds > matches
+  # nested routing for tournaments > rounds > duels > matches
   # and routing for tournaments > rounds > standings
   resources :tournaments do
     resources :rounds do
-      resources :matches
+      resources :duels do
+        resources :matches
+      end
       resources :standings
     end
   end

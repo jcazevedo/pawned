@@ -3,8 +3,8 @@ class Match < ActiveRecord::Base
   belongs_to :black_player, :class_name => "Player", :foreign_key => "black_id"
   has_many :ratings
 
-  belongs_to :round
-  has_one :tournament, :through => :round
+  belongs_to :duel
+  has_one :round, :through => :duel
 
   validates :white_id, :black_id, :presence => true
   validates_with MatchDateValidator
@@ -18,6 +18,12 @@ class Match < ActiveRecord::Base
               :constructor => Proc.new{ |item| item },
               :converter => Proc.new{ |item| item }
 
+  def tournament
+    return round.tournament
+  end
+  def round_id
+    return round.id
+  end
   def result
     return nil if white_result.nil? or black_result.nil?
     [white_result.to_s, black_result.to_s].join('-')
