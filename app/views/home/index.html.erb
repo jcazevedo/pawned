@@ -160,15 +160,15 @@ $(document).ready(function() {
               <tr>
                 <td rowspan="3"><b>Standings</b></td>
                 <td>best</td>
-                <td><%= @player.closed_standings.max_by {|s| s.position}.position %></td>
+                <td><%= tournament_best %></td>
               </tr>
               <tr>
                 <td>worst</td>
-                <td><%= @player.closed_standings.min_by {|s| s.position}.position %></td>
+                <td><%= tournament_worst %></td>
               </tr>
               <tr>
                 <td>latest</td>
-                <td><%= @player.closed_standings.max_by {|s| s.created_at}.position %></td>
+                <td><%= tournament_latest %></td>
               </tr>
             </tbody>
           </table>
