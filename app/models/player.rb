@@ -39,6 +39,14 @@ class Player < ActiveRecord::Base
     roles.include?("admin")
   end
 
+  def skip_confirmation!
+    self.confirmed_at = Time.now.utc
+  end
+
+  def skip_reconfirmation!
+    @bypass_postpone = true
+  end
+
   def matches_won
     (matches.map { |m| m if m.winner == self }).reject { |r| r.nil? }
   end
