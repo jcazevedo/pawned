@@ -13,9 +13,13 @@ class Tournament < ActiveRecord::Base
   default_scope order('date_started desc')
 
   def latest_standings
-    if !rounds.empty?
-      rounds.map { |r| r if !r.standings.empty? }.max_by { |r| r.tournament_round_id }.standings
-    end
+    return nil if rounds.empty?
+
+    rounds_st = rounds.map { |r| r if !r.standings.empty? }.reject { |r| r.nil? }
+
+    return nil if rounds_st.empty?
+
+    rounds_st.max_by { |r| r.tournament_round_id }.standings
   end
 
   def status
