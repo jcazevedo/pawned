@@ -13,6 +13,8 @@ class StandingsController < ApplicationController
   # GET /standings/1
   # GET /standings/1.json
   def show
+    @tournament = Tournament.find(params[:tournament_id])
+    @round = @tournament.rounds.find(params[:round_id])
     @standing = Standing.find(params[:id])
 
     respond_to do |format|
@@ -24,8 +26,9 @@ class StandingsController < ApplicationController
   # GET /standings/new
   # GET /standings/new.json
   def new
+    @tournament = Tournament.find(params[:tournament_id])
+    @round = @tournament.rounds.find(params[:round_id])
     @standing = Standing.new
-    @current_round = params[:round_id]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,13 +38,17 @@ class StandingsController < ApplicationController
 
   # GET /standings/1/edit
   def edit
-    @standing = Standing.find(params[:id])
+    @tournament = Tournament.find(params[:tournament_id])
+    @round = @tournament.rounds.find(params[:round_id])
+    @standing = @round.standings.find(params[:id])
   end
 
   # POST /standings
   # POST /standings.json
   def create
-    @standing = Standing.new(params[:standing])
+    @tournament = Tournament.find(params[:tournament_id])
+    @round = @tournament.rounds.find(params[:round_id])
+    @standing = @round.standings.build(params[:standing])
 
     respond_to do |format|
       if @standing.save
@@ -57,7 +64,9 @@ class StandingsController < ApplicationController
   # PUT /standings/1
   # PUT /standings/1.json
   def update
-    @standing = Standing.find(params[:id])
+    @tournament = Tournament.find(params[:tournament_id])
+    @round = @tournament.rounds.find(params[:round_id])
+    @standing = @round.standings.find(params[:id])
 
     respond_to do |format|
       if @standing.update_attributes(params[:standing])
@@ -73,7 +82,9 @@ class StandingsController < ApplicationController
   # DELETE /standings/1
   # DELETE /standings/1.json
   def destroy
-    @standing = Standing.find(params[:id])
+    @tournament = Tournament.find(params[:tournament_id])
+    @round = @tournament.rounds.find(params[:round_id])
+    @standing = @round.standings.find(params[:id])
     @standing.destroy
 
     respond_to do |format|
