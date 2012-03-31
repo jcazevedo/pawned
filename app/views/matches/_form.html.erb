@@ -2,8 +2,20 @@
   <%= f.error_notification %>
   <legend>Match</legend>
 
-  <%= f.input :date_inserted %>
-  <%= f.input :date_played %>
+  <%= f.input :date_inserted, :as => :string, :input_html => { :value => (
+      if @match.date_inserted != nil then
+        @match.date_inserted.strftime("%d-%m-%Y")
+      else
+        Time.now.strftime("%d-%m-%Y")
+      end )} %>
+
+  <%= f.input :date_played, :as => :string, :input_html => { :value => (
+      if @match.date_played != nil then
+        @match.date_played.strftime("%d-%m-%Y")
+      else
+        Time.now.strftime("%d-%m-%Y")
+      end )} %>
+
   <%= f.input :white_player do %>
   <%= f.select :white_id, @tournament.players.all.map { |r| [r.name, r.id] }, :include_blank => true %>
   <% end %>
@@ -13,6 +25,15 @@
   <%= f.input :result, :as => :select, :collection => ["1.0-0.0", "0.0-1.0", "0.5-0.5"] %>
   <%= f.input :round_id %>
   <%= f.input :png_text %>
+
+  <script>
+    $('#match_date_inserted').datepicker({
+      format: 'dd-mm-yyyy'
+    })
+    $('#match_date_played').datepicker({
+      format: 'dd-mm-yyyy'
+    })
+  </script>
 
   <div class="form-actions">
     <%= f.button :submit %>
