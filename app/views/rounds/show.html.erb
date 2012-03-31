@@ -22,14 +22,18 @@
   </tbody>
 </table>
 
+<% if can? :manage, @tournament %>
+  <%= link_to 'Update standings', edit_tournament_round_path(@tournament, @round) %>
+<% end %>
+
 <h3>Games</h3>
 <table class="table">
   <tr>
     <th>Date played</th>
-    <th>White Player</th>
-    <th>White Result</th>
-    <th>Black Result</th>
-    <th>Black Player</th>
+    <th><span class="pull-right">White</span></th>
+    <th></th>
+    <th></th>
+    <th>Black</th>
     <th></th>
     <% if can? :manage, @tournament %>
       <th></th>
@@ -40,8 +44,8 @@
 <% @round.duels.each do |duel| %>
   <tr>
     <td><%= duel.date_played.strftime("%d-%m-%Y %H:%M") %></td>
-    <td><%= dule.white_player.name %></td>
-    <td><%= duel.white_result %></td>
+    <td><span class="pull-right"><%= dule.white_player.name %></span></td>
+    <td><span class="pull-right"><%= duel.white_result %></span></td>
     <td><%= duel.black_result %></td>
     <td><%= duel.black_player.name %></td>
     <td><%= link_to 'Show', tournament_round_duel_path(@tournament, @round, duel) %></td>

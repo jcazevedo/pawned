@@ -1,12 +1,27 @@
-<%= simple_form_for([@tournament, @round]) do |f| %>
-  <%= f.error_notification %>
+<%= simple_form_for([@tournament, @round], :html => {:class => 'form-inline'}) do |f| %>
+<%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :tournament_id %>
-    <%= f.input :tournament_round_id %>
-  </div>
+<legend>Standings for Round #<%= @round.tournament_round_id %></legend>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Position</th>
+      <th>Player</th>
+      <th>Points</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= f.simple_fields_for :standings do |s| %>
+    <tr>
+      <td><%= s.input :position, :collection => 1..@players.length, :label => false %></td>
+      <td><%= s.association :player, :label => false %></td>
+      <td><%= s.input :points, :label => false %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+<div class="form-actions">
+  <%= f.button :submit %>
+</div>
 <% end %>

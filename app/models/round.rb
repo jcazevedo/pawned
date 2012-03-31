@@ -3,6 +3,7 @@ class Round < ActiveRecord::Base
   has_many :duels, :dependent => :destroy
 
   has_many :standings, :dependent => :destroy, :order => "position ASC"
+  accepts_nested_attributes_for :standings
   validates :tournament_id, :tournament_round_id, presence: true
 
   
