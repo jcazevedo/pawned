@@ -78,3 +78,4 @@ class Player < ActiveRecord::Base
                                   :value => 1300)
   end
 end
+

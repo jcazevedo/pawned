@@ -13,4 +13,11 @@ class Tournament < ActiveRecord::Base
 
   scope :open, where('date_started >= ?', Date.today)
   scope :ongoing, where('date_started <= ? AND date_finished >= ?', Date.today, Date.today)
+
+  def latest_standings
+    if !rounds.empty?
+      rounds.map { |r| r if !r.standings.empty? }.max_by { |r| r.tournament_round_id }.standings
+    end
+  end
 end
+

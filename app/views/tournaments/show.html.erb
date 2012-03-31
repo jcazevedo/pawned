@@ -2,8 +2,6 @@
 
 <hr>
 
-<p id="notice"><%= notice %></p>
-
 <div class="row">
   <div class="span5">
     <h2>Details</h2>
@@ -36,19 +34,45 @@
   </div>
 
   <div class="span7">
-    <h2>Players (and maybe live rankings, later)</h2>
+    <h2>Players</h2>
     <table class="table">
+    <% if @tournament.latest_standings %>
       <tr>
-        <th>Player name</th>
-        <th>Player email</th>
+        <th>Pos.</th>
+        <th>Name</th>
+        <th>Points</th>
+        <th>Rating</th>
       </tr>
 
-      <% @tournament.players.each do |p| %>
-        <tr>
-          <td><%= p.name %></td>
-          <td><%= p.email %></td>
-        </tr>
+      <% @tournament.latest_standings.each do |s| %>
+      <tr>
+        <td><%= s.position %></td>
+        <td><%= s.player.name %></td>
+        <td><%= s.points %></td>
+        <td><%= s.player.ratings.last.value %></td>
+      </tr>
       <% end %>
+    <% else %>
+      <% if @tournament.players.empty? %>
+      <hr>
+      <p class="alert alert-block alert-info">
+        There are no players signed up for this tournament yet.
+      </p>
+      <% else %>
+      <tr>
+        <th>Name</th>
+        <th>e-mail</th>
+        <th>Rating</th>
+      </tr>
+        <% @tournament.players.each do |p| %>
+      <tr>
+        <td><%= p.name %></td>
+        <td><%= p.email %></td>
+        <td><%= p.ratings.last.value %></td>
+      </tr>
+        <% end %>
+      <% end %>
+    <% end %>
     </table>
 
   </div>
@@ -135,3 +159,4 @@
   <% end %>
   <%= link_to 'Back', tournaments_path, :class => "btn" %>
 </div>
+

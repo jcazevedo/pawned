@@ -22,7 +22,7 @@
 
               <li class="<%= current_controller('home') %>"><a href="/">Home</a></li>
 
-              <li class="<%= current_controller('standings') %>"><a href="#">Standings</a></li>
+              <li class="<%= current_controller('standings') %>"><a href="#">Live Ranking</a></li>
 
               <li class="dropdown <%= current_controller('tournaments') %>">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tournaments <b class="caret"></b></a>
@@ -121,6 +121,16 @@
                 </ul>
               </li>
 
+              <li class="dropdown <%= current_controller('help') %>">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Help <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Get online help</a></li>
+                  <li><a href="#">F.A.Q.</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">About</a></li>
+                </ul>
+              </li>
+
             </ul>
         </div>
       </div>
@@ -129,10 +139,16 @@
 
   <div class="container">
     <% if notice %>
-    <p class="alert alert-success"><%= notice %></p>
+    <div class="alert alert-block alert-success">
+      <a class="close" data-dismiss="alert">×</a>
+      <%= notice %>
+    </div>
     <% end %>
     <% if alert %>
-    <p class="alert alert-danger"><%= alert %></p>
+    <div class="alert alert-block alert-danger">
+      <a class="close" data-dismiss="alert">×</a>
+      <%= alert %>
+    </div>
     <% end %>
 
     <%= yield %>
@@ -151,3 +167,4 @@
 
 </body>
 </html>
+
