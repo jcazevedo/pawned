@@ -14,4 +14,28 @@ module HomeHelper
       0
     end
   end
+
+  def tournament_best
+    unless @player.closed_standings.empty?
+      @player.closed_standings.max_by {|s| s.position }.position
+    else
+      0
+    end
+  end
+
+  def tournament_worst
+    unless @player.closed_standings.empty?
+      @player.closed_standings.min_by {|s| s.position}.position
+    else
+      0
+    end
+  end
+
+  def tournament_latest
+    unless @player.closed_standings.empty?
+      @player.closed_standings.max_by {|s| s.created_at}.position
+    else
+      0
+    end
+  end
 end

@@ -10,13 +10,15 @@
       <thead>
       </thead>
       <tbody>
+        <% unless @player.name.blank? %>
         <tr>
           <td><b>Name</b></td>
           <td><%= @player.name %></td>
         </tr>
+        <% end %>
         <tr>
           <td><b>Username</b></td>
-          <td><%= @player.login %></td>
+          <td><%= @player.username %></td>
         </tr>
         <% if @player.show_email %>
         <tr>
