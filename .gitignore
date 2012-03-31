@@ -18,3 +18,6 @@
 # Ignore all (or the majority of the) vim swap files
 .*swp
 .*swo
+
+# Ignore db schema
+db/schema.rb
