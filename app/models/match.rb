@@ -18,7 +18,7 @@ class Match < ActiveRecord::Base
   end
 
   def result=(result)
-    if result.nil?
+    if result.nil? || result.empty?
       self.white_result = nil
       self.black_result = nil
     else
