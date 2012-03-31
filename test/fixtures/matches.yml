@@ -1,21 +1,19 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
-one:
-  date_inserted: 2012-03-20
-  date_played: 2012-03-20
-  white_id: 1
-  black_id: 1
-  white_result: 1.5
-  black_result: 1.5
-  round_id: 1
-  png_text: MyText
-
-two:
-  date_inserted: 2012-03-20
-  date_played: 2012-03-20
-  white_id: 1
-  black_id: 1
-  white_result: 1.5
-  black_result: 1.5
-  round_id: 1
-  png_text: MyText
+# one:
+#   date_inserted: 2012-03-20
+#   date_played: 2012-03-20
+#   white_id: 1
+#   black_id: 1
+#   white_result: 1.5
+#   black_result: 1.5
+#   round_id: 1
+#   png_text: MyText
+#
+# two:
+#   date_inserted: 2012-03-20
+#   date_played: 2012-03-20
+#   white_id: 1
+#   black_id: 1
+#   white_result: 1.5
+#   black_result: 1.5
+#   round_id: 1
+#   png_text: MyText

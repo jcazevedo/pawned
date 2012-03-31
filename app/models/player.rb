@@ -12,7 +12,7 @@ class Player < ActiveRecord::Base
   has_many :administered_tournaments, :class_name => "Tournament", :foreign_key => "admin_id"
   has_many :matches_as_white, :class_name => "Match", :foreign_key => "white_id"
   has_many :matches_as_black, :class_name => "Match", :foreign_key => "black_id"
-  has_many :ratings, :order => "created_at ASC"
+  has_many :ratings, :order => "date ASC"
   has_many :standings
 
   after_create :set_initial_rating
@@ -37,6 +37,14 @@ class Player < ActiveRecord::Base
 
   def admin?
     roles.include?("admin")
+  end
+
+  def skip_confirmation!
+    self.confirmed_at = Time.now.utc
+  end
+
+  def skip_reconfirmation!
+    @bypass_postpone = true
   end
 
   def matches_won
