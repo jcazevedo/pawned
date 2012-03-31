@@ -9,12 +9,14 @@
         Time.now.strftime("%d-%m-%Y")
       end )} %>
 
-  <%= f.input :date_played, :as => :string, :input_html => { :value => (
-      if @match.date_played != nil then
-        @match.date_played.strftime("%d-%m-%Y")
+  <%= f.input :date, :as => :string, :input_html => { :value => (
+      if @match.date != nil then
+        @match.date.strftime("%d-%m-%Y")
       else
         Time.now.strftime("%d-%m-%Y")
       end )} %>
+
+   <%= f.input :time_played, :as => :time %>
 
   <%= f.input :white_player do %>
   <%= f.select :white_id, @tournament.players.all.map { |r| [r.name, r.id] }, :include_blank => true %>
@@ -30,7 +32,7 @@
     $('#match_date_inserted').datepicker({
       format: 'dd-mm-yyyy'
     })
-    $('#match_date_played').datepicker({
+    $('#match_date').datepicker({
       format: 'dd-mm-yyyy'
     })
   </script>

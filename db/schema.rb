@@ -11,11 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120328172606) do
+ActiveRecord::Schema.define(:version => 20120331142311) do
 
   create_table "matches", :force => true do |t|
     t.date     "date_inserted"
-    t.date     "date_played"
+    t.datetime "date_played"
     t.integer  "white_id"
     t.integer  "black_id"
     t.float    "white_result"
