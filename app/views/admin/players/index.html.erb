@@ -4,7 +4,7 @@
 
 <table class="table">
   <tr>
-    <th>Login</th>
+    <th>Username</th>
     <th>Email</th>
     <th>Name</th>
     <th>Confirmed?</th>
@@ -16,7 +16,7 @@
 
 <% @players.each do |player| %>
   <tr>
-    <td><%= player.login %></td>
+    <td><%= player.username %></td>
     <td><%= player.email %></td>
     <td><%= player.name %></td>
     <td><%= player.confirmed? %></td>

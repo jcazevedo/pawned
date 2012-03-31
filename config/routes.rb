@@ -1,6 +1,6 @@
 Pawned::Application.routes.draw do
   # route for the user profile
-  match "profile/(:login)" => "profile#show", :as => :profile
+  match "profile/(:username)" => "profile#show", :as => :profile
 
   # route for the user's upcoming matches
   match "matches" => "upcoming_matches#show"

@@ -1,10 +1,10 @@
 class ProfileController < ApplicationController
   before_filter :authenticate_player!
 
-  # GET /profile(/:login)
-  # GET /profile(/:login).json
+  # GET /profile(/:username)
+  # GET /profile(/:username).json
   def show
-    @player = params[:login].blank? ? current_player : Player.find_by_login(params[:login])
+    @player = params[:username].blank? ? current_player : Player.find_by_username(params[:username])
 
     respond_to do |format|
       if @player

@@ -5,7 +5,8 @@ class Player < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :encryptable, :confirmable, :lockable, :timeoutable
 
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :login, :show_email
+  attr_accessor :login
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :username, :show_email, :login
 
   has_many :tournament_players
   has_many :tournaments, :through => :tournament_players
@@ -15,14 +16,16 @@ class Player < ActiveRecord::Base
   has_many :ratings, :order => "date ASC"
   has_many :standings
 
-  validates :login, :email, :presence => true
-  validates :login, :uniqueness => true
-  validates :login, :format => { :with => /^[a-zA-Z1-9_]+$/, :message => 'may only contain alphanumerical characters and "_"' }
+  validates :username, :email, :presence => true
+  validates :username, :uniqueness => true
+  validates :username, :format => { :with => /^[a-zA-Z1-9_]+$/, :message => 'may only contain alphanumerical characters and "_"' }
 
   after_create :set_initial_rating
 
-  def matches
-    matches_as_white + matches_as_black
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    login = conditions.delete(:login)
+    where(conditions).where("lower(username) = ? OR lower(email) = ?", login.strip.downcase, login.strip.downcase).first
   end
 
   def roles
@@ -44,7 +47,7 @@ class Player < ActiveRecord::Base
   end
 
   def given_name
-    name.blank? ? login : name
+    name.blank? ? username : name
   end
 
   def skip_confirmation!
@@ -53,6 +56,10 @@ class Player < ActiveRecord::Base
 
   def skip_reconfirmation!
     @bypass_postpone = true
+  end
+
+  def matches
+    matches_as_white + matches_as_black
   end
 
   def matches_won
