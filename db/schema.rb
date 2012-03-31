@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120328172606) do
+ActiveRecord::Schema.define(:version => 20120331142756) do
 
   create_table "matches", :force => true do |t|
     t.date     "date_inserted"
@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(:version => 20120328172606) do
     t.string   "name"
     t.date     "date_started"
     t.date     "date_finished"
-    t.integer  "status"
+    t.integer  "status_index"
     t.integer  "admin_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false

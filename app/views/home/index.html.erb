@@ -7,7 +7,7 @@
     <div class="row">
       <% pos = 1 %>
       <div class="span12">
-        <h2>Live Ranking</h2>
+        <h2>Top Players</h2>
         <table class="table table-striped">
           <tr>
             <th>#</th>
@@ -36,6 +36,7 @@
           </tr>
           <% end %>
         </table>
+        <%= link_to "See complete ranking", ratings_path %>
       </div>
     </div>
 
@@ -180,7 +181,9 @@ $(document).ready(function() {
         <h3>Ongoing Tournaments</h3>
 
         <hr>
-
+        <% if @tournaments.empty? %>
+        <p class="alert alert-info">You are not in any ongoing tournaments. Why don't you join some?</p>
+        <% else %>
         <div class="accordion" id="tournament-accordion">
           <% @tournaments.each_with_index do |tournament, i| %>
           <div class="accordion-group">
@@ -227,6 +230,7 @@ $(document).ready(function() {
           </div>
           <% end %>
         </div>
+        <% end %>
 
       </div>
     </div>

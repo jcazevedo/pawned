@@ -2,7 +2,7 @@
 
 <hr>
 
-<% if @tournaments.count.zero? %>
+<% if @tournaments.empty? %>
 <div class="alert alert-info"><p>There are no tournaments at the moment. Why don't you create a new one?</p></div>
 <% else %>
 
@@ -45,3 +45,4 @@
 <div class="form-actions">
   <%= link_to 'New Tournament', new_tournament_path, :class => "btn btn-primary" %>
 </div>
+

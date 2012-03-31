@@ -13,18 +13,19 @@ class Rating < ActiveRecord::Base
 
   def previous
     Rating.find(:first,
-                :order => 'created_at DESC', 
+                :order => 'created_at DESC',
                 :limit => 1,
                 :conditions => ["Date(date) <= Date(?) AND player_id = ? AND created_at < ?", date, player, created_at]).presence
   end
 
   def next
     Rating.find(:first,
-                :order => 'created_at ASC', 
-                :limit => 1, 
+                :order => 'created_at ASC',
+                :limit => 1,
                 :conditions => ["Date(date) >= Date(?) AND player_id = ? AND created_at > ?", date, player, created_at]).presence
   end
 
+  # TODO change to a single select with GROUP BY and ORDER
   def self.rankings(date = nil)
     ranking = []
     Player.find(:all).each do |player|
@@ -38,7 +39,7 @@ class Rating < ActiveRecord::Base
   end
 
   private
-  
+
   def self.special_rating(n_previous_games, player_rating, opponent_rating, player_result)
     coef = {1.0 => 1, 0.5 => 0, 0.0 => -1}[player_result]
     ((n_previous_games * player_rating + opponent_rating + coef * 400.0) / (n_previous_games + 1.0)).round
@@ -61,3 +62,4 @@ class Rating < ActiveRecord::Base
     1.0 / (10**((opponent_rating - player_rating) / 400) + 1.0)
   end
 end
+
