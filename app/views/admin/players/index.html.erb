@@ -4,9 +4,11 @@
 
 <table class="table">
   <tr>
-    <th>Name</th>
+    <th>Login</th>
     <th>Email</th>
+    <th>Name</th>
     <th>Confirmed?</th>
+    <th>Show email?</th>
     <th></th>
     <th></th>
     <th></th>
@@ -14,9 +16,11 @@
 
 <% @players.each do |player| %>
   <tr>
-    <td><%= player.name %></td>
+    <td><%= player.login %></td>
     <td><%= player.email %></td>
+    <td><%= player.name %></td>
     <td><%= player.confirmed? %></td>
+    <td><%= player.show_email %></td>
     <td><%= link_to 'Show', admin_player_path(player) %></td>
     <td><%= link_to 'Edit', edit_admin_player_path(player) %></td>
     <td><%= link_to 'Destroy', admin_player_path(player), confirm: 'Are you sure?', method: :delete %></td>

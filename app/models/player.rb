@@ -5,7 +5,7 @@ class Player < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :encryptable, :confirmable, :lockable, :timeoutable
 
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :login, :show_email
 
   has_many :tournament_players
   has_many :tournaments, :through => :tournament_players
@@ -14,6 +14,10 @@ class Player < ActiveRecord::Base
   has_many :matches_as_black, :class_name => "Match", :foreign_key => "black_id"
   has_many :ratings, :order => "date ASC"
   has_many :standings
+
+  validates :login, :email, :presence => true
+  validates :login, :uniqueness => true
+  validates :login, :format => { :with => /^[a-zA-Z1-9_]+$/, :message => 'may only contain alphanumerical characters and "_"' }
 
   after_create :set_initial_rating
 
@@ -37,6 +41,10 @@ class Player < ActiveRecord::Base
 
   def admin?
     roles.include?("admin")
+  end
+
+  def given_name
+    name.blank? ? login : name
   end
 
   def skip_confirmation!

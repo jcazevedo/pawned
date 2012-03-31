@@ -6,10 +6,11 @@
 
   <%= f.input :name %>
   <%= f.input :email, :as => :email %>
+  <%= f.input :show_email, :as => :boolean %>
   <%= f.input :password, :as => :password %>
   <%= f.input :password_confirmation, :as => :password %>
 
-  <%= f.input :current_password, :as => :password %></div>
+  <%= f.input :current_password, :as => :password, :required => true %></div>
 
   <div class="form-actions">
     <%= f.button :submit, "Update", :class => "btn-primary" %>

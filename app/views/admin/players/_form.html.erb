@@ -5,8 +5,10 @@
   <% end %>
 
   <%= f.input :name %>
+  <%= f.input :login %>
   <%= f.input :email, :as => :email %>
-  <%= f.input :password %>
+  <%= f.input :show_email %>
+  <%= f.input :password, :as => :password %>
 
   <div class="form-actions">
     <%= f.button :submit, :class => "btn" %>
