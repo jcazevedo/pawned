@@ -21,6 +21,7 @@ class RoundsController < ApplicationController
   def show
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.find(params[:id])
+    @standings = @round.standings
     authorize! :read, @round
 
     respond_to do |format|

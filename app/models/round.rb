@@ -2,7 +2,7 @@ class Round < ActiveRecord::Base
   belongs_to :tournament
   has_many :duels, :dependent => :destroy
 
-  has_many :standings, :dependent => :destroy
+  has_many :standings, :dependent => :destroy, :order => "position ASC"
   validates :tournament_id, :tournament_round_id, presence: true
 
   
@@ -13,7 +13,6 @@ class Round < ActiveRecord::Base
       last_round = nil
     end
     return last_round == nil ? 1 : last_round + 1 
-        
   end
 end
 
