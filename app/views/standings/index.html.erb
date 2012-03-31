@@ -11,7 +11,7 @@
 <% @standings.each do |standing| %>
   <tr>
     <td><%= standing.position %></td>
-    <td><%= standing.player.name %></td>
+    <td><%= standing.player.given_name %></td>
     <td><%= standing.points %></td>
     <td><%= link_to 'Show', tournament_round_standing_path(@tournament, @round, standing) %> <%= link_to 'Edit', edit_tournament_round_standing_path(@tournament, @round, standing) %> <%= link_to 'Destroy', tournament_round_standing_path(@tournament, @round, standing), confirm: 'Are you sure?', method: :delete %></td>
   </tr>

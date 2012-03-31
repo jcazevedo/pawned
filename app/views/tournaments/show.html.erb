@@ -51,7 +51,7 @@
       <% @tournament.latest_standings.each do |s| %>
       <tr>
         <td><%= s.position %></td>
-        <td><%= s.player.name %></td>
+        <td><%= s.player.given_name %></td>
         <td><%= s.points %></td>
         <td><%= s.player.ratings.last.value %></td>
       </tr>
@@ -180,10 +180,10 @@ $(document).ready(function() {
             <tbody>
               <% round.matches.each do |match| %>
               <tr>
-                <td><span class="pull-right"><%= match.white_player.name %></span></td>
+                <td><span class="pull-right"><%= match.white_player.given_name %></span></td>
                 <td><span class="pull-right"><%= match.white_result %></span></td>
                 <td><%= match.black_result %></td>
-                <td><%= match.black_player.name %></td>
+                <td><%= match.black_player.given_name %></td>
                 <td><%= link_to "View", tournament_round_match_path(@tournament, round, match) %></td>
               </tr>
               <% end %>
