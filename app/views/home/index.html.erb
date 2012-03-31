@@ -7,7 +7,7 @@
     <div class="row">
       <% pos = 1 %>
       <div class="span12">
-        <h2>Top Players</h2>
+        <h2>Current Top 10</h2>
         <table class="table table-striped">
           <tr>
             <th>#</th>
@@ -19,7 +19,7 @@
           <tr>
             <td><%= pos %></td>
             <% pos += 1 %>
-            <td><%= rating.player.name %></td>
+            <td><%= link_to rating.player.given_name, profile_path(rating.player.username) %></td>
             <td>
               <%= rating.value %>
               <% if rating.previous %>
@@ -151,28 +151,28 @@ $(document).ready(function() {
               <tr>
                 <td rowspan="2"><b>Played</b></td>
                 <td>won</td>
-                <td>0</td>
+                <td><%= @player.tournaments_won.count %></td>
               </tr>
               <tr>
                 <td>total</td>
-                <td><% @player.tournaments.count %></td>
+                <td><%= @player.tournaments.count %></td>
               </tr>
               <tr>
                 <td rowspan="3"><b>Standings</b></td>
                 <td>best</td>
-                <td>0</td>
+                <td><%= tournament_best %></td>
               </tr>
               <tr>
                 <td>worst</td>
-                <td>0</td>
+                <td><%= tournament_worst %></td>
               </tr>
               <tr>
                 <td>latest</td>
-                <td>0</td>
+                <td><%= tournament_latest %></td>
               </tr>
             </tbody>
           </table>
-          <%= link_to "Available tournaments", tournaments_path %>
+          <%= link_to "Open tournaments", open_tournaments_path %>
           <%= link_to "New tournament", new_tournament_path, :class => "pull-right" %>
         </div>
       </div>
@@ -207,10 +207,10 @@ $(document).ready(function() {
                     <% if round %>
                     <% round.matches.each do |match| %>
                     <tr>
-                      <td><span class="pull-right"><%= match.white_player.name %></span></td>
+                      <td><span class="pull-right"><%= match.white_player.given_name %></span></td>
                       <td><span class="pull-right"><%= match.white_result %></span></td>
                       <td><%= match.black_result %></td>
-                      <td><%= match.black_player.name %></td>
+                      <td><%= match.black_player.given_name %></td>
                       <td><%= link_to "View", tournament_round_match_path(tournament, round, match) %></td>
                     </tr>
                     <% end %>
@@ -249,9 +249,9 @@ $(document).ready(function() {
   <div class="span4">
     <h2>Sign in here</h2>
     <%= form_tag(player_session_path, class: "well", id: "signin-form") do %>
-      <div><%= text_field_tag('player[email]', '', class: "input-small span3", placeholder: "Your e-mail goes here...") %></div>
+      <div><%= text_field_tag('player[login]', '', class: "input-small span3", placeholder: "Username or email") %></div>
       <div>
-        <%= password_field_tag('player[password]', '', class: "input-small span2", placeholder: "Your password, here.") %>
+        <%= password_field_tag('player[password]', '', class: "input-small span2", placeholder: "Password") %>
         <button type="submit" class="btn btn-success" style="margin: 0 10px 9px;" >Submit</button>
       </div>
       <label class="checkbox"><%= check_box_tag('player[remember_me]', '', false, class: "checkbox") %> Remember me</label>
@@ -268,9 +268,9 @@ $(document).ready(function() {
   <div class="span4">
     <h2>New to Pawned?</h2>
     <%= form_tag(player_registration_path, class: "well", id: "signin-form") do %>
-      <div><%= text_field_tag('player[name]', '', class: "input-small span3", placeholder: "Tell us your name") %></div>
-      <div><%= text_field_tag('player[email]', '', class: "input-small span3", placeholder: "Your e-mail goes here...") %></div>
-      <%= password_field_tag('player[password]', '', class: "input-small span2", placeholder: "Your password, here.") %>
+      <div><%= text_field_tag('player[username]', '', class: "input-small span3", placeholder: "Username") %></div>
+      <div><%= text_field_tag('player[email]', '', class: "input-small span3", placeholder: "Email") %></div>
+      <%= password_field_tag('player[password]', '', class: "input-small span2", placeholder: "Password") %>
       <button type="submit" class="btn btn-danger" style="margin: 0 10px 9px;">Submit</button>
     <% end %>
   </div>

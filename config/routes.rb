@@ -2,7 +2,7 @@ Pawned::Application.routes.draw do
 
 
   # route for the user profile
-  match "profile" => "profile#show", :as => :profile
+  match "profile/(:username)" => "profile#show", :as => :profile
 
   # route for the user's upcoming matches
   match "matches" => "upcoming_matches#show"
@@ -11,6 +11,7 @@ Pawned::Application.routes.draw do
   match "tournaments/open" => "tournaments#open", :as => :open_tournaments
   match "tournaments/ongoing" => "tournaments#ongoing", :as => :ongoing_tournaments
 
+  # Route for ratings
   match "ratings" => "ratings#index", :as => :ratings
 
   # I don't know what the hell I'm doing

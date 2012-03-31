@@ -26,6 +26,10 @@
           <td><%= @tournament.status %></td>
         </tr>
         <tr>
+          <td><b>Matches per Duel</b></td>
+          <td><%= @tournament.matches_per_duel %></td>
+        </tr>
+        <tr>
           <td><b>Admin</b></td>
           <td><%= @tournament.admin.name %></td>
         </tr>
@@ -47,11 +51,56 @@
       <% @tournament.latest_standings.each do |s| %>
       <tr>
         <td><%= s.position %></td>
-        <td><%= s.player.name %></td>
+        <td><%= s.player.given_name %></td>
         <td><%= s.points %></td>
         <td><%= s.player.ratings.last.value %></td>
       </tr>
       <% end %>
+
+
+        <div id="container"></div>
+        <script type="text/javascript">
+var chart1; // globally available
+$(document).ready(function() {
+      chart1 = new Highcharts.Chart({
+         chart: {
+            renderTo: 'container',
+            type: 'line'
+         },
+         title: {
+            text: 'Standings'
+         },
+         xAxis: {
+            categories: [
+              <% @tournament.rounds.each do |round| %>
+              <%= '\'' + round.tournament_round_id.to_s + '\', ' %>
+              <% end %>
+            ]
+         },
+         yAxis: {
+            title: {
+               text: 'Position'
+            }
+         },
+         series: [
+        <% @tournament.players.each do |player| %>
+          {
+            name: "<%= player.given_name.to_s %>",
+            data: [
+              <% @tournament.rounds.each do |round| %>
+                <%= player.standings.map { |s| s.position if s.round == round }.first.to_s + ',' %>
+              <% end %>
+            ]
+         },
+        <% end %>
+        ]
+      });
+   });
+        </script>
+
+
+
+      </div>
     <% else %>
       <% if @tournament.players.empty? %>
       <hr>
