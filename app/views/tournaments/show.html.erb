@@ -189,9 +189,11 @@ $(document).ready(function() {
               <% end %>
             </tbody>
           </table>
-          </div>
+
+          <%= link_to "Edit round", tournament_round_path(@tournament, round) %>
         </div>
       </div>
+    </div>
     <% end %>
     </div>
   <% else %>
