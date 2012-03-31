@@ -94,7 +94,6 @@ class Match < ActiveRecord::Base
           rating.value = new_white_rating
           rating.date = date
           rating.save
-          
           white_rating = rating
         elsif rating.player == black_player
           rating.value = new_black_rating
