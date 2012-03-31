@@ -7,18 +7,17 @@ class Tournament < ActiveRecord::Base
 
   belongs_to :admin, :class_name => "Player", :foreign_key => "admin_id"
 
-  validates :name, :status_index, :date_started, :matches_per_duel, :presence => true
-  before_validation :default_status, :default_matches_per_duel
+  validates :name, :date_started, :presence => true, :on => :create
+  validates :name, :date_started, :status, :matches_per_duel, :presence => true, :on => :update
+  before_create :set_default_values
 
   default_scope order('date_started desc')
 
   def latest_standings
     return nil if rounds.empty?
-
     rounds_st = rounds.map { |r| r if !r.standings.empty? }.reject { |r| r.nil? }
 
     return nil if rounds_st.empty?
-
     rounds_st.max_by { |r| r.tournament_round_id }.standings
   end
 
@@ -31,12 +30,9 @@ class Tournament < ActiveRecord::Base
     self.status_index = STATUSES.index(status)
   end
 
-  def default_status
-    status_index ||= 0
-  end
-
-  def default_matches_per_duel
-    matches_per_duel ||= 2
+  def set_default_values
+    self.status_index ||= 0
+    self.matches_per_duel ||= 2
   end
 end
 

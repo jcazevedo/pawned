@@ -249,7 +249,7 @@ $(document).ready(function() {
   <div class="span4">
     <h2>Sign in here</h2>
     <%= form_tag(player_session_path, class: "well", id: "signin-form") do %>
-      <div><%= text_field_tag('player[login]', '', class: "input-small span3", placeholder: "Login") %></div>
+      <div><%= text_field_tag('player[login]', '', class: "input-small span3", placeholder: "Username or email") %></div>
       <div>
         <%= password_field_tag('player[password]', '', class: "input-small span2", placeholder: "Password") %>
         <button type="submit" class="btn btn-success" style="margin: 0 10px 9px;" >Submit</button>
