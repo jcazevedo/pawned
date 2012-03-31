@@ -124,14 +124,17 @@
   <% else %>
   <div class="alert alert-info"><p>This tournament has no rounds defined, yet.</p></div>
   <% end %>
+  <% if can? :manage, @tournament %>
+    <%= simple_form_for [@tournament, Round.new() ] do |f| %>
+    <%= f.hidden_field :tournament_round_id, :value => Round.new(:tournament_id => @tournament.id).new_round_id %>
+    <%= submit_tag "Create new round", :class => "btn btn-primary" %></p>
+    <% end %>
+  <% end %>
 
   </div>
 </div>
 
 <div class="form-actions">
-  <% if can? :manage, @tournament %>
-    <%= link_to 'Create new round', new_tournament_round_path(@tournament), :class => "btn btn-primary" %>
-    <%= link_to 'Edit', edit_tournament_path(@tournament), :class => "btn" %>
-  <% end %>
+  <%= link_to 'Edit', edit_tournament_path(@tournament), :class => "btn" %>
   <%= link_to 'Back', tournaments_path, :class => "btn" %>
 </div>
