@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  round_id: 
+  player_id: 
+  points: 9.99
+  rating_performance: 1
+  buc1: 9.99
+  buct: 9.99
+  position: 1
+
+two:
+  round_id: 
+  player_id: 
+  points: 9.99
+  rating_performance: 1
+  buc1: 9.99
+  buct: 9.99
+  position: 1

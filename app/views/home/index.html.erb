@@ -3,44 +3,77 @@
 
     <hr>
 
-    <p id="notice"><%= notice %></p>
-
     <div class="row">
+      <% if @rankings %>
+      <% pos = 1 %>
+      <div class="span12">
+        <h2>Live Rankings</h2>
+        <table class="table table-striped">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Rating</th>
+            <th>Games</th>
+          </tr>
+          <% @rankings.each do |rating| %>
+          <tr>
+            <td><%= pos %></td>
+            <% pos += 1 %>
+            <td><%= rating.player.name %></td>
+            <td>
+              <%= rating.value %> 
+              <% if rating.previous %>
+              <% val = rating.value - rating.previous.value %>
+              (<% if val >= 0 %><%= '+' %><% end %><%= rating.value - rating.previous.value %>)
+              <% end %>
+            </td>
+            <td>
+              <%= rating.player.matches.length %>
+              (<%= rating.player.matches_won.length.to_s + ' W / ' + 
+                   rating.player.matches_lost.length.to_s + ' L / ' +
+                   rating.player.matches_drawn.length.to_s + ' D' %>)
+            </td>
+          </tr>
+          <% end %>
+        </table>
+      </div>
+      <% end %>
+
       <div class="span8">
         <div id="container"></div>
         <script type="text/javascript">
-        var chart1; // globally available
-        $(document).ready(function() {
-              chart1 = new Highcharts.Chart({
-                 chart: {
-                    renderTo: 'container',
-                    type: 'line'
-                 },
-                 title: {
-                    text: 'Rating evolution'
-                 },
-                 xAxis: {
-                    type: 'datetime',
-                    dateTimeLabelFormats: {
-                            month: '%e. %b',
-                            year: '%b'
-                    }
-                 },
-                 yAxis: {
-                    title: {
-                       text: 'Rating value'
-                    }
-                 },
-                 series: [{
-                    name: 'Rating',
-                    data: [
-                      <% @ratings.each do |rating| %>
-                        <%= '[' + (rating.date.to_time.to_i * 1000).to_s(10) + ', ' + rating.value.to_s + '],' %>
-                      <% end %>
-                    ]
-                 }]
-              });
-           });
+var chart1; // globally available
+$(document).ready(function() {
+      chart1 = new Highcharts.Chart({
+         chart: {
+            renderTo: 'container',
+            type: 'line'
+         },
+         title: {
+            text: 'Rating evolution'
+         },
+         xAxis: {
+            categories: [
+              <% @ratings.each do |rating| %>
+              <%= '\'' + rating.date.to_date.to_s + '\', ' %>
+              <% end %>
+            ]
+         },
+         yAxis: {
+            title: {
+               text: 'Rating value'
+            }
+         },
+         series: [{
+            name: 'Rating',
+            data: [
+              <% @ratings.each do |rating| %>
+              <%= rating.value.to_s + ', ' %>
+              <% end %>
+            ]
+         }]
+      });
+   });
         </script>
 
       </div>
@@ -64,33 +97,33 @@
               <tr>
                 <td rowspan="2"><b>Streaks</b></td>
                 <td>winning</td>
-                <td>0</td>
+                <td><%= @player.streak_winning %></td>
               </tr>
               <tr>
                 <td>losing</td>
-                <td>0</td>
+                <td><%= @player.streak_losing %></td>
               </tr>
               <tr>
-                <td rowspan="2"><b>Opponents</b></td>
+                <td rowspan="2"><b>Wins</b></td>
                 <td>strongest</td>
-                <td>0</td>
+                <td><%= @player.wins_strongest %></td>
               </tr>
               <tr>
                 <td>weakest</td>
-                <td>0</td>
+                <td><%= @player.wins_weakest %></td>
               </tr>
               <tr>
                 <td rowspan="3"><b>Matches</b></td>
                 <td>won</td>
-                <td>0</td>
+                <td><%= @player.matches_won.count %></td>
               </tr>
               <tr>
                 <td>lost</td>
-                <td>0</td>
+                <td><%= @player.matches_lost.count %></td>
               </tr>
               <tr>
                 <td>draw</td>
-                <td>0</td>
+                <td><%= @player.matches_drawn.count %></td>
               </tr>
             </tbody>
           </table>
@@ -117,7 +150,7 @@
               </tr>
               <tr>
                 <td>total</td>
-                <td>0</td>
+                <td><% @player.tournaments.count %></td>
               </tr>
               <tr>
                 <td rowspan="3"><b>Standings</b></td>

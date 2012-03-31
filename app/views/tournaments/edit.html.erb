@@ -2,13 +2,16 @@
 
 <hr>
 
+<div class="row">
+  <div class="span4">
 <%= render 'form' %>
+  </div>
 
-<h2>Players</h2>
+  <div class="span8">
+<h2>Manage Players</h2>
+<hr>
 <p>Use this to "volunteer" players into joining this tournament. (perhaps in a new tab?)</p>
 
-<div class="row">
-  <div id="span12">
     <table class="table">
       <tr>
         <th>Player name</th>
@@ -29,18 +32,22 @@
           </td>
         </tr>
       <% end %>
-    </table>
-  </div>
-</div>
+        <tr>
 
 <%= form_for TournamentPlayer.new, :url => participations_path do |f| %>
   <%= f.hidden_field :tournament_id, :value => @tournament.id %>
+  <td colspan="2">
   <%= f.select :player_id, (Player.all - @tournament.players).map{ |p| [p.name, p.id] } %>
+  </td>
+  <td>
   <button type="submit" class="btn btn-success">
     <i class="icon-white icon-ok-sign"></i>
     Sign up for this tournament
   </button>
+  </td>
 <% end %>
 
-<%= link_to 'Show', @tournament, :class => "btn btn-primary" %>
-<%= link_to 'Back', tournaments_path, :class => "btn btn-danger" %>
+    </table>
+
+  </div>
+</div>

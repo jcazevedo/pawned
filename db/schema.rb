@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120320185849) do
+ActiveRecord::Schema.define(:version => 20120328172606) do
 
   create_table "matches", :force => true do |t|
     t.date     "date_inserted"
@@ -72,6 +72,18 @@ ActiveRecord::Schema.define(:version => 20120320185849) do
     t.datetime "updated_at",          :null => false
     t.integer  "status"
   end
+
+  create_table "standings", :force => true do |t|
+    t.integer  "round_id"
+    t.integer  "player_id"
+    t.decimal  "points"
+    t.integer  "position"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "standings", ["player_id"], :name => "index_standings_on_player_id"
+  add_index "standings", ["round_id"], :name => "index_standings_on_round_id"
 
   create_table "tournament_players", :force => true do |t|
     t.integer  "player_id"
