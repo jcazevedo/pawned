@@ -16,7 +16,7 @@
         Time.now.strftime("%d-%m-%Y")
       end )} %>
 
-   <%= f.input :time_played, :as => :time %>
+  <%= f.input :time_played, :as => :time %>
 
   <%= f.input :white_player do %>
   <%= f.select :white_id, @tournament.players.all.map { |r| [r.name, r.id] }, :include_blank => true %>
@@ -34,6 +34,17 @@
     })
     $('#match_date').datepicker({
       format: 'dd-mm-yyyy'
+    })
+    $('#match_date').change(function () {
+      if (this.value == "") {
+         $('#match_time_played_4i').attr("disabled", "disabled");
+         $('#match_time_played_5i').attr("disabled", "disabled");
+         $('#match_result').attr("disabled", "disabled");
+      } else {
+         $('#match_time_played_4i').removeAttr("disabled");
+         $('#match_time_played_5i').removeAttr("disabled");
+         $('#match_result').removeAttr("disabled");
+      }
     })
   </script>
 
