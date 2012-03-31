@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @standing %> |
-<%= link_to 'Back', tournament_round_standings_path %>
+<%= link_to 'Show', edit_tournament_round_standing_path(@tournament, @round, @standing) %> |
+<%= link_to 'Back', tournament_round_standings_path(@tournament, @round) %>

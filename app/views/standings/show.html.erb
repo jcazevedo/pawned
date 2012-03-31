@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
 
 
-<%= link_to 'Edit', edit_tournament_round_standing_path(@standing) %> |
-<%= link_to 'Back', tournament_round_standings_path %>
+<%= link_to 'Edit', edit_tournament_round_standing_path(@tournament, @round, @standing) %> |
+<%= link_to 'Back', tournament_round_path(@tournament, @round) %>

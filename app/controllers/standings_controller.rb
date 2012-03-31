@@ -2,8 +2,10 @@ class StandingsController < ApplicationController
   # GET /standings
   # GET /standings.json
   def index
-    @standings = Standing.all
-    @round = params[:round_id]
+    @tournament = Tournament.find(params[:tournament_id])
+    @round = @tournament.rounds.find(params[:round_id])
+    @standings = @round.standings
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @standings }
@@ -15,7 +17,7 @@ class StandingsController < ApplicationController
   def show
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.find(params[:round_id])
-    @standing = Standing.find(params[:id])
+    @standing = @round.standings.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -52,7 +54,7 @@ class StandingsController < ApplicationController
 
     respond_to do |format|
       if @standing.save
-        format.html { redirect_to @standing, notice: 'Standing was successfully created.' }
+        format.html { redirect_to tournament_round_standing_url(@tournament, @round, @standing), notice: 'Standing was successfully created.' }
         format.json { render json: @standing, status: :created, location: @standing }
       else
         format.html { render action: "new" }
@@ -70,7 +72,7 @@ class StandingsController < ApplicationController
 
     respond_to do |format|
       if @standing.update_attributes(params[:standing])
-        format.html { redirect_to @standing, notice: 'Standing was successfully updated.' }
+        format.html { redirect_to tournament_round_standing_url(@tournament, @round, @standing), notice: 'Standing was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -88,7 +90,7 @@ class StandingsController < ApplicationController
     @standing.destroy
 
     respond_to do |format|
-      format.html { redirect_to standings_url }
+      format.html { redirect_to tournament_round_standings_url(@tournament, @round) }
       format.json { head :no_content }
     end
   end
