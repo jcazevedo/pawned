@@ -12,6 +12,12 @@ class Match < ActiveRecord::Base
 
   after_save :check_for_rating_update
 
+  composed_of :time_played,
+              :class_name => 'DateTime',
+              :mapping => %w(DateTime to_s),
+              :constructor => Proc.new{ |item| item },
+              :converter => Proc.new{ |item| item }
+
   def result
     return nil if white_result.nil? or black_result.nil?
     [white_result.to_s, black_result.to_s].join('-')
@@ -26,6 +32,25 @@ class Match < ActiveRecord::Base
       self.white_result = split.first.to_f
       self.black_result = split.last.to_f
     end
+  end
+
+  def time_played
+    self.date_played
+  end
+
+  def time_played=(time)
+    self.date_played = DateTime.new if self.date_played.nil?
+    self.date_played = self.date_played.change({:hour => time.hour, :min => time.min})
+  end
+
+  def date=(date)
+    date = date.to_datetime
+    self.date_played = DateTime.new if self.date_played.nil?
+    self.date_played = self.date_played.change({:day => date.day, :month => date.month, :year => date.year})
+  end
+
+  def date
+    self.date_played
   end
 
   def white_rating
@@ -43,37 +68,36 @@ class Match < ActiveRecord::Base
   end
 
   def update_ratings
-    old_white_rating = white_player.ratings[-1 - (ratings.empty? ? 0 : 1)].value
-    old_black_rating = black_player.ratings[-1 - (ratings.empty? ? 0 : 1)].value
+    old_white_rating = white_player.ratings.where("date < ?", date).last.value
+    old_black_rating = black_player.ratings.where("date < ?", date).last.value
 
-    new_white_rating = Rating.new_rating(white_player.matches.find_all { |match| match.date_played <= date_played }.length - 1,
+    new_white_rating = Rating.new_rating(white_player.matches.find_all { |match| match.date < date }.length,
                                          old_white_rating,
                                          old_black_rating,
                                          white_result)
-    new_black_rating = Rating.new_rating(black_player.matches.find_all { |match| match.date_played <= date_played }.length - 1,
+    new_black_rating = Rating.new_rating(black_player.matches.find_all { |match| match.date < date }.length,
                                          old_black_rating,
                                          old_white_rating,
                                          black_result)
     if ratings.empty?
       white_rating = Rating.create(:player_id => white_id,
                                    :value => new_white_rating,
-                                   :date => date_played.to_s)
+                                   :date => date)
       ratings << white_rating
       black_rating = Rating.create(:player_id => black_id,
                                    :value => new_black_rating,
-                                   :date => date_played.to_s)
+                                   :date => date)
       ratings << black_rating
     else
       ratings.each do |rating|
         if rating.player == white_player
           rating.value = new_white_rating
-          rating.date = date_played.to_s
+          rating.date = date
           rating.save
-          
           white_rating = rating
         elsif rating.player == black_player
           rating.value = new_black_rating
-          rating.date = date_played.to_s
+          rating.date = date
           rating.save
           black_rating = rating
         end

@@ -10,7 +10,7 @@
         Time.now.strftime("%d-%m-%Y")
       end )} %>
 
-    <% if !@tournament.id.nil? %>
+    <% if !@tournament.new_record? %>
 
     <%= f.input :date_finished, :as => :string, :input_html => { :value => (
       if @tournament.date_finished != nil then
@@ -19,9 +19,10 @@
         Time.now.strftime("%d-%m-%Y")
       end )} %>
 
+    <%= f.input :status, :default => 0, :collection => Tournament::STATUSES %>
+
     <% end %>
 
-    <%= f.input :status, :collection => Tournament::STATUSES %>
 
     <% if current_player.admin? %>
     <%= f.input :admin_id, :collection => Player.all %>
@@ -42,6 +43,7 @@
   <div class="form-actions">
     <%= f.button :submit %>
 
-    <%= link_to 'Back', URI(request.referer).path, :class => "btn" %>
+    <%= link_to 'Back', tournaments_path, :class => "btn" %>
   </div>
 <% end %>
+

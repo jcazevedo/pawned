@@ -1,0 +1,38 @@
+<h1>Live Ranking</h1>
+
+<hr>
+
+<% if !@rankings %>
+<div class="alert alert-info"><p>It seems that there are no ratings whatsoever. Has noone been playing chess?</p></div>
+<% else %>
+  <% pos = 1 %>
+  <table class="table table-striped">
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Rating</th>
+      <th>Games</th>
+    </tr>
+    <% @rankings.each do |rating| %>
+    <tr>
+      <td><%= pos %></td>
+      <% pos += 1 %>
+      <td><%= rating.player.name %></td>
+      <td>
+        <%= rating.value %>
+        <% if rating.previous %>
+        <% val = rating.value - rating.previous.value %>
+        (<% if val >= 0 %><%= '+' %><% end %><%= rating.value - rating.previous.value %>)
+        <% end %>
+      </td>
+      <td>
+        <%= rating.player.matches.length %>
+        (<%= rating.player.matches_won.length.to_s + ' W / ' +
+             rating.player.matches_lost.length.to_s + ' L / ' +
+             rating.player.matches_drawn.length.to_s + ' D' %>)
+      </td>
+    </tr>
+    <% end %>
+  </table>
+<% end %>
+

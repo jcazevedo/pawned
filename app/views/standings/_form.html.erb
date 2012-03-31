@@ -1,11 +1,15 @@
 <%= simple_form_for(@standing) do |f| %>
-  <%= f.error_notification %>
+    <%= f.error_notification %>
 
-  <div class="form-inputs">
+    <div class="form-inputs">
+      <%= f.input :position %>
+      <%= f.input :points %>
+      <%= f.input :player_id, :collection => Player.all %>
+      <%= f.hidden_field :round_id, :value => @current_round %>
+    </div>
 
-  </div>
+    <div class="form-actions">
+      <%= f.button :submit %>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+    </div>
 <% end %>

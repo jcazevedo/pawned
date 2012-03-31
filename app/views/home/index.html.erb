@@ -3,11 +3,11 @@
 
     <hr>
 
+    <% if @rankings %>
     <div class="row">
-      <% if @rankings %>
       <% pos = 1 %>
       <div class="span12">
-        <h2>Live Rankings</h2>
+        <h2>Top Players</h2>
         <table class="table table-striped">
           <tr>
             <th>#</th>
@@ -21,7 +21,7 @@
             <% pos += 1 %>
             <td><%= rating.player.name %></td>
             <td>
-              <%= rating.value %> 
+              <%= rating.value %>
               <% if rating.previous %>
               <% val = rating.value - rating.previous.value %>
               (<% if val >= 0 %><%= '+' %><% end %><%= rating.value - rating.previous.value %>)
@@ -29,16 +29,21 @@
             </td>
             <td>
               <%= rating.player.matches.length %>
-              (<%= rating.player.matches_won.length.to_s + ' W / ' + 
+              (<%= rating.player.matches_won.length.to_s + ' W / ' +
                    rating.player.matches_lost.length.to_s + ' L / ' +
                    rating.player.matches_drawn.length.to_s + ' D' %>)
             </td>
           </tr>
           <% end %>
         </table>
+        <%= link_to "See complete ranking", ratings_path %>
       </div>
-      <% end %>
+    </div>
 
+    <hr>
+    <% end %>
+
+    <div class="row">
       <div class="span8">
         <div id="container"></div>
         <script type="text/javascript">
@@ -176,7 +181,9 @@ $(document).ready(function() {
         <h3>Ongoing Tournaments</h3>
 
         <hr>
-
+        <% if @tournaments.empty? %>
+        <p class="alert alert-info">You are not in any ongoing tournaments. Why don't you join some?</p>
+        <% else %>
         <div class="accordion" id="tournament-accordion">
           <% @tournaments.each_with_index do |tournament, i| %>
           <div class="accordion-group">
@@ -223,6 +230,7 @@ $(document).ready(function() {
           </div>
           <% end %>
         </div>
+        <% end %>
 
       </div>
     </div>
@@ -269,3 +277,4 @@ $(document).ready(function() {
 
 </div>
 <% end %>
+

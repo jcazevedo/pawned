@@ -1,19 +1,52 @@
-<%= simple_form_for([@tournament, @round, @match]) do |f| %>
+<%= simple_form_for([@tournament, @round, @match], :html => {:class => 'form-horizontal'}) do |f| %>
   <%= f.error_notification %>
+  <legend>Match</legend>
 
-  <div class="form-inputs">
-    <%= f.input :date_inserted %>
-    <%= f.input :date_played %>
-    <%= f.input :white_player do %>
-      <%= f.select :white_id, @tournament.players.all.map { |r| [r.name, r.id] }, :include_blank => true %>
-    <% end %>
-    <%= f.input :black_player do %>
-      <%= f.select :black_id, @tournament.players.all.map { |r| [r.name, r.id] }, :include_blank => true %>
-    <% end %>
-    <%= f.input :result, :as => :select, :collection => ["1.0-0.0", "0.0-1.0", "0.5-0.5"] %>
-    <%= f.input :round_id %>
-    <%= f.input :png_text %>
-  </div>
+  <%= f.input :date_inserted, :as => :string, :input_html => { :value => (
+      if @match.date_inserted != nil then
+        @match.date_inserted.strftime("%d-%m-%Y")
+      else
+        Time.now.strftime("%d-%m-%Y")
+      end )} %>
+
+  <%= f.input :date, :as => :string, :input_html => { :value => (
+      if @match.date != nil then
+        @match.date.strftime("%d-%m-%Y")
+      else
+        Time.now.strftime("%d-%m-%Y")
+      end )} %>
+
+  <%= f.input :time_played, :as => :time %>
+
+  <%= f.input :white_player do %>
+  <%= f.select :white_id, @tournament.players.all.map { |r| [r.name, r.id] }, :include_blank => true %>
+  <% end %>
+  <%= f.input :black_player do %>
+  <%= f.select :black_id, @tournament.players.all.map { |r| [r.name, r.id] }, :include_blank => true %>
+  <% end %>
+  <%= f.input :result, :as => :select, :collection => ["1.0-0.0", "0.0-1.0", "0.5-0.5"] %>
+  <%= f.input :round_id %>
+  <%= f.input :png_text %>
+
+  <script>
+    $('#match_date_inserted').datepicker({
+      format: 'dd-mm-yyyy'
+    })
+    $('#match_date').datepicker({
+      format: 'dd-mm-yyyy'
+    })
+    $('#match_date').change(function () {
+      if (this.value == "") {
+         $('#match_time_played_4i').attr("disabled", "disabled");
+         $('#match_time_played_5i').attr("disabled", "disabled");
+         $('#match_result').attr("disabled", "disabled");
+      } else {
+         $('#match_time_played_4i').removeAttr("disabled");
+         $('#match_time_played_5i').removeAttr("disabled");
+         $('#match_result').removeAttr("disabled");
+      }
+    })
+  </script>
 
   <div class="form-actions">
     <%= f.button :submit %>

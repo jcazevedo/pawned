@@ -2,6 +2,8 @@ class Rating < ActiveRecord::Base
   belongs_to :player
   belongs_to :match
 
+  validates :player_id, :value, :date, :presence => true
+
   def self.new_rating(n_previous_games, player_rating, opponent_rating, player_result)
     if (n_previous_games <= 8)
       rating = self.special_rating(n_previous_games, player_rating, opponent_rating, player_result)
@@ -12,33 +14,28 @@ class Rating < ActiveRecord::Base
   end
 
   def previous
-    Rating.find(:first,
-                :order => 'created_at DESC', 
-                :limit => 1,
-                :conditions => ["created_at < ? AND player_id = ?", created_at, player]).presence
+    Rating.where("date < ? AND player_id = ?", date, player).order("date DESC").first
   end
 
   def next
-    Rating.find(:first,
-                :order => 'created_at ASC', 
-                :limit => 1, 
-                :conditions => ["created_at > ? AND player_id = ?", created_at, player ]).presence
+    Rating.where("date > ? AND player_id = ?", date, player).order("date ASC").first
   end
 
+  # TODO change to a single select with GROUP BY and ORDER
   def self.rankings(date = nil)
     ranking = []
     Player.find(:all).each do |player|
       if date.nil?
         ranking << player.ratings.last
       else
-        ranking << player.ratings.where("Date(date) <= ?", date).last
+        ranking << player.ratings.where("date <= ?", date).last
       end
     end
     ranking.sort_by{ |rating| rating.value }.reverse
   end
 
   private
-  
+
   def self.special_rating(n_previous_games, player_rating, opponent_rating, player_result)
     coef = {1.0 => 1, 0.5 => 0, 0.0 => -1}[player_result]
     ((n_previous_games * player_rating + opponent_rating + coef * 400.0) / (n_previous_games + 1.0)).round
@@ -61,3 +58,4 @@ class Rating < ActiveRecord::Base
     1.0 / (10**((opponent_rating - player_rating) / 400) + 1.0)
   end
 end
+

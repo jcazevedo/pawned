@@ -22,7 +22,9 @@
 
               <li class="<%= current_controller('home') %>"><a href="/">Home</a></li>
 
-              <li class="<%= current_controller('standings') %>"><a href="#">Standings</a></li>
+              <li class="<%= current_controller('ratings') %>">
+                <%= link_to "Live Ranking", ratings_path %>
+              </li>
 
               <li class="dropdown <%= current_controller('tournaments') %>">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tournaments <b class="caret"></b></a>
@@ -76,6 +78,16 @@
             </ul>
 
             <ul class="nav pull-right">
+              <li class="dropdown <%= current_controller('help') %>">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Help <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Get online help</a></li>
+                  <li><a href="#">F.A.Q.</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">About</a></li>
+                </ul>
+              </li>
+
               <% if current_player.admin? %>
               <li class="dropdown <%= current_controller('admin') %>">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin <b class="caret"></b></a>
@@ -129,10 +141,16 @@
 
   <div class="container">
     <% if notice %>
-    <p class="alert alert-success"><%= notice %></p>
+    <div class="alert alert-block alert-success">
+      <a class="close" data-dismiss="alert">×</a>
+      <%= notice %>
+    </div>
     <% end %>
     <% if alert %>
-    <p class="alert alert-danger"><%= alert %></p>
+    <div class="alert alert-block alert-danger">
+      <a class="close" data-dismiss="alert">×</a>
+      <%= alert %>
+    </div>
     <% end %>
 
     <%= yield %>
@@ -151,3 +169,4 @@
 
 </body>
 </html>
+

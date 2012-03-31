@@ -42,6 +42,7 @@ class Admin::PlayersController < Admin::BaseController
   # POST /admin/players.json
   def create
     @player = Player.new(params[:player])
+    @player.skip_confirmation!
 
     respond_to do |format|
       if @player.save
@@ -59,6 +60,9 @@ class Admin::PlayersController < Admin::BaseController
   # PUT /admin/players/1.json
   def update
     @player = Player.find(params[:id])
+    @player.skip_reconfirmation!
+
+    params[:player].delete(:password) if params[:player][:password].blank?
 
     respond_to do |format|
       if @player.update_attributes(params[:player])

@@ -9,6 +9,8 @@ Pawned::Application.routes.draw do
   match "tournaments/open" => "tournaments#open", :as => :open_tournaments
   match "tournaments/ongoing" => "tournaments#ongoing", :as => :ongoing_tournaments
 
+  match "ratings" => "ratings#index", :as => :ratings
+
   # I don't know what the hell I'm doing
   # But still: players > tournaments (they admin)
   match "players/:id/tournaments" => "players#tournaments", :as => :player_tournaments

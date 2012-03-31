@@ -1,5 +1,5 @@
 class Tournament < ActiveRecord::Base
-  STATUSES = %w[open ongoing finished]
+  STATUSES = %w[Open Ongoing Finished Closed]
 
   has_many :rounds, :dependent => :destroy
   has_many :tournament_players
@@ -7,10 +7,28 @@ class Tournament < ActiveRecord::Base
 
   belongs_to :admin, :class_name => "Player", :foreign_key => "admin_id"
 
-  validates :name, :status, :date_started, :presence => true
+  validates :name, :status_index, :date_started, :presence => true
+  before_validation :default_status
 
   default_scope order('date_started desc')
 
-  scope :open, where('date_started >= ?', Date.today)
-  scope :ongoing, where('date_started <= ? AND date_finished >= ?', Date.today, Date.today)
+  def latest_standings
+    if !rounds.empty?
+      rounds.map { |r| r if !r.standings.empty? }.max_by { |r| r.tournament_round_id }.standings
+    end
+  end
+
+  def status
+    return 0 if status_index.nil?
+    STATUSES[status_index]
+  end
+
+  def status=(status)
+    self.status_index = STATUSES.index(status)
+  end
+
+  def default_status
+    status_index ||= 0
+  end
 end
+

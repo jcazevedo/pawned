@@ -94,7 +94,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments/open
   # GET /tournaments/open.json
   def open
-    @tournaments = Tournament.open
+    @tournaments = Tournament.where(:status_index => 0)
     @index_type = "Open"
 
     respond_to do |format|
@@ -106,7 +106,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments/open
   # GET /tournaments/open.json
   def ongoing
-    @tournaments = Tournament.ongoing
+    @tournaments = Tournament.where(:status_index => 1)
     @index_type = "Ongoing"
 
     respond_to do |format|
@@ -115,3 +115,4 @@ class TournamentsController < ApplicationController
     end
   end
 end
+

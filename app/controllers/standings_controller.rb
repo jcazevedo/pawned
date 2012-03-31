@@ -3,7 +3,7 @@ class StandingsController < ApplicationController
   # GET /standings.json
   def index
     @standings = Standing.all
-
+    @round = params[:round_id]
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @standings }
@@ -25,6 +25,7 @@ class StandingsController < ApplicationController
   # GET /standings/new.json
   def new
     @standing = Standing.new
+    @current_round = params[:round_id]
 
     respond_to do |format|
       format.html # new.html.erb
