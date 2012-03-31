@@ -15,14 +15,14 @@ class Rating < ActiveRecord::Base
     Rating.find(:first,
                 :order => 'created_at DESC', 
                 :limit => 1,
-                :conditions => ["created_at < ? AND player_id = ?", created_at, player]).presence
+                :conditions => ["Date(date) <= Date(?) AND player_id = ? AND created_at < ?", date, player, created_at]).presence
   end
 
   def next
     Rating.find(:first,
                 :order => 'created_at ASC', 
                 :limit => 1, 
-                :conditions => ["created_at > ? AND player_id = ?", created_at, player ]).presence
+                :conditions => ["Date(date) >= Date(?) AND player_id = ? AND created_at > ?", date, player, created_at]).presence
   end
 
   def self.rankings(date = nil)
