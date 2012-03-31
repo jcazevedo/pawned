@@ -20,7 +20,7 @@
     <th>White result</th>
     <th>Black result</th>
     <th>Round</th>
-    <th>Png text</th>
+    <th>Pgn text</th>
     <th></th>
     <% if can? :manage, @tournament %>
       <th></th>
@@ -37,7 +37,7 @@
     <td><%= match.white_result %></td>
     <td><%= match.black_result %></td>
     <td><%= match.round_id %></td>
-    <td><%= match.png_text %></td>
+    <td><%= match.pgn_text %></td>
     <td><%= link_to 'Show', tournament_round_match_path(@tournament, @round, match) %></td>
     <% if can? :manage, @tournament %>
       <td><%= link_to 'Edit', edit_tournament_round_match_path(@tournament, @round, match) %></td>

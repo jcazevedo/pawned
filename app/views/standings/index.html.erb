@@ -1,21 +1,23 @@
-<h1>Round <%= @round %> Standings</h1>
+<h1>Round <%= @round.tournament_round_id %> Standings</h1>
 
 <table>
   <tr>
-    <th></th>
-    <th></th>
+    <th>Position</th>
+    <th>Player</th>
+    <th>Points</th>
     <th></th>
   </tr>
 
 <% @standings.each do |standing| %>
   <tr>
-    <td><%= link_to 'Show', standing %></td>
-    <td><%= link_to 'Edit', edit_tournament_round_standing_path(standing) %></td>
-    <td><%= link_to 'Destroy', standing, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= standing.position %></td>
+    <td><%= standing.player.name %></td>
+    <td><%= standing.points %></td>
+    <td><%= link_to 'Show', tournament_round_standing_path(@tournament, @round, standing) %> <%= link_to 'Edit', edit_tournament_round_standing_path(@tournament, @round, standing) %> <%= link_to 'Destroy', tournament_round_standing_path(@tournament, @round, standing), confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Standing', new_tournament_round_standing_path %>
+<%= link_to 'New Standing', new_tournament_round_standing_path(@tournament, @round) %>
