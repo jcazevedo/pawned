@@ -7,8 +7,8 @@ class Tournament < ActiveRecord::Base
 
   belongs_to :admin, :class_name => "Player", :foreign_key => "admin_id"
 
-  validates :name, :status_index, :date_started, :presence => true
-  before_validation :default_status
+  validates :name, :status_index, :date_started, :matches_per_duel, :presence => true
+  before_validation :default_status, :default_matches_per_duel
 
   default_scope order('date_started desc')
 
@@ -33,6 +33,10 @@ class Tournament < ActiveRecord::Base
 
   def default_status
     status_index ||= 0
+  end
+
+  def default_matches_per_duel
+    matches_per_duel ||= 2
   end
 end
 

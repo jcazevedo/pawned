@@ -151,28 +151,28 @@ $(document).ready(function() {
               <tr>
                 <td rowspan="2"><b>Played</b></td>
                 <td>won</td>
-                <td>0</td>
+                <td><%= @player.tournaments_won.count %></td>
               </tr>
               <tr>
                 <td>total</td>
-                <td><% @player.tournaments.count %></td>
+                <td><%= @player.tournaments.count %></td>
               </tr>
               <tr>
                 <td rowspan="3"><b>Standings</b></td>
                 <td>best</td>
-                <td>0</td>
+                <td><%= @player.closed_standings.max_by {|s| s.position}.position %></td>
               </tr>
               <tr>
                 <td>worst</td>
-                <td>0</td>
+                <td><%= @player.closed_standings.min_by {|s| s.position}.position %></td>
               </tr>
               <tr>
                 <td>latest</td>
-                <td>0</td>
+                <td><%= @player.closed_standings.max_by {|s| s.created_at}.position %></td>
               </tr>
             </tbody>
           </table>
-          <%= link_to "Available tournaments", tournaments_path %>
+          <%= link_to "Open tournaments", open_tournaments_path %>
           <%= link_to "New tournament", new_tournament_path, :class => "pull-right" %>
         </div>
       </div>

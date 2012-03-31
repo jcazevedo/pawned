@@ -87,6 +87,14 @@ class Player < ActiveRecord::Base
     (m.white_player == self ? m.black_rating : m.white_rating).previous.value
   end
 
+  def tournaments_won
+    standings.map { |s| s.position if (s.round.tournament.status == 'Finished' and s.position == 1) }
+  end
+
+  def closed_standings
+    standings.map { |s| s if (s.round.tournament.status == 'Finished') }
+  end
+
   private
 
   def set_initial_rating
