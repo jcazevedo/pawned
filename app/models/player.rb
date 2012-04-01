@@ -63,11 +63,11 @@ class Player < ActiveRecord::Base
   end
 
   def matches_won
-    (matches.map { |m| m if m.winner == self }).reject { |r| r.nil? }
+    (matches.map { |m| m if m.winner == self }).compact
   end
 
   def matches_lost
-    (matches.map { |m| m if !m.winner.nil? and m.winner != self }).reject { |r| r.nil? }
+    (matches.map { |m| m if !m.winner.nil? and m.winner != self }).compact
   end
 
   def matches_drawn
@@ -75,11 +75,11 @@ class Player < ActiveRecord::Base
   end
 
   def streak_winning
-    ((matches.map { |m| 1 if m.winner == self }).reject { |r| r.nil? }).split(0).max_by { |s| s.count }.count
+    ((matches.map { |m| 1 if m.winner == self }).compact).split(0).max_by { |s| s.count }.count
   end
 
   def streak_losing
-    ((matches.map { |m| 1 if !m.winner.nil? and m.winner != self }).reject { |r| r.nil? }).split(0).max_by { |s| s.count }.count
+    ((matches.map { |m| 1 if !m.winner.nil? and m.winner != self }).compact).split(0).max_by { |s| s.count }.count
   end
 
   def wins_strongest
@@ -95,11 +95,11 @@ class Player < ActiveRecord::Base
   end
 
   def tournaments_won
-    standings.map { |s| s.position if (s.round.tournament.status == 'Finished' and s.position == 1) }
+    standings.map { |s| s.position if (s.round.tournament.status == 'Finished' and s.position == 1) }.compact
   end
 
   def closed_standings
-    standings.map { |s| s if (s.round.tournament.status == 'Finished') }
+    standings.map { |s| s if (s.round.tournament.status == 'Finished') }.compact.compact
   end
 
   private
@@ -108,4 +108,3 @@ class Player < ActiveRecord::Base
     self.ratings << Rating.create(:date => created_at, :value => 1300)
   end
 end
-

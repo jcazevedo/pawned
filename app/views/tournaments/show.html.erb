@@ -58,49 +58,51 @@
       <% end %>
 
 
-        <div id="container"></div>
-        <script type="text/javascript">
-var chart1; // globally available
-$(document).ready(function() {
-      chart1 = new Highcharts.Chart({
-         chart: {
-            renderTo: 'container',
-            type: 'line'
-         },
-         title: {
-            text: 'Standings'
-         },
-         xAxis: {
-            categories: [
-              <% @tournament.rounds.each do |round| %>
-              <%= '\'' + round.tournament_round_id.to_s + '\', ' %>
-              <% end %>
-            ]
-         },
-         yAxis: {
+      <div id="container"></div>
+      <script type="text/javascript">
+        var chart1; // globally available
+        $(document).ready(function() {
+          chart1 = new Highcharts.Chart({
+            chart: {
+              renderTo: 'container',
+                type: 'line'
+            },
             title: {
-               text: 'Position'
-            }
-         },
-         series: [
-        <% @tournament.players.each do |player| %>
-          {
-            name: "<%= player.given_name.to_s %>",
-            data: [
-              <% @tournament.rounds.each do |round| %>
-                <%= player.standings.map { |s| s.position if s.round == round }.first.to_s + ',' %>
-              <% end %>
+              text: 'Standings'
+            },
+            xAxis: {
+              categories: [
+                <% rounds = @tournament.rounds.map {|r| r if !r.standings.empty? }.compact %>
+                <% rounds.each do |round| %>
+                <%= '\'Round #' + round.tournament_round_id.to_s + '\', ' %>
+                <% end %>
+              ]
+            },
+            yAxis: {
+              min: 1,
+              max: <%= @tournament.players.count %>,
+              reversed: true,
+              allowDecimals: false,
+              title: {
+                text: 'Position'
+              }
+            },
+            series: [
+              <% @tournament.players.each do |player| %>
+              {
+                name: "<%= player.given_name.to_s %>",
+                data: [
+                  <% rounds.each do |round| %>
+                    <%= player.standings.map { |s| s.position if s.round == round }.compact.first.to_s + ',' %>
+                  <% end %>
+                ]
+              },
+            <% end %>
             ]
-         },
-        <% end %>
-        ]
-      });
-   });
-        </script>
+          });
+        });
+      </script>
 
-
-
-      </div>
     <% else %>
       <% if @tournament.players.empty? %>
       <hr>
@@ -213,4 +215,3 @@ $(document).ready(function() {
   <%= link_to 'Edit', edit_tournament_path(@tournament), :class => "btn" %>
   <%= link_to 'Back', tournaments_path, :class => "btn" %>
 </div>
-
