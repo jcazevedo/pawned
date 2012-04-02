@@ -6,20 +6,18 @@ class Duel < ActiveRecord::Base
   has_one :tournament, :through => :round
 
   validates :white_id, :black_id, :presence => true
-
-
-    # TODO The winner might be determined by something other than this comparison
-
+  
+  # TODO The winner might be determined by something other than this comparison  
   def winner
     return nil if white_result == black_result
     white_result > black_result ? white_player : black_player
   end
 
-   def result
+  def result
     return nil if white_result.nil? or black_result.nil?
     [white_result.to_s, black_result.to_s].join('-')
   end
-
+  
   def result=(result)
     if result.nil? || result.empty?
       self.white_result = nil
