@@ -186,7 +186,7 @@
                 <td><span class="pull-right"><%= duel.white_result %></span></td>
                 <td><%= duel.black_result %></td>
                 <td><%= duel.black_player.given_name %></td>
-                <td><%= link_to "View", tournament_round_duel_path(@tournament, round, duel) %></td>
+                <td><%= link_to "View", tournament_round_duel_path(@tournament.id, round, duel) %></td>
               </tr>
               <% end %>
             </tbody>

@@ -43,8 +43,8 @@
 
 <% @round.duels.each do |duel| %>
   <tr>
-    <td><%= duel.date_played.strftime("%d-%m-%Y %H:%M") %></td>
-    <td><span class="pull-right"><%= dule.white_player.name %></span></td>
+    <td><%= duel.created_at.strftime("%d-%m-%Y %H:%M") %></td>
+    <td><span class="pull-right"><%= duel.white_player.given_name %></span></td>
     <td><span class="pull-right"><%= duel.white_result %></span></td>
     <td><%= duel.black_result %></td>
     <td><%= duel.black_player.name %></td>
