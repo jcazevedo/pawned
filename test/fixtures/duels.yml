@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  white_id: 1
+  black_id: 1
+  white_result: 1
+  black_result: 1
+
+two:
+  white_id: 1
+  black_id: 1
+  white_result: 1
+  black_result: 1

@@ -211,7 +211,7 @@ $(document).ready(function() {
                       <td><span class="pull-right"><%= match.white_result %></span></td>
                       <td><%= match.black_result %></td>
                       <td><%= match.black_player.given_name %></td>
-                      <td><%= link_to "View", tournament_round_match_path(tournament, round, match) %></td>
+                      <td><%= link_to "View", tournament_round_duel_path(tournament, round, duel) %></td>
                     </tr>
                     <% end %>
                     <% end %>
