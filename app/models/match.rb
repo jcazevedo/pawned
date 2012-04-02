@@ -7,8 +7,8 @@ class Match < ActiveRecord::Base
   has_one :round, :through => :duel
 
   validates :white_id, :black_id, :presence => true
-  validates_with MatchDateValidator
-  validates_with MatchPlayersValidator
+#  validates_with MatchDateValidator
+#  validates_with MatchPlayersValidator
 
   after_save :check_for_rating_update
 
@@ -119,7 +119,7 @@ class Match < ActiveRecord::Base
   def check_for_rating_update
     if (white_result_changed? or black_result_changed?) and
         !white_result.nil? and
-        !black_result.nil?      
+        !black_result.nil?
       update_ratings
     end
   end

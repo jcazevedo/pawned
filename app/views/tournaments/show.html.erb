@@ -36,8 +36,12 @@
       </tbody>
     </table>
   </div>
+</div>
 
-  <div class="span7">
+<hr>
+
+<div class="row">
+  <div class="span6">
     <h2>Players</h2>
     <table class="table">
     <% if @tournament.latest_standings %>
@@ -56,54 +60,7 @@
         <td><%= s.player.ratings.last.value %></td>
       </tr>
       <% end %>
-
-
-      <div id="container"></div>
-      <script type="text/javascript">
-        var chart1; // globally available
-        $(document).ready(function() {
-          chart1 = new Highcharts.Chart({
-            chart: {
-              renderTo: 'container',
-                type: 'line'
-            },
-            title: {
-              text: 'Standings'
-            },
-            xAxis: {
-              categories: [
-                <% rounds = @tournament.rounds.map {|r| r if !r.standings.empty? }.compact %>
-                <% rounds.each do |round| %>
-                <%= '\'Round #' + round.tournament_round_id.to_s + '\', ' %>
-                <% end %>
-              ]
-            },
-            yAxis: {
-              min: 1,
-              max: <%= @tournament.players.count %>,
-              reversed: true,
-              allowDecimals: false,
-              title: {
-                text: 'Position'
-              }
-            },
-            series: [
-              <% @tournament.players.each do |player| %>
-              {
-                name: "<%= player.given_name.to_s %>",
-                data: [
-                  <% rounds.each do |round| %>
-                    <%= player.standings.map { |s| s.position if s.round == round }.compact.first.to_s + ',' %>
-                  <% end %>
-                ]
-              },
-            <% end %>
-            ]
-          });
-        });
-      </script>
-
-    <% else %>
+      <% else %>
       <% if @tournament.players.empty? %>
       <hr>
       <p class="alert alert-block alert-info">
@@ -125,12 +82,56 @@
       <% end %>
     <% end %>
     </table>
-
   </div>
-</div>
 
-<div class="row">
-  <div class="span7 offset5">
+  <div class="span6">
+    <% if @tournament.latest_standings %>
+    <div id="container"></div>
+    <script type="text/javascript">
+      var chart1; // globally available
+      $(document).ready(function() {
+        chart1 = new Highcharts.Chart({
+          chart: {
+            renderTo: 'container',
+              type: 'line'
+          },
+          title: {
+            text: 'Standings'
+          },
+          xAxis: {
+            categories: [
+              <% rounds = @tournament.rounds.map {|r| r if !r.standings.empty? }.compact %>
+              <% rounds.each do |round| %>
+              <%= '\'Round #' + round.tournament_round_id.to_s + '\', ' %>
+              <% end %>
+            ]
+          },
+          yAxis: {
+            min: 1,
+            max: <%= @tournament.players.count %>,
+            reversed: true,
+            allowDecimals: false,
+            title: {
+              text: 'Position'
+            }
+          },
+          series: [
+            <% @tournament.players.each do |player| %>
+            {
+              name: "<%= player.given_name.to_s %>",
+              data: [
+                <% rounds.each do |round| %>
+                  <%= player.standings.map { |s| s.position if s.round == round }.compact.first.to_s + ',' %>
+                <% end %>
+              ]
+            },
+          <% end %>
+          ]
+        });
+      });
+    </script>
+    <% end %>
+    <hr>
     <% if @tournament.players.include?(current_player) %>
     <!-- this is one of the ugliest things I've ever seen, seconded perhaps only by your momma.. -->
 
@@ -153,6 +154,7 @@
 
     <% end %>
   </div>
+
 </div>
 
 <hr>

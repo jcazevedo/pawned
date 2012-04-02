@@ -37,7 +37,7 @@ class MatchesController < ApplicationController
     @round = @tournament.rounds.find(params[:round_id])
     @duel = @round.duels.find(params[:duel_id])
     @match = @duel.matches.build
-    
+
     authorize! :create, @match
 
     respond_to do |format|
@@ -62,13 +62,13 @@ class MatchesController < ApplicationController
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.find(params[:round_id])
     @duel = @round.duels.find(params[:duel_id])
-    @match = @duel.matches.find(params[:id])
+    @match = @duel.matches.build(params[:match])
 
     authorize! :create, @match
 
     respond_to do |format|
       if @match.save
-        format.html { redirect_to tournament_round_match_url(@tournament, @round, @match), notice: 'Match was successfully created.' }
+        format.html { redirect_to tournament_round_duel_match_url(@tournament, @round, @duel, @match), notice: 'Match was successfully created.' }
         format.json { render json: @match, status: :created, location: @match }
       else
         format.html { render action: "new" }
