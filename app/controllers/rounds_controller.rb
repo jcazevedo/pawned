@@ -21,6 +21,7 @@ class RoundsController < ApplicationController
   def show
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.find(params[:id])
+    @standings = @round.standings
     authorize! :read, @round
 
     respond_to do |format|
@@ -46,6 +47,13 @@ class RoundsController < ApplicationController
   def edit
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.find(params[:id])
+    @players = @tournament.players
+    @players.each do |player|
+      if !player.id.in? @round.standings.map { |s| s.player_id }
+        @round.standings << Standing.new(:player_id => player.id)
+      end
+    end
+
     authorize! :manage, @round
   end
 

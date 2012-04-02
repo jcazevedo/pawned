@@ -1,26 +1,39 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Tournament:</b>
-  <%= @round.tournament_id %>
-</p>
+<div class="page-header">
+  <h1><%= @round.tournament.name %> <small>Round #<%= @round.tournament_round_id %></small></h1>
+</div>
 
-<p>
-  <b>Tournament round:</b>
-  <%= @round.tournament_round_id %>
-</p>
+<h3>Standings</h3>
+<table class="table">
+  <thead>
+    <th>Position</th>
+    <th>Player</th>
+    <th>Points</th>
+  </thead>
+  <tbody>
+    <% @standings.each do |standing| %>
+    <tr>
+      <td><%= standing.position %></td>
+      <td><%= standing.player.name %></td>
+      <td><%= standing.points %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
 
+<% if can? :manage, @tournament %>
+  <%= link_to 'Update standings', edit_tournament_round_path(@tournament, @round) %>
+<% end %>
 
+<h3>Games</h3>
 <table class="table">
   <tr>
-    <th>Date inserted</th>
     <th>Date played</th>
-    <th>White</th>
+    <th><span class="pull-right">White</span></th>
+    <th></th>
+    <th></th>
     <th>Black</th>
-    <th>White result</th>
-    <th>Black result</th>
-    <th>Round</th>
-    <th>Pgn text</th>
     <th></th>
     <% if can? :manage, @tournament %>
       <th></th>
@@ -30,14 +43,11 @@
 
 <% @round.duels.each do |duel| %>
   <tr>
-    <td><%= duel.date_inserted %></td>
-    <td><%= duel.date_played %></td>
-    <td><%= duel.white_id %></td>
-    <td><%= duel.black_id %></td>
-    <td><%= duel.white_result %></td>
+    <td><%= duel.date_played.strftime("%d-%m-%Y %H:%M") %></td>
+    <td><span class="pull-right"><%= dule.white_player.name %></span></td>
+    <td><span class="pull-right"><%= duel.white_result %></span></td>
     <td><%= duel.black_result %></td>
-    <td><%= duel.round_id %></td>
-    <td><%= duel.png_text %></td>
+    <td><%= duel.black_player.name %></td>
     <td><%= link_to 'Show', tournament_round_duel_path(@tournament, @round, duel) %></td>
     <% if can? :manage, @tournament %>
       <td><%= link_to 'Edit', edit_tournament_round_duel_path(@tournament, @round, duel) %></td>
