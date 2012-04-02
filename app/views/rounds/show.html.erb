@@ -15,7 +15,7 @@
     <% @standings.each do |standing| %>
     <tr>
       <td><%= standing.position %></td>
-      <td><%= standing.player.name %></td>
+      <td><%= standing.player.given_name %></td>
       <td><%= standing.points %></td>
     </tr>
     <% end %>
@@ -47,7 +47,7 @@
     <td><span class="pull-right"><%= duel.white_player.given_name %></span></td>
     <td><span class="pull-right"><%= duel.white_result %></span></td>
     <td><%= duel.black_result %></td>
-    <td><%= duel.black_player.name %></td>
+    <td><%= duel.black_player.given_name %></td>
     <td><%= link_to 'Show', tournament_round_duel_path(@tournament, @round, duel) %></td>
     <% if can? :manage, @tournament %>
       <td><%= link_to 'Edit', edit_tournament_round_duel_path(@tournament, @round, duel) %></td>
