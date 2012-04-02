@@ -1,47 +1,51 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Date inserted:</b>
-  <%= @match.date_inserted %>
-</p>
-
-<p>
-  <b>Date played:</b>
-  <%= @match.date_played %>
-</p>
-
-<p>
-  <b>White:</b>
-  <%= @match.white_id %>
-</p>
-
-<p>
-  <b>Black:</b>
-  <%= @match.black_id %>
-</p>
-
-<p>
-  <b>White result:</b>
-  <%= @match.white_result %>
-</p>
-
-<p>
-  <b>Black result:</b>
-  <%= @match.black_result %>
-</p>
-
-<p>
-  <b>Round:</b>
-  <%= @match.round_id %>
-</p>
-
-<p>
-  <b>Pgn text:</b>
-  <%= @match.pgn_text %>
-</p>
+<div class="page-header">
+  <h1><%= @match.white_player.given_name %> x <%= @match.black_player.given_name %></h1>
+</div>
 
 
-<% if can? :manage, @tournament %>
-  <%= link_to 'Edit', edit_tournament_round_duel_match_path(@tournament, @round, @match) %> |
-<% end %>
-<%= link_to 'Back', tournament_round_duel_path(@tournament, @round, @duel) %>
+<div class="row">
+  <div class="span5">
+    <h2>Details</h2>
+    <table class="table">
+      <tr>
+        <td><b>Date Inserted</b></td>
+        <td><%= @match.date_inserted %></td>
+      </tr>
+      <tr>
+        <td><b>Date Played</b></td>
+        <td><%= @match.date_played %></td>
+      </tr>
+      <tr>
+        <td><b>White Player</b></td>
+        <td><%= @match.white_player.given_name %></td>
+      </tr>
+      <tr>
+        <td><b>Black Player</b></td>
+        <td><%= @match.black_player.given_name %></td>
+      </tr>
+      <tr>
+        <td><b>Result</b></td>
+        <td><%= @match.result %></td>
+      </tr>
+      <tr>
+        <td><b>Context</b></td>
+        <td>
+          <%= link_to "Round #" + @match.round.tournament_round_id.to_s, tournament_round_path(@match.round.tournament, @match.round) %>
+          on
+          <%= link_to @match.round.tournament.name, tournament_path(@match.round.tournament) %>
+        </td>
+      </tr>
+      <tr>
+        <td><b>PGN</b></td>
+        <td><%= @match.pgn_text %></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="form-actions">
+  <% if can? :manage, @tournament %>
+  <%= link_to 'Edit', edit_tournament_round_duel_match_path(@tournament, @round, @match), :class => "btn" %>
+  <% end %>
+  <%= link_to 'Back', tournament_round_duel_path(@tournament, @round, @duel), :class => "btn" %>
+</div>

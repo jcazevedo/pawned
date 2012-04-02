@@ -2,13 +2,14 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :white_id, :collection => @tournament.players %>
-    <%= f.input :black_id, :collection => @tournament.players %>
+    <%= f.input :white_id, :collection => @tournament.players.sort { |a, b| a.given_name <=> b.given_name }, :include_blank => false %>
+    <%= f.input :black_id, :collection => @tournament.players.sort { |a, b| a.given_name <=> b.given_name }, :include_blank => false %>
     <%= f.input :white_result %>
     <%= f.input :black_result %>
   </div>
 
   <div class="form-actions">
     <%= f.button :submit %>
+    <%= link_to 'Back', tournament_round_path(@tournament, @round), :class => "btn" %>
   </div>
 <% end %>

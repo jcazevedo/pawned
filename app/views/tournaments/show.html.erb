@@ -1,6 +1,6 @@
-<h1><%= @tournament.name %></h1>
-
-<hr>
+<div class="page-header">
+  <h1><%= @tournament.name %></h1>
+</div>
 
 <div class="row">
   <div class="span5">
@@ -164,12 +164,12 @@
   <h2>Rounds</h2>
   <% if @tournament.rounds %>
   <div class="accordion" id="rounds-accordion">
-    <% @tournament.rounds.each do |round| %>
+    <% @tournament.rounds.reverse.each do |round| %>
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#rounds-accordion" href="#collapse<%= round.tournament_round_id %>">Round #<%= round.tournament_round_id %></a>
       </div>
-      <div id="collapse<%= round.tournament_round_id %>" class="accordion-body collapse <%= 'in' if round.tournament_round_id == 1 %>">
+      <div id="collapse<%= round.tournament_round_id %>" class="accordion-body collapse <%= 'in' if round.tournament_round_id == @tournament.rounds.count %>">
         <div class="accordion-inner">
           <table class="table table-striped">
             <thead>
