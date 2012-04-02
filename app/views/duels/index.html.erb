@@ -1,0 +1,29 @@
+<h1>Listing duels</h1>
+
+<table>
+  <tr>
+    <th>White</th>
+    <th>Black</th>
+    <th>White result</th>
+    <th>Black result</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @duels.each do |duel| %>
+  <tr>
+    <td><%= duel.white_id %></td>
+    <td><%= duel.black_id %></td>
+    <td><%= duel.white_result %></td>
+    <td><%= duel.black_result %></td>
+    <td><%= link_to 'Show', duel %></td>
+    <td><%= link_to 'Edit', edit_duel_path(duel) %></td>
+    <td><%= link_to 'Destroy', duel, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Duel', new_duel_path %>

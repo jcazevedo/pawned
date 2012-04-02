@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>White:</b>
+  <%= @duel.white_id %>
+</p>
+
+<p>
+  <b>Black:</b>
+  <%= @duel.black_id %>
+</p>
+
+<p>
+  <b>White result:</b>
+  <%= @duel.white_result %>
+</p>
+
+<p>
+  <b>Black result:</b>
+  <%= @duel.black_result %>
+</p>
+<% if can? :manage, @tournament %>
+  <%= link_to 'Create new match', new_tournament_round_duel_match_path(@tournament,@round,@duel) %>
+
+<% end %>
+
+<%= link_to 'Edit', edit_duel_path(@duel) %> |
+<%= link_to 'Back', duel_path %>
