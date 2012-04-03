@@ -1,4 +1,5 @@
 class StandingsController < ApplicationController
+  before_filter :authenticate_player!
   # GET /standings
   # GET /standings.json
   def index

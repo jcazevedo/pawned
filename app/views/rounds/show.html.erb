@@ -1,65 +1,67 @@
-<p id="notice"><%= notice %></p>
-
 <div class="page-header">
   <h1><%= @round.tournament.name %> <small>Round #<%= @round.tournament_round_id %></small></h1>
 </div>
 
-<h3>Standings</h3>
-<table class="table">
-  <thead>
-    <th>Position</th>
-    <th>Player</th>
-    <th>Points</th>
-  </thead>
-  <tbody>
+<div class="row">
+  <div class="span5">
+  <h2>Standings</h2>
+  <table class="table">
+    <tr>
+      <th>Position</th>
+      <th>Player</th>
+      <th>Points</th>
+    </tr>
     <% @standings.each do |standing| %>
     <tr>
       <td><%= standing.position %></td>
-      <td><%= standing.player.name %></td>
+      <td><%= standing.player.given_name %></td>
       <td><%= standing.points %></td>
     </tr>
     <% end %>
-  </tbody>
-</table>
+  </table>
+  <% if can? :manage, @tournament %>
+    <%= link_to 'Update standings', edit_tournament_round_path(@tournament, @round), :class => "btn btn-primary" %>
+  <% end %>
+  </div>
 
-<% if can? :manage, @tournament %>
-  <%= link_to 'Update standings', edit_tournament_round_path(@tournament, @round) %>
-<% end %>
-
-<h3>Games</h3>
-<table class="table">
-  <tr>
-    <th>Date played</th>
-    <th><span class="pull-right">White</span></th>
-    <th></th>
-    <th></th>
-    <th>Black</th>
-    <th></th>
-    <% if can? :manage, @tournament %>
+  <div class="span7">
+  <h2>Duels</h2>
+  <table class="table">
+    <tr>
+      <th>Date played</th>
+      <th><span class="pull-right">White</span></th>
       <th></th>
       <th></th>
-    <% end %>
-  </tr>
+      <th>Black</th>
+      <th></th>
+      <% if can? :manage, @tournament %>
+        <th></th>
+        <th></th>
+      <% end %>
+    </tr>
 
-<% @round.duels.each do |duel| %>
-  <tr>
-    <td><%= duel.created_at.strftime("%d-%m-%Y %H:%M") %></td>
-    <td><span class="pull-right"><%= duel.white_player.given_name %></span></td>
-    <td><span class="pull-right"><%= duel.white_result %></span></td>
-    <td><%= duel.black_result %></td>
-    <td><%= duel.black_player.name %></td>
-    <td><%= link_to 'Show', tournament_round_duel_path(@tournament, @round, duel) %></td>
-    <% if can? :manage, @tournament %>
-      <td><%= link_to 'Edit', edit_tournament_round_duel_path(@tournament, @round, duel) %></td>
-      <td><%= link_to 'Destroy', tournament_round_duel_path(@tournament, @round, duel), confirm: 'Are you sure?', method: :delete %></td>
-    <% end %>
-  </tr>
-<% end %>
-</table>
-
+  <% @round.duels.each do |duel| %>
+    <tr>
+      <td><%= duel.created_at.strftime("%d-%m-%Y %H:%M") %></td>
+      <td><span class="pull-right"><%= duel.white_player.given_name %></span></td>
+      <td><span class="pull-right"><%= duel.white_result %></span></td>
+      <td><%= duel.black_result %></td>
+      <td><%= duel.black_player.given_name %></td>
+      <td><%= link_to 'Show', tournament_round_duel_path(@tournament, @round, duel) %></td>
+      <% if can? :manage, @tournament %>
+        <td><%= link_to 'Edit', edit_tournament_round_duel_path(@tournament, @round, duel) %></td>
+        <td><%= link_to 'Destroy', tournament_round_duel_path(@tournament, @round, duel), confirm: 'Are you sure?', method: :delete %></td>
+      <% end %>
+    </tr>
+  <% end %>
+  </table>
+  <%= link_to 'Create new duel', new_tournament_round_duel_path(@tournament, @round), :class => "btn btn-primary" %>
+  </div>
+</div>
 
 <% if can? :manage, @tournament %>
-  <%= link_to 'Create new duel', new_tournament_round_duel_path(@tournament, @round) %> |
-  <%= link_to 'Edit', edit_tournament_round_path(@tournament, @round) %> |
+<div class="form-actions">
+  <%= link_to 'Edit Round', edit_tournament_round_path(@tournament, @round), :class => "btn" %>
+  <%= link_to 'Back', tournament_path(@tournament), :class => "btn" %>
+</div>
 <% end %>
-<%= link_to 'Back', tournament_path(@tournament) %>

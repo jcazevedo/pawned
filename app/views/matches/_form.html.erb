@@ -1,4 +1,4 @@
-<%= simple_form_for([@tournament, @round,@duel, @match], :html => {:class => 'form-horizontal'}) do |f| %>
+<%= simple_form_for([@tournament, @round, @duel, @match], :html => {:class => 'form-horizontal'}) do |f| %>
   <%= f.error_notification %>
   <legend>Match</legend>
 
@@ -19,13 +19,12 @@
   <%= f.input :time_played, :as => :time %>
 
   <%= f.input :white_player do %>
-  <%= f.select :white_id, @tournament.players.all.map { |r| [r.name, r.id] }, :include_blank => true %>
+  <%= f.select :white_id, @duel.players.map { |r| [r.name, r.id] }, :include_blank => false %>
   <% end %>
   <%= f.input :black_player do %>
-  <%= f.select :black_id, @tournament.players.all.map { |r| [r.name, r.id] }, :include_blank => true %>
+  <%= f.select :black_id, @duel.players.map { |r| [r.name, r.id] }, :include_blank => false %>
   <% end %>
   <%= f.input :result, :as => :select, :collection => ["1.0-0.0", "0.0-1.0", "0.5-0.5"] %>
-  <%= f.input :round_id %>
   <%= f.input :pgn_text %>
 
   <script>

@@ -1,4 +1,5 @@
 class RatingsController < ApplicationController
+  before_filter :authenticate_player!
   # GET /ratings
   # GET /ratings.json
   def index
@@ -10,4 +11,3 @@ class RatingsController < ApplicationController
     end
   end
 end
-

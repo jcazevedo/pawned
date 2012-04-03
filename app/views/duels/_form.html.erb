@@ -2,13 +2,14 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :white_id, :collection => @tournament.players %>
-    <%= f.input :black_id, :collection => @tournament.players %>
+    <%= f.association :white_player, :label_method => lambda { |player| "#{player.given_name}" } %>
+    <%= f.association :black_player, :label_method => lambda { |player| "#{player.given_name}" } %>
     <%= f.input :white_result %>
     <%= f.input :black_result %>
   </div>
 
   <div class="form-actions">
     <%= f.button :submit %>
+    <%= link_to 'Back', tournament_round_path(@tournament, @round), :class => "btn" %>
   </div>
 <% end %>
