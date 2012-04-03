@@ -4,8 +4,8 @@
   <div class="form-inputs">
     <%= f.association :white_player, :label_method => lambda { |player| "#{player.given_name}" } %>
     <%= f.association :black_player, :label_method => lambda { |player| "#{player.given_name}" } %>
-    <%= f.input :white_result %>
-    <%= f.input :black_result %>
+    <%= f.input :match_num %>
+
   </div>
 
   <div class="form-actions">

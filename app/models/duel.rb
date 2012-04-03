@@ -5,8 +5,9 @@ class Duel < ActiveRecord::Base
   belongs_to :round
   has_one :tournament, :through => :round
 
-  validates :white_id, :black_id, :presence => true
-  
+  validates :white_id, :black_id, :match_num, :presence => true
+  validates_numericality_of :match_num, :only_integer => true, :message => "It needs to be a positive number."
+  validate :positive_num
   # TODO The winner might be determined by something other than this comparison  
   def winner
     return nil if white_result == black_result
@@ -31,5 +32,8 @@ class Duel < ActiveRecord::Base
 
   def players
     [white_player, black_player]
+  end
+  def positive_num
+    errors.add(:match_num, "It needs to be a positive number.") unless self.match_num > 0
   end
 end
