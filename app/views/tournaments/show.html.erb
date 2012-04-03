@@ -193,8 +193,10 @@
               <% end %>
             </tbody>
           </table>
-
-          <%= link_to "Edit round", tournament_round_path(@tournament, round) %>
+          <% if can? :manage, @tournament %>
+          <td><%= link_to "Edit", tournament_round_path(@tournament, round) %></td>
+          <td><%= link_to "Destroy", [@tournament,round], confirm: 'Are you sure?', method: :delete %></td>
+          <% end %>
         </div>
       </div>
     </div>
