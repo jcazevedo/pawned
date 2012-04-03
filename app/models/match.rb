@@ -21,9 +21,11 @@ class Match < ActiveRecord::Base
   def tournament
     return round.tournament
   end
+
   def round_id
     return round.id
   end
+
   def result
     return nil if white_result.nil? or black_result.nil?
     [white_result.to_s, black_result.to_s].join('-')

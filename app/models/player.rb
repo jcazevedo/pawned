@@ -105,6 +105,6 @@ class Player < ActiveRecord::Base
   private
 
   def set_initial_rating
-    self.ratings << Rating.create(:date => created_at, :value => 1300)
+    self.ratings << Rating.create(:date => DateTime.new(1970, 1, 1), :value => 1300)
   end
 end
