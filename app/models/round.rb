@@ -4,9 +4,10 @@ class Round < ActiveRecord::Base
 
   has_many :standings, :dependent => :destroy, :order => "position ASC"
   accepts_nested_attributes_for :standings
-  validates :tournament_id, :tournament_round_id, presence: true
+  validates :tournament_id, :tournament_round_id, presence: true  
+  validates :standings, :standings_position_uniqueness => true
+  validates :standings, :standings_player_uniqueness => true
 
-  
   def new_round_id
     begin
       last_round = Round.last(:conditions => ["tournament_id = ?", tournament_id], :order => "tournament_round_id ASC").tournament_round_id

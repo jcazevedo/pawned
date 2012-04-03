@@ -86,17 +86,6 @@ class RoundsController < ApplicationController
     @tournament = Tournament.find(params[:tournament_id])
     @round = @tournament.rounds.find(params[:id])
     @players = @tournament.players
-    positions = (1..@players.length).to_a
-    @players.each do |player|
-      if !player.id.in? @round.standings.map { |s| s.player_id }
-        @round.standings << Standing.new(:player_id => player.id,
-                                         :position => positions[0])
-        positions.shift
-      else
-        positions.delete(@round.standings.where(:player_id => player.id).first.position)
-      end
-    end
-
     authorize! :manage, @round
 
     respond_to do |format|
