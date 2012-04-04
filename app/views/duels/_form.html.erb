@@ -4,8 +4,7 @@
   <div class="form-inputs">
     <%= f.association :white_player, :collection => @tournament.players.sort! { |a, b| a.given_name <=> b.given_name }, :include_blank => false %>
     <%= f.association :black_player, :collection => @tournament.players.sort! { |a, b| a.given_name <=> b.given_name }, :include_blank => false %>
-    <%= f.input :white_result %>
-    <%= f.input :black_result %>
+    <%= f.input :match_num %>
   </div>
 
   <div class="form-actions">

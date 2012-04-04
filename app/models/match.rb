@@ -7,8 +7,8 @@ class Match < ActiveRecord::Base
   has_one :round, :through => :duel
 
   validates :white_id, :black_id, :presence => true
-  validates_with MatchDateValidator
-  validates_with MatchPlayersValidator
+ # validates_with MatchDateValidator
+ # validates_with MatchPlayersValidator
 
   after_save :check_for_rating_update
 
@@ -18,6 +18,11 @@ class Match < ActiveRecord::Base
               :constructor => Proc.new{ |item| item },
               :converter => Proc.new{ |item| item }
 
+  def duel_info(white_id, black_id, duel_id)
+    @white_id = white_id
+    @black_id = black_id
+    @duel_id = duel_id   
+  end
   def tournament
     return round.tournament
   end
