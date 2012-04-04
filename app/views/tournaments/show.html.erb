@@ -207,8 +207,8 @@
   <% end %>
   <% if can? :manage, @tournament %>
     <%= simple_form_for [@tournament, Round.new() ] do |f| %>
-    <%= f.hidden_field :tournament_round_id, :value => Round.new(:tournament_id => @tournament.id).new_round_id %>
-    <%= submit_tag "Create new round", :class => "btn btn-primary" %></p>
+      <%= f.hidden_field :tournament_round_id, :value => Round.new(:tournament_id => @tournament.id).new_round_id %>
+      <%= submit_tag "Create new round", :class => "btn btn-primary" %></p>
     <% end %>
   <% end %>
 

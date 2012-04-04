@@ -28,11 +28,11 @@
     </tr>
   <% @duel.matches.each do |match| %>
     <tr>
-      <td><%= match.date_played.strftime("%d-%m-%Y %H:%M") %></td>
+      <td><%= match.date_played.strftime("%d-%m-%Y %H:%M") if match.date_played %></td>
       <td><span class="pull-right"><%= match.white_player.given_name %></span></td>
       <td><span class="pull-right"><%= match.white_result %></span></td>
       <td><%= match.black_result %></td>
-      <td><%= match.black_player.name %></td>
+      <td><%= match.black_player.given_name %></td>
       <% if can? :manage, @tournament %>
         <td><%= link_to 'Edit', edit_tournament_round_duel_match_path(@tournament, @round, @duel, match) %></td>
         <td><%= link_to 'Destroy', tournament_round_duel_match_path(@tournament, @round, @duel, match), confirm: 'Are you sure?', method: :delete %></td>
@@ -41,10 +41,7 @@
   <% end %>
   </table>
 
-  <% if can? :manage, @tournament %>
-    <%= link_to 'Create new match', new_tournament_round_duel_match_path(@tournament,@round,@duel), :class => "btn btn-primary" %>
-  <% end %>
-  </div>
+   </div>
 </div>
 
 <div class="form-actions">
