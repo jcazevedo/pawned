@@ -81,10 +81,10 @@
               <li class="dropdown <%= current_controller('help') %>">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Help <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Get online help</a></li>
-                  <li><a href="#">F.A.Q.</a></li>
+                  <li><a href="javascript:void(0)" onclick="showModal('help');"><i class="icon-exclamation-sign"></i> Get online help</a></li>
+                  <li><a href="javascript:void(0)" onclick="showModal('faq');"><i class="icon-question-sign"></i> F.A.Q.</a></li>
                   <li class="divider"></li>
-                  <li><a href="#">About</a></li>
+                  <li><a href="javascript:void(0)" onclick="showModal('about');"><i class="icon-info-sign"></i> About</a></li>
                 </ul>
               </li>
 
@@ -94,11 +94,13 @@
                 <ul class="dropdown-menu">
                   <li>
                   <%= link_to(admin_players_path()) do %>
+                    <i class="icon-list-alt"></i>
                     Players
                   <% end %>
                   </li>
                   <li>
                   <%= link_to(new_admin_player_path()) do %>
+                    <i class="icon-user"></i>
                     Create Player
                   <% end %>
                   </li>
@@ -165,6 +167,16 @@
 
   </div>
 
+<div class="modal fade" id="myModal">
+
+</div>
+<script>
+  function showModal(page) {
+  $.get("/" + page + ".html", function(data){
+    $('#myModal').html(data);
+    $('#myModal').modal();
+  });
+  }
+</script>
 </body>
 </html>
-
