@@ -18,9 +18,35 @@
     </tr>
     <% end %>
   </tbody>
+  
 </table>
-
 <div class="form-actions">
   <%= f.button :submit %>
 </div>
 <% end %>
+
+<%= simple_form_for([@tournament, @round], :html => {:class => 'form-inline'}) do |f| %>
+<%= f.error_notification %>
+<legend>Duels for Round #<%= @round.tournament_round_id %></legend>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Player 1</th>
+      <th>Player 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= f.simple_fields_for :duels do |d| %>
+    <tr>
+      <td><%= d.input :white_player, :label => false, :label_method => lambda { |white_player| "#{white_player.given_name}" } %></td>
+      <td><%= d.input :black_player, :label => false, :label_method => lambda { |black_player| "#{black_player.given_name}" } %></td>
+    </tr>
+    <% end %>
+  </tbody> 
+</table>
+<div class="form-actions">
+  <%= f.button :submit %>
+</div>
+<% end %>
+
+
