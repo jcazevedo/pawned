@@ -36,3 +36,6 @@ gem 'cancan'
 # Simple forms and awesome graphs
 gem 'simple_form'
 gem 'highcharts-rails'
+
+# Pagination
+gem 'will_paginate', '~> 3.0'

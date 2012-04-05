@@ -108,3 +108,4 @@ class Player < ActiveRecord::Base
     self.ratings << Rating.create(:date => DateTime.new(1970, 1, 1), :value => 1300)
   end
 end
+

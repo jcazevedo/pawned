@@ -35,38 +35,45 @@
         </tr>
       </tbody>
     </table>
+    <hr>
+    <% if @tournament.players.include?(current_player) %>
+    <!-- this is one of the ugliest things I've ever seen, seconded perhaps only by your momma.. -->
+
+      <%= link_to participation_path(TournamentPlayer.find(current_player.tournament_players(:tournament_id => @tournament.id).first.id)),
+        confirm: 'Are you sure?', method: :delete, :class => "btn btn-warning pull-right" do %>
+        <i class="icon-white icon-remove-sign"></i>
+        Withdraw from this tournament
+      <% end %>
+
+    <% else %>
+
+      <%= form_for TournamentPlayer.new, :url => participations_path do |f| %>
+        <%= f.hidden_field :tournament_id, :value => @tournament.id %>
+        <%= f.hidden_field :player_id, :value => current_player.id %>
+        <button type="submit" class="btn btn-success pull-right">
+          <i class="icon-white icon-ok-sign"></i>
+          Sign up for this tournament
+        </button>
+      <% end %>
+
+    <% end %>
   </div>
-</div>
 
-<hr>
-
-<div class="row">
-  <div class="span6">
+  <div class="span7">
+    <% if @latest_standings %>
+    <h2>Current Standings</h2>
+    <div id="standings">
+      <%= render("standings") %>
+    </div>
+    <% else %>
+    <% if @tournament.players.empty? %>
+    <hr>
+    <p class="alert alert-block alert-info">
+      There are no players signed up for this tournament yet.
+    </p>
+    <% else %>
     <h2>Players</h2>
     <table class="table">
-    <% if @tournament.latest_standings %>
-      <tr>
-        <th>Pos.</th>
-        <th>Name</th>
-        <th>Points</th>
-        <th>Rating</th>
-      </tr>
-
-      <% @tournament.latest_standings.each do |s| %>
-      <tr>
-        <td><%= s.position %></td>
-        <td><%= s.player.given_name %></td>
-        <td><%= s.points %></td>
-        <td><%= s.player.ratings.last.value %></td>
-      </tr>
-      <% end %>
-      <% else %>
-      <% if @tournament.players.empty? %>
-      <hr>
-      <p class="alert alert-block alert-info">
-        There are no players signed up for this tournament yet.
-      </p>
-      <% else %>
       <tr>
         <th>Name</th>
         <th>e-mail</th>
@@ -79,12 +86,17 @@
         <td><%= p.ratings.last.value %></td>
       </tr>
         <% end %>
-      <% end %>
-    <% end %>
     </table>
+    <% end %>
+  <% end %>
   </div>
 
-  <div class="span6">
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="span12">
     <% if @tournament.latest_standings %>
     <div id="container"></div>
     <script type="text/javascript">
@@ -96,7 +108,7 @@
               type: 'line'
           },
           title: {
-            text: 'Standings'
+            text: 'Player Standings Evolution'
           },
           xAxis: {
             categories: [
@@ -130,28 +142,6 @@
         });
       });
     </script>
-    <% end %>
-    <hr>
-    <% if @tournament.players.include?(current_player) %>
-    <!-- this is one of the ugliest things I've ever seen, seconded perhaps only by your momma.. -->
-
-      <%= link_to participation_path(TournamentPlayer.find(current_player.tournament_players(:tournament_id => @tournament.id).first.id)),
-        confirm: 'Are you sure?', method: :delete, :class => "btn btn-warning" do %>
-        <i class="icon-white icon-remove-sign"></i>
-        Withdraw from this tournament
-      <% end %>
-
-    <% else %>
-
-      <%= form_for TournamentPlayer.new, :url => participations_path do |f| %>
-        <%= f.hidden_field :tournament_id, :value => @tournament.id %>
-        <%= f.hidden_field :player_id, :value => current_player.id %>
-        <button type="submit" class="btn btn-success">
-          <i class="icon-white icon-ok-sign"></i>
-          Sign up for this tournament
-        </button>
-      <% end %>
-
     <% end %>
   </div>
 
@@ -219,3 +209,4 @@
   <%= link_to 'Edit', edit_tournament_path(@tournament), :class => "btn" %>
   <%= link_to 'Back', tournaments_path, :class => "btn" %>
 </div>
+

@@ -17,10 +17,12 @@ class TournamentsController < ApplicationController
   # GET /tournaments/1.json
   def show
     @tournament = Tournament.find(params[:id])
+    @latest_standings = @tournament.latest_standings.nil? ? nil : @tournament.latest_standings.paginate(:page => params[:page], :per_page => 5)
     authorize! :read, @tournament
 
     respond_to do |format|
       format.html # show.html.erb
+      format.js # show.html.erb
       format.json { render json: @tournament }
     end
   end
