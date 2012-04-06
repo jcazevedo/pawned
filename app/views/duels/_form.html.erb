@@ -2,9 +2,14 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :white_player, :collection => @tournament.players.sort! { |a, b| a.given_name <=> b.given_name }, :include_blank => false %>
-    <%= f.association :black_player, :collection => @tournament.players.sort! { |a, b| a.given_name <=> b.given_name }, :include_blank => false %>
+    <% players = (@tournament.players - (@round.duels.map { |r| r.black_player } + @round.duels.map { |r| r.white_player })).sort! { |a, b| a.given_name <=> b.given_name } %>
+    <%= f.association :white_player, :collection => players, :include_blank => false %>
+    <%= f.association :black_player, :collection => players, :include_blank => false %>
     <%= f.input :match_num %>
+    <!-- TODO re-including these fields in the form, as there is currently no other way of adding this.
+              Will be removed when there is another interface. -->
+    <%= f.input :white_result %>
+    <%= f.input :black_result %>
   </div>
 
   <div class="form-actions">

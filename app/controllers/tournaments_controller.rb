@@ -17,7 +17,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments/1.json
   def show
     @tournament = Tournament.find(params[:id])
-    @latest_standings = @tournament.latest_standings.nil? ? nil : @tournament.latest_standings.paginate(:page => params[:page], :per_page => 5)
+    @latest_standings = @tournament.latest_standings.nil? ? nil : @tournament.latest_standings.paginate(:page => params[:page], :per_page => 6)
     authorize! :read, @tournament
 
     respond_to do |format|
@@ -117,4 +117,3 @@ class TournamentsController < ApplicationController
     end
   end
 end
-

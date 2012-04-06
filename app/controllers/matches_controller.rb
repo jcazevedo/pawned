@@ -89,7 +89,7 @@ class MatchesController < ApplicationController
 
     respond_to do |format|
       if @match.update_attributes(params[:match])
-        format.html { redirect_to tournament_round_match_url(@tournament, @round, @match), notice: 'Match was successfully updated.' }
+        format.html { redirect_to tournament_round_duel_match_url(@tournament, @round, @duel, @match), notice: 'Match was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

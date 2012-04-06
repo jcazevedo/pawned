@@ -154,29 +154,27 @@
     <% end %>
 
     <%= yield %>
+
+    <% if player_signed_in? %>
     <hr>
 
     <footer>
-      &copy; Pawnage Software 2012
-      <!-- Social icons by: http://www.elegantthemes.com/blog/resources/free-social-media-icon-set -->
-      <a href="#"><img src="/img/orkut.png" class="pull-right" /></a>
-      <a href="#"><img src="/img/facebook.png" class="pull-right" /></a>
-      <a href="#"><img src="/img/twitter.png" class="pull-right" /></a>
-      <a href="#"><img src="/img/google.png" class="pull-right" /></a>
+      &copy; Pawned 2012
     </footer>
+    <% end %>
 
   </div>
 
-<div class="modal fade" id="myModal">
-
-</div>
-<script>
-  function showModal(page) {
-  $.get("/" + page + ".html", function(data){
-    $('#myModal').html(data);
-    $('#myModal').modal();
-  });
-  }
-</script>
+  <% if player_signed_in? %>
+  <div class="modal fade" id="myModal"></div>
+  <script>
+    function showModal(page) {
+    $.get("/" + page + ".html", function(data){
+      $('#myModal').html(data);
+      $('#myModal').modal();
+    });
+    }
+  </script>
+  <% end %>
 </body>
 </html>

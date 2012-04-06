@@ -21,7 +21,7 @@ class Match < ActiveRecord::Base
   def duel_info(white_id, black_id, duel_id)
     @white_id = white_id
     @black_id = black_id
-    @duel_id = duel_id   
+    @duel_id = duel_id
   end
   def tournament
     return round.tournament
@@ -84,11 +84,12 @@ class Match < ActiveRecord::Base
     old_white_rating = white_player.ratings.where("date < ?", date).last.value
     old_black_rating = black_player.ratings.where("date < ?", date).last.value
 
-    new_white_rating = Rating.new_rating(white_player.matches.find_all { |match| match.date < date }.length,
+    # TODO added the unless in there. @jcazevedo check this, please.
+    new_white_rating = Rating.new_rating(white_player.matches.find_all { |match| match.date < date unless match.date.nil? }.compact.length,
                                          old_white_rating,
                                          old_black_rating,
                                          white_result)
-    new_black_rating = Rating.new_rating(black_player.matches.find_all { |match| match.date < date }.length,
+    new_black_rating = Rating.new_rating(black_player.matches.find_all { |match| match.date < date unless match.date.nil? }.compact.length,
                                          old_black_rating,
                                          old_white_rating,
                                          black_result)
