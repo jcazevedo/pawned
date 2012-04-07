@@ -7,7 +7,7 @@ class Match < ActiveRecord::Base
   has_one :round, :through => :duel
 
   validates :white_id, :black_id, :presence => true
- # validates_with MatchDateValidator
+  validates_with MatchDateValidator
  # validates_with MatchPlayersValidator
 
   after_save :check_for_rating_update

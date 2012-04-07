@@ -6,13 +6,13 @@ class MatchDateValidator < ActiveModel::Validator
 
     # match must be inserted during the date limits of the tournament
     if record.tournament.date_finished.nil?
-      unless record.date_played >= record.tournament.date_started
-        record.errors[:date_played] << "Match must have been played during the tournament."
+      unless record.date >= record.tournament.date_started
+        record.errors[:date] << "Match must have been played during the tournament."
       end
     else
       unless record.date_played >= record.tournament.date_started and
-        record.date_played <= record.tournament.date_finished
-        record.errors[:date_played] << "Match must have been played during the tournament."
+        record.date <= record.tournament.date_finished
+        record.errors[:date] << "Match must have been played during the tournament."
       end
     end
   end
