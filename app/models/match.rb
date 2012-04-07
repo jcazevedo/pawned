@@ -5,6 +5,7 @@ class Match < ActiveRecord::Base
 
   belongs_to :duel
   has_one :round, :through => :duel
+  has_one :tournament, :through => :round
 
   validates :white_id, :black_id, :presence => true
   validates_with MatchDateValidator
@@ -22,9 +23,6 @@ class Match < ActiveRecord::Base
     @white_id = white_id
     @black_id = black_id
     @duel_id = duel_id
-  end
-  def tournament
-    return round.tournament
   end
 
   def round_id

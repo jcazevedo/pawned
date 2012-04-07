@@ -8,8 +8,7 @@
     <%= f.input :match_num %>
     <!-- TODO re-including these fields in the form, as there is currently no other way of adding this.
               Will be removed when there is another interface. -->
-    <%= f.input :white_result %>
-    <%= f.input :black_result %>
+    <%= f.input :result, :as => :select, :collection => ["1.0-0.0", "0.0-1.0", "0.5-0.5"] %>
   </div>
 
   <div class="form-actions">

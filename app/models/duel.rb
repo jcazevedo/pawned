@@ -8,7 +8,7 @@ class Duel < ActiveRecord::Base
   validates :white_id, :black_id, :match_num, :presence => true
   validates_numericality_of :match_num, :only_integer => true, :message => "It needs to be a positive number."
   validate :positive_num
-  after_save :create_match
+  after_save :create_matches
 
   # TODO The winner might be determined by something other than this comparison  
   def winner
@@ -47,7 +47,7 @@ class Duel < ActiveRecord::Base
   end
 
   #Creates the number of matches defined at self.match_num, alternating white_id with black_id
-  def create_match
+  def create_matches
     i = 0
     while i < self.match_num.to_i do
       #puts "iter: #{i}"
