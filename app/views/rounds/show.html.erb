@@ -44,7 +44,7 @@
 
   <% @round.duels.each do |duel| %>
     <tr>
-      <td><%= duel.matches.map { |m| m.date_played }.max.strftime("%d-%m-%Y") %></td>
+      <td><%= duel.date.strftime("%d-%m-%Y") unless duel.date.nil? %></td>
       <td><span class="pull-right"><%= duel.white_player.given_name %></span></td>
       <td><span class="pull-right"><%= duel.white_result %></span></td>
       <td><%= duel.black_result %></td>

@@ -40,6 +40,12 @@ class Duel < ActiveRecord::Base
     errors.add(:match_num, "It needs to be a positive number.") unless self.match_num > 0
   end
 
+  def date
+    match_dates = self.matches.map { |m| m.date unless m.date.nil? }.compact
+    return nil if match_dates.empty?
+    match_dates.max    
+  end
+
   #Creates the number of matches defined at self.match_num, alternating white_id with black_id
   def create_match
     i = 0
