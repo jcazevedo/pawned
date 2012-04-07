@@ -19,8 +19,20 @@
     <td><%= player.username %></td>
     <td><%= player.email %></td>
     <td><%= player.name %></td>
-    <td><%= player.confirmed? %></td>
-    <td><%= player.show_email %></td>
+    <td>
+      <% if player.confirmed? %>
+      <i class="icon-ok"></i>
+      <% else %>
+      <i class="icon-remove"></i>
+      <% end %>
+    </td>
+    <td>
+      <% if player.show_email %>
+      <i class="icon-ok"></i>
+      <% else %>
+      <i class="icon-remove"></i>
+      <% end %>
+    </td>
     <td><%= link_to 'Show', admin_player_path(player) %></td>
     <td><%= link_to 'Edit', edit_admin_player_path(player) %></td>
     <td><%= link_to 'Destroy', admin_player_path(player), confirm: 'Are you sure?', method: :delete %></td>

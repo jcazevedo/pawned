@@ -3,85 +3,44 @@
 
     <hr>
 
-    <% if @rankings %>
-    <div class="row">
-      <% pos = 1 %>
-      <div class="span12">
-        <h2>Current Top 10</h2>
-        <table class="table table-striped">
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Rating</th>
-            <th>Games</th>
-          </tr>
-          <% @rankings.each do |rating| %>
-          <tr>
-            <td><%= pos %></td>
-            <% pos += 1 %>
-            <td><%= link_to rating.player.given_name, profile_path(rating.player.username) %></td>
-            <td>
-              <%= rating.value %>
-              <% if rating.previous %>
-              <% val = rating.value - rating.previous.value %>
-              (<% if val >= 0 %><%= '+' %><% end %><%= rating.value - rating.previous.value %>)
-              <% end %>
-            </td>
-            <td>
-              <%= rating.player.matches.length %>
-              (<%= rating.player.matches_won.length.to_s + ' W / ' +
-                   rating.player.matches_lost.length.to_s + ' L / ' +
-                   rating.player.matches_drawn.length.to_s + ' D' %>)
-            </td>
-          </tr>
-          <% end %>
-        </table>
-        <%= link_to "See complete ranking", ratings_path %>
-      </div>
-    </div>
-
-    <hr>
-    <% end %>
-
     <div class="row">
       <div class="span8">
         <div id="container"></div>
         <script type="text/javascript">
-var chart1; // globally available
-$(document).ready(function() {
-      chart1 = new Highcharts.Chart({
-         chart: {
-            renderTo: 'container',
-            type: 'line'
-         },
-         title: {
-            text: 'Rating evolution'
-         },
-         xAxis: {
-            categories: [
-              <% @ratings.each do |rating| %>
-              <%= '\'' + rating.date.to_date.to_s + '\', ' %>
-              <% end %>
-            ]
-         },
-         yAxis: {
-            title: {
-               text: 'Rating value'
-            }
-         },
-         series: [{
-            name: 'Rating',
-            data: [
-              <% @ratings.each do |rating| %>
-              <%= rating.value.to_s + ', ' %>
-              <% end %>
-            ]
-         }]
-      });
-   });
+        var chart1; // globally available
+        $(document).ready(function() {
+          chart1 = new Highcharts.Chart({
+            chart: {
+              renderTo: 'container',
+                type: 'line'
+              },
+              title: {
+                text: 'Rating evolution'
+              },
+              xAxis: {
+                categories: [
+                <% @ratings.each do |rating| %>
+                 <%= '\'' + rating.date.to_date.to_s + '\', ' %>
+                <% end %>
+                ]
+              },
+              yAxis: {
+                title: {
+                  text: 'Rating value'
+                }
+              },
+              series: [{
+                name: 'Rating',
+                data: [
+                <% @ratings.each do |rating| %>
+                  <%= rating.value.to_s + ', ' %>
+                <% end %>
+                ]
+              }]
+          });
+        });
         </script>
-
-      </div>
+      </div> <!-- span8 -->
 
       <div class="span4">
         <div class="well">
@@ -134,9 +93,9 @@ $(document).ready(function() {
           </table>
           <a href="#">Go to your rating</a>
           <a class="pull-right" href="#">See your last games</a>
-        </div>
-      </div>
-    </div>
+        </div><!-- well -->
+      </div><!-- span4 -->
+    </div><!-- row -->
 
     <hr>
 
@@ -174,8 +133,8 @@ $(document).ready(function() {
           </table>
           <%= link_to "Open tournaments", open_tournaments_path %>
           <%= link_to "New tournament", new_tournament_path, :class => "pull-right" %>
-        </div>
-      </div>
+        </div><!-- well -->
+      </div><!-- span4 -->
 
       <div class="span8">
         <h3>Ongoing Tournaments</h3>
@@ -229,11 +188,49 @@ $(document).ready(function() {
             </div>
           </div>
           <% end %>
-        </div>
+        </div><!-- well -->
         <% end %>
+      </div><!-- span8 -->
+    </div><!-- row -->
 
-      </div>
-    </div>
+    <hr>
+
+    <% if @rankings %>
+    <div class="row">
+      <div class="span8">
+        <h2>Top Players</h2>
+        <table class="table table-striped">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Rating</th>
+            <th>Games</th>
+          </tr>
+          <% @rankings.each_with_index do |rating, index| %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= link_to rating.player.given_name, profile_path(rating.player.username) %></td>
+            <td>
+              <%= rating.value %>
+              <% if rating.previous %>
+              <% val = rating.value - rating.previous.value %>
+              (<% if val >= 0 %><%= '+' %><% end %><%= rating.value - rating.previous.value %>)
+              <% end %>
+            </td>
+            <td>
+              <%= rating.player.matches.length %>
+              (<%= rating.player.matches_won.length.to_s + ' W / ' +
+                   rating.player.matches_lost.length.to_s + ' L / ' +
+                   rating.player.matches_drawn.length.to_s + ' D' %>)
+            </td>
+          </tr>
+          <% end %>
+        </table>
+        <%= link_to "See complete ranking", ratings_path %>
+      </div><!-- span8 -->
+    </div><!-- row -->
+    <% end %>
+
 <% else %>
 <div class="hero-unit">
   <!-- Chess board photo from: http://www.flickr.com/photos/eivindw/4873333202/ -->

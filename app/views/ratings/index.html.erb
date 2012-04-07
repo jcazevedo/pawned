@@ -5,7 +5,6 @@
 <% if !@rankings %>
 <div class="alert alert-info"><p>It seems that there are no ratings whatsoever. Has noone been playing chess?</p></div>
 <% else %>
-  <% pos = 1 %>
   <table class="table table-striped">
     <tr>
       <th>#</th>
@@ -13,11 +12,10 @@
       <th>Rating</th>
       <th>Games</th>
     </tr>
-    <% @rankings.each do |rating| %>
+    <% @rankings.each_with_index do |rating, index| %>
     <tr>
-      <td><%= pos %></td>
-      <% pos += 1 %>
-      <td><%= rating.player.given_name %></td>
+      <td><%= index + 1 %></td>
+      <td><%= link_to rating.player.given_name, profile_path(rating.player.username) %></td>
       <td>
         <%= rating.value %>
         <% if rating.previous %>
@@ -35,4 +33,3 @@
     <% end %>
   </table>
 <% end %>
-
