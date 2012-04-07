@@ -48,9 +48,7 @@ class Duel < ActiveRecord::Base
       white = i % 2 == 0 ? self.white_id : self.black_id
       black = i % 2 == 0 ? self.black_id : self.white_id
       puts "white: #{white} and black: #{black}"
-      a = Match.create(:white_id => white, :black_id => black, :duel_id => self.id)
-      #a.save()
-      #puts "duel id a: #{a.duel_id}"
+      self.matches << Match.create(:white_id => white, :black_id => black)
       i += 1
     end
   end

@@ -57,9 +57,13 @@ class Match < ActiveRecord::Base
   end
 
   def date=(date)
-    date = date.to_datetime
-    self.date_played = DateTime.new if self.date_played.nil?
-    self.date_played = self.date_played.change({:day => date.day, :month => date.month, :year => date.year})
+    if date.nil?
+      self.date_played = nil
+    else
+      date = date.to_datetime
+      self.date_played = DateTime.new if self.date_played.nil?
+      self.date_played = self.date_played.change({:day => date.day, :month => date.month, :year => date.year})
+    end
   end
 
   def date
@@ -84,7 +88,6 @@ class Match < ActiveRecord::Base
     old_white_rating = white_player.ratings.where("date < ?", date).last.value
     old_black_rating = black_player.ratings.where("date < ?", date).last.value
 
-    # TODO added the unless in there. @jcazevedo check this, please.
     new_white_rating = Rating.new_rating(white_player.matches.find_all { |match| match.date < date unless match.date.nil? }.compact.length,
                                          old_white_rating,
                                          old_black_rating,
