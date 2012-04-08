@@ -173,6 +173,15 @@
                       <td><%= link_to "View", tournament_round_duel_path(tournament, round, duel) %></td>
                     </tr>
                     <% end %>
+                    <% unless round.bye.nil? %>
+                    <tr>
+                      <td><span class="pull-right"><%= round.bye.given_name %></span></td>
+                      <td><span class="pull-right">1.0</span></td>
+                      <td>0.0</td>
+                      <td>BYE</td>
+                      <td></td>
+                    </tr>
+                    <% end %>
                     <% end %>
                   </tbody>
                 </table>
