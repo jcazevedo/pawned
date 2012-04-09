@@ -9,8 +9,10 @@ class Duel < ActiveRecord::Base
   validates_numericality_of :match_num, :only_integer => true, :message => "It needs to be a positive number."
   validate :positive_num
   after_save :create_matches
+  after_save :update_bye
+  after_destroy :destroy_bye
 
-  # TODO The winner might be determined by something other than this comparison  
+  # TODO The winner might be determined by something other than this comparison
   def winner
     return nil if white_result == black_result
     white_result > black_result ? white_player : black_player
@@ -20,7 +22,7 @@ class Duel < ActiveRecord::Base
     return nil if white_result.nil? or black_result.nil?
     [white_result.to_s, black_result.to_s].join('-')
   end
-  
+
   def result=(result)
     if result.nil? || result.empty?
       self.white_result = nil
@@ -43,7 +45,7 @@ class Duel < ActiveRecord::Base
   def date
     match_dates = self.matches.map { |m| m.date unless m.date.nil? }.compact
     return nil if match_dates.empty?
-    match_dates.max    
+    match_dates.max
   end
 
   #Creates the number of matches defined at self.match_num, alternating white_id with black_id
@@ -56,6 +58,27 @@ class Duel < ActiveRecord::Base
       puts "white: #{white} and black: #{black}"
       self.matches << Match.create(:white_id => white, :black_id => black)
       i += 1
+    end
+  end
+
+  def update_bye
+    unless self.round.nil?
+      if self.round.tournament.players.count % 2 == 1 and
+          self.round.duels.count == (self.round.tournament.players.count - 1)/2
+        self.round.bye = (self.round.tournament.players -
+          (self.round.duels.map { |r| r.black_player } +
+            self.round.duels.map { |r| r.white_player })).first
+        self.round.save()
+      end
+    end
+  end
+
+  def destroy_bye
+    unless self.round.nil?
+      unless self.round.bye.nil?
+        self.round.bye = nil
+        self.round.save
+      end
     end
   end
 end

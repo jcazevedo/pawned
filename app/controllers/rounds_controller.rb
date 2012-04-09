@@ -23,19 +23,6 @@ class RoundsController < ApplicationController
     @round = @tournament.rounds.find(params[:id])
     @standings = @round.standings
 
-    # TODO This shouldn't be here! Especially the save part...
-    if @tournament.players.count % 2 == 1
-      if @round.duels.count == (@tournament.players.count - 1)/2 and @round.bye.nil?
-        @round.bye = (@tournament.players - (@round.duels.map { |r| r.black_player } + @round.duels.map { |r| r.white_player })).first
-        @round.save()
-      else
-        if !@round.bye.nil? and @round.duels.count != (@tournament.players.count - 1)/2
-          @round.bye = nil
-          @round.save
-        end
-      end
-    end
-
     authorize! :read, @round
 
     respond_to do |format|

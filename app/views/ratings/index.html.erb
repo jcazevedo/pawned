@@ -1,6 +1,6 @@
-<h1>Live Ranking</h1>
-
-<hr>
+<div class="page-header">
+  <h1>Live Ranking</h1>
+</div>
 
 <% if !@rankings %>
 <div class="alert alert-info"><p>It seems that there are no ratings whatsoever. Has noone been playing chess?</p></div>
@@ -33,3 +33,7 @@
     <% end %>
   </table>
 <% end %>
+
+<div class="form-actions">
+  <%= link_to "Back", :back, :class => "btn" %>
+</div>

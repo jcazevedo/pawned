@@ -2,7 +2,7 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <% players = (@tournament.players - (@round.duels.map { |r| r.black_player } + @round.duels.map { |r| r.white_player })).sort! { |a, b| a.given_name <=> b.given_name } %>
+    <% players = (@tournament.players - (@round.duels.reject { |d| d == @duel }.map { |r| r.black_player } + @round.duels.reject { |d| d == @duel }.map { |r| r.white_player })).sort! { |a, b| a.given_name <=> b.given_name } %>
     <%= f.association :white_player, :collection => players, :include_blank => false, :label_method => lambda { |player| "#{player.given_name}" } %>
     <%= f.association :black_player, :collection => players, :include_blank => false, :label_method => lambda { |player| "#{player.given_name}" } %>
     <%= f.input :match_num %>
