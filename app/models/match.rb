@@ -27,19 +27,19 @@ class Match < ActiveRecord::Base
   end
 
   def white_id
-    round.white_id
+    reverse_positions ? duel.black_id : duel.white_id
   end
 
   def black_id
-    round.black_id
+    reverse_positions ? duel.white_id : duel.black_id
   end
 
   def white_player
-    round.white_player
+    reverse_positions ? duel.black_player : duel.white_player
   end
 
   def black_player
-    round.black_player
+    reverse_positions ? duel.white_player : duel.black_player
   end
 
   def result

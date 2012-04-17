@@ -11,8 +11,8 @@ class Player < ActiveRecord::Base
   has_many :tournament_players
   has_many :tournaments, :through => :tournament_players
   has_many :administered_tournaments, :class_name => "Tournament", :foreign_key => "admin_id"
-  has_many :matches_as_white, :class_name => "Match", :foreign_key => "white_id"
-  has_many :matches_as_black, :class_name => "Match", :foreign_key => "black_id"
+  has_many :duels_as_white, :class_name => "Duel", :foreign_key => "white_id"
+  has_many :duels_as_black, :class_name => "Duel", :foreign_key => "black_id"
   has_many :ratings, :order => "date ASC"
   has_many :standings
 
@@ -59,7 +59,16 @@ class Player < ActiveRecord::Base
   end
 
   def matches
-    matches_as_white + matches_as_black
+    self.duels_as_white.map { |d| d.matches }.flatten.compact +
+    self.duels_as_black.map { |d| d.matches }.flatten.compact
+  end
+
+  def matches_as_white
+    matches.map { |m| m if m.white_id == self.id }.compact
+  end
+
+  def matches_as_black
+    matches.map { |m| m if m.black_id == self.id }.compact
   end
 
   def matches_won
@@ -108,4 +117,3 @@ class Player < ActiveRecord::Base
     self.ratings << Rating.create(:date => DateTime.new(1970, 1, 1), :value => 1300)
   end
 end
-

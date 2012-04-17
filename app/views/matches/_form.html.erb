@@ -1,13 +1,5 @@
 <%= simple_form_for([@tournament, @round, @duel, @match], :html => {:class => 'form-horizontal'}) do |f| %>
   <%= f.error_notification %>
-  <legend>Match</legend>
-
-  <%= f.input :date_inserted, :as => :string, :input_html => { :value => (
-      if @match.date_inserted != nil then
-        @match.date_inserted.strftime("%d-%m-%Y")
-      else
-        Time.now.strftime("%d-%m-%Y")
-      end )} %>
 
   <%= f.input :date, :as => :string, :input_html => { :value => (
       if @match.date != nil then
@@ -16,18 +8,12 @@
         Time.now.strftime("%d-%m-%Y")
       end )} %>
 
-  <%= f.input :time_played, :as => :time %>
-
-  <%= f.association :white_player, :collection => @duel.players, :label_method => lambda { |player| "#{player.given_name}" }, :include_blank => false %>
-  <%= f.association :black_player, :collection => @duel.players, :label_method => lambda { |player| "#{player.given_name}" }, :include_blank => false %>
+  <%= f.input :reverse_positions %>
 
   <%= f.input :result, :as => :select, :collection => ["1.0-0.0", "0.0-1.0", "0.5-0.5"] %>
   <%= f.input :pgn_text %>
 
   <script>
-    $('#match_date_inserted').datepicker({
-      format: 'dd-mm-yyyy'
-    })
     $('#match_date').datepicker({
       format: 'dd-mm-yyyy'
     })
