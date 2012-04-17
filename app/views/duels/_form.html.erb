@@ -5,9 +5,13 @@
     <% players = (@tournament.players - (@round.duels.reject { |d| d == @duel }.map { |r| r.black_player } + @round.duels.reject { |d| d == @duel }.map { |r| r.white_player })).sort! { |a, b| a.given_name <=> b.given_name } %>
     <%= f.association :white_player, :collection => players, :include_blank => false, :label_method => lambda { |player| "#{player.given_name}" } %>
     <%= f.association :black_player, :collection => players, :include_blank => false, :label_method => lambda { |player| "#{player.given_name}" } %>
-    <%= f.input :match_num %>
-    <!-- TODO re-including these fields in the form, as there is currently no other way of adding this.
-              Will be removed when there is another interface. -->
+
+    <% if @tournament.nil? and @duel.matches.empty? %>
+    <%= f.input :matches_to_create, :as => :integer, :required => true %>
+    <% else %>
+    <%= f.hidden_field :matches_to_create, :value => @tournament.matches_per_duel %>
+    <% end %>
+
     <%= f.input :result, :as => :select, :collection => ["1.0-0.0", "0.0-1.0", "0.5-0.5"] %>
   </div>
 

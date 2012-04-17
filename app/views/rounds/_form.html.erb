@@ -13,7 +13,7 @@
     <%= f.simple_fields_for :standings do |s| %>
     <tr>
       <td><%= s.input :position, :collection => 1..@players.length, :label => false %></td>
-      <td><%= s.association :player, :label => false, :label_method => lambda { |player| "#{player.given_name}" } %></td>
+      <td><%= s.association :player, :collection => @tournament.players.sort! { |a, b| a.given_name <=> b.given_name }, :label => false, :label_method => lambda { |player| "#{player.given_name}" }, :include_blank => false %></td>
       <td><%= s.input :points, :label => false %></td>
     </tr>
     <% end %>

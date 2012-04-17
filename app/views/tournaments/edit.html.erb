@@ -23,7 +23,7 @@
         <%= form_for TournamentPlayer.new, :url => participations_path do |f| %>
         <%= f.hidden_field :tournament_id, :value => @tournament.id %>
         <td colspan="2">
-          <%= f.select :player_id, (Player.all - @tournament.players).map{ |p| [p.given_name, p.id] } %>
+          <%= f.select :player_id, (Player.all - @tournament.players).map{ |p| [p.given_name, p.id] }.sort! { |a, b| a.first.upcase <=> b.first.upcase }, :include_blank => false %>
         </td>
         <td>
           <button type="submit" class="btn btn-success">

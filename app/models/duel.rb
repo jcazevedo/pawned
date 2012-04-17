@@ -1,5 +1,5 @@
 class Duel < ActiveRecord::Base
-  attr_accessor :match_number
+  attr_accessor :matches_to_create
   attr_accessible :white_id, :black_id, :round_id, :result, :matches_to_create
 
   belongs_to :round
@@ -49,15 +49,17 @@ class Duel < ActiveRecord::Base
 
   #Creates the number of matches defined at self.match_num, alternating white_id with black_id
   def create_matches
-    # safeguarding what should already be safe
-    if tournament.present?
-      matches_to_create = self.tournament.matches_per_duel
-    end
+    if self.matches.empty?
+      # safeguarding what should already be safe
+      if tournament.present?
+        self.matches_to_create = self.tournament.matches_per_duel
+      end
 
-    # create the matches
-    matches_to_create.times do |i|
-      match = matches.build(:reverse_positions => !(i%2).zero?)
-      match.save
+      # create the matches
+      self.matches_to_create.to_i.times do |i|
+        match = matches.build(:reverse_positions => !(i%2).zero?)
+        match.save
+      end
     end
   end
 

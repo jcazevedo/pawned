@@ -71,13 +71,12 @@
       <%= render("standings") %>
     </div>
     <% else %>
+    <h2>Players</h2>
     <% if @tournament.players.empty? %>
-    <hr>
     <p class="alert alert-block alert-info">
       There are no players signed up for this tournament yet.
     </p>
     <% else %>
-    <h2>Players</h2>
     <table class="table">
       <tr>
         <th>Name</th>
@@ -100,9 +99,9 @@
 
 <hr>
 
+<% if @tournament.latest_standings %>
 <div class="row">
   <div class="span12">
-    <% if @tournament.latest_standings %>
     <div id="container"></div>
     <script type="text/javascript">
       var chart1; // globally available
@@ -147,17 +146,17 @@
         });
       });
     </script>
-    <% end %>
   </div>
-
 </div>
 
 <hr>
+<% end %>
 
 <div class="row">
   <div class="span12">
   <h2>Rounds</h2>
-  <% if @tournament.rounds %>
+  <hr>
+  <% unless @tournament.rounds.empty? %>
   <div class="accordion" id="rounds-accordion">
     <% @tournament.rounds.reverse.each do |round| %>
     <div class="accordion-group">
@@ -220,7 +219,7 @@
     <% end %>
     </div>
   <% else %>
-  <div class="alert alert-info"><p>This tournament has no rounds defined, yet.</p></div>
+  <p class="alert alert-info">This tournament has no rounds defined, yet.</p>
   <% end %>
   <% if can? :manage, @tournament %>
     <%= simple_form_for [@tournament, Round.new() ] do |f| %>

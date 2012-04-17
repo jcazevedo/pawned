@@ -79,7 +79,7 @@
 
 <% if can? :manage, @tournament %>
 <div class="form-actions">
-  <%= link_to 'Edit Round', edit_tournament_round_path(@tournament, @round), :class => "btn" %>
+  <%= link_to "Destroy Round", [@tournament,@round], confirm: 'Are you sure?', method: :delete, :class => "btn" %>
   <%= link_to 'Back', tournament_path(@tournament), :class => "btn" %>
 </div>
 <% end %>
