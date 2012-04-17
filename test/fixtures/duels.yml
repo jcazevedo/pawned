@@ -1,13 +1,18 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+poor_strife_round_one_duel_one:
+  white_player: user1
+  black_player: user2
+  round: poor_strife_round_one
 
-one:
-  white_id: 1
-  black_id: 1
-  white_result: 1
-  black_result: 1
+poor_strife_round_one_duel_two:
+  white_player: user3
+  black_player: user4
+  round: poor_strife_round_one
 
-two:
-  white_id: 1
-  black_id: 1
-  white_result: 1
-  black_result: 1
+poor_strife_round_one_duel_three:
+  white_player: user5
+  black_player: user6
+  round: poor_strife_round_one
+
+poor_strife_round_one_duel_four:
+  white_player: user1
+  black_player: user1

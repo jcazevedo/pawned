@@ -1,7 +1,7 @@
 one:
-  player_id: 1
-  tournament_id: 1
+  player: user1
+  tournament: poor_strife
 
 two:
-  player_id: 2
-  tournament_id: 1
+  player: user2
+  tournament: poor_strife

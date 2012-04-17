@@ -17,7 +17,7 @@ class Player < ActiveRecord::Base
   has_many :standings
 
   validates :username, :email, :presence => true
-  validates :username, :uniqueness => true
+  validates :username, :email, :uniqueness => true
   validates :username, :format => { :with => /^[a-zA-Z1-9_]+$/, :message => 'may only contain alphanumerical characters and "_"' }
 
   after_create :set_initial_rating

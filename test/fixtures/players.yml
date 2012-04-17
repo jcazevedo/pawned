@@ -1,7 +1,29 @@
-one:
+user1:
+  username: user1
   email: user1@example.com
   encrypted_password: 12345678
 
-two:
+user2:
+  username: user2
   email: user2@example.com
+  encrypted_password: 12345678
+
+user3:
+  username: user3
+  email: user3@example.com
+  encrypted_password: 12345678
+
+user4:
+  username: user4
+  email: user4@example.com
+  encrypted_password: 12345678
+
+user5:
+  username: user5
+  email: user5@example.com
+  encrypted_password: 12345678
+
+user6:
+  username: user6
+  email: user6@example.com
   encrypted_password: 12345678

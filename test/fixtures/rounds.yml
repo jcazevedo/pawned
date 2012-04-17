@@ -1,7 +1,15 @@
-# one:
-#   tournament_id: 1
-#   tournament_round_id: 1
-#
-# two:
-#   tournament_id: 1
-#   tournament_round_id: 1
+poor_strife_round_one:
+  tournament: poor_strife
+  tournament_round_id: 1
+
+poor_strife_round_two:
+  tournament: poor_strife
+  tournament_round_id: 2
+
+common_strife_round_one:
+  tournament: common_strife
+  tournament_round_id: 1
+
+common_strife_round_two:
+  tournament: common_strife
+  tournament_round_id: 2

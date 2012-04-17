@@ -1,9 +1,29 @@
 one:
-  player_id: 1
+  player: user1
   value: 1300
   date: 2012-03-18 21:17:17
 
 two:
-  player_id: 2
+  player: user2
+  value: 1300
+  date: 2012-03-18 21:17:17
+
+three:
+  player: user3
+  value: 1300
+  date: 2012-03-18 21:17:17
+
+four:
+  player: user4
+  value: 1300
+  date: 2012-03-18 21:17:17
+
+five:
+  player: user5
+  value: 1300
+  date: 2012-03-18 21:17:17
+
+six:
+  player: user6
   value: 1300
   date: 2012-03-18 21:17:17

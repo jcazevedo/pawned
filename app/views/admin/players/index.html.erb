@@ -10,8 +10,6 @@
     <th>Confirmed?</th>
     <th>Show email?</th>
     <th></th>
-    <th></th>
-    <th></th>
   </tr>
 
 <% @players.each do |player| %>
@@ -33,9 +31,13 @@
       <i class="icon-remove"></i>
       <% end %>
     </td>
-    <td><%= link_to 'Show', admin_player_path(player) %></td>
-    <td><%= link_to 'Edit', edit_admin_player_path(player) %></td>
-    <td><%= link_to 'Destroy', admin_player_path(player), confirm: 'Are you sure?', method: :delete %></td>
+    <td>
+      <div class="btn-group">
+        <%= link_to 'Show', admin_player_path(player), class: 'btn' %>
+        <%= link_to 'Edit', edit_admin_player_path(player), class: 'btn' %>
+        <%= link_to 'Destroy', admin_player_path(player), confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger' %>
+      </div>
+    </td>
   </tr>
 <% end %>
 </table>

@@ -1,13 +1,16 @@
 class Duel < ActiveRecord::Base
+  attr_accessor :match_number
+  attr_accessible :white_id, :black_id, :round_id, :result, :matches_to_create
+
+  belongs_to :round
   belongs_to :white_player, :class_name => "Player", :foreign_key => "white_id"
   belongs_to :black_player, :class_name => "Player", :foreign_key => "black_id"
-  has_many :matches
-  belongs_to :round
   has_one :tournament, :through => :round
+  has_many :matches, :dependent => :destroy
 
-  validates :white_id, :black_id, :match_num, :presence => true
-  validates_numericality_of :match_num, :only_integer => true, :message => "It needs to be a positive number."
-  validate :positive_num
+  validates :white_id, :black_id, :presence => true
+  validates :matches_to_create, :numericality => {:only_integer => true, :greater_than_or_equal_to => 0}
+
   after_save :create_matches
   after_save :update_bye
   after_destroy :destroy_bye
@@ -38,10 +41,6 @@ class Duel < ActiveRecord::Base
     [white_player, black_player]
   end
 
-  def positive_num
-    errors.add(:match_num, "It needs to be a positive number.") unless self.match_num > 0
-  end
-
   def date
     match_dates = self.matches.map { |m| m.date unless m.date.nil? }.compact
     return nil if match_dates.empty?
@@ -50,14 +49,15 @@ class Duel < ActiveRecord::Base
 
   #Creates the number of matches defined at self.match_num, alternating white_id with black_id
   def create_matches
-    i = 0
-    while i < self.match_num.to_i do
-      #puts "iter: #{i}"
-      white = i % 2 == 0 ? self.white_id : self.black_id
-      black = i % 2 == 0 ? self.black_id : self.white_id
-      puts "white: #{white} and black: #{black}"
-      self.matches << Match.create(:white_id => white, :black_id => black)
-      i += 1
+    # safeguarding what should already be safe
+    if tournament.present?
+      matches_to_create = self.tournament.matches_per_duel
+    end
+
+    # create the matches
+    matches_to_create.times do |i|
+      match = matches.build(:reverse_positions => !(i%2).zero?)
+      match.save
     end
   end
 

@@ -1,19 +1,13 @@
-# one:
-#   date_inserted: 2012-03-20
-#   date_played: 2012-03-20
-#   white_id: 1
-#   black_id: 1
-#   white_result: 1.5
-#   black_result: 1.5
-#   round_id: 1
-#   png_text: MyText
-#
-# two:
-#   date_inserted: 2012-03-20
-#   date_played: 2012-03-20
-#   white_id: 1
-#   black_id: 1
-#   white_result: 1.5
-#   black_result: 1.5
-#   round_id: 1
-#   png_text: MyText
+one:
+  date_played: <%= Date.tomorrow - 1.week %>
+  white_result: 1
+  black_result: 0
+  duel: poor_strife_round_one_duel_one
+  pgn_text: MyText
+
+two:
+  date_played: <%= Date.tomorrow - 6.days %>
+  white_result: 0
+  black_result: 1
+  duel: poor_strife_round_one_duel_one
+  pgn_text: MyText

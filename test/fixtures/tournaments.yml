@@ -1,5 +1,27 @@
-one:
-  name: The Huge Bulge
-  date_started: 2012-04-08
-  date_finished: 2012-08-16
-  admin_id: 1
+late_strife:
+  name: The Late Strife
+  date_started: <%= Date.yesterday %>
+  admin: user1
+
+early_strife:
+  name: The Early Strife
+  date_started: <%= Date.tomorrow %>
+  admin: user1
+
+past_strife:
+  name: The Past Strife
+  date_started: <%= Date.today - 1.month %>
+  date_finished: <%= Date.today - 1.month + 1.week %>
+  admin: user1
+
+common_strife:
+  name: The Common Strife
+  date_started: <%= Date.today + 1.month %>
+  admin: user1
+  matches_per_duel: 2
+
+poor_strife:
+  name: The Poor Strife
+  date_started: <%= Date.today - 1.week %>
+  admin: user1
+  matches_per_duel: 2

@@ -1,6 +1,4 @@
 class Match < ActiveRecord::Base
-  belongs_to :white_player, :class_name => "Player", :foreign_key => "white_id"
-  belongs_to :black_player, :class_name => "Player", :foreign_key => "black_id"
   has_many :ratings
 
   belongs_to :duel
@@ -9,7 +7,6 @@ class Match < ActiveRecord::Base
 
   validates :white_id, :black_id, :presence => true
   validates_with MatchDateValidator
- # validates_with MatchPlayersValidator
 
   after_save :check_for_rating_update
 
@@ -27,6 +24,22 @@ class Match < ActiveRecord::Base
 
   def round_id
     return round.id
+  end
+
+  def white_id
+    round.white_id
+  end
+
+  def black_id
+    round.black_id
+  end
+
+  def white_player
+    round.white_player
+  end
+
+  def black_player
+    round.black_player
   end
 
   def result
