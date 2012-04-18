@@ -42,6 +42,9 @@ class TournamentsController < ApplicationController
   # GET /tournaments/1/edit
   def edit
     @tournament = Tournament.find(params[:id])
+    unless request.referer == edit_tournament_url(@tournament)
+      session[:return_to] = request.referer
+    end
     authorize! :manage, @tournament
   end
 

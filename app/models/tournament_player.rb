@@ -1,6 +1,6 @@
 class TournamentPlayer < ActiveRecord::Base
-	belongs_to :tournament
-	belongs_to :player
+  belongs_to :tournament
+  belongs_to :player
 
   before_destroy :validate_withdrawal
 
@@ -12,4 +12,3 @@ class TournamentPlayer < ActiveRecord::Base
     self.tournament.status == 'Open' and self.tournament.rounds.empty?
   end
 end
-

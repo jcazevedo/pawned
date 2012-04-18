@@ -19,11 +19,14 @@
         <th></th>
       </tr>
 
+      <% if @tournament.status == 'Open' and @tournament.rounds.empty?%>
+      <% players = (Player.all - @tournament.players).map{ |p| [p.given_name, p.id] }.sort! { |a, b| a.first.upcase <=> b.first.upcase } %>
+      <% unless players.empty? %>
       <tr>
         <%= form_for TournamentPlayer.new, :url => participations_path do |f| %>
         <%= f.hidden_field :tournament_id, :value => @tournament.id %>
         <td colspan="2">
-          <%= f.select :player_id, (Player.all - @tournament.players).map{ |p| [p.given_name, p.id] }.sort! { |a, b| a.first.upcase <=> b.first.upcase }, :include_blank => false %>
+          <%= f.select :player_id, players, :include_blank => false %>
         </td>
         <td>
           <button type="submit" class="btn btn-success">
@@ -33,17 +36,21 @@
         </td>
         <% end %>
       </tr>
+      <% end %>
+      <% end %>
 
       <% @tournament.players.each do |p| %>
       <tr>
         <td><%= p.given_name %></td>
         <td><%= p.email %></td>
         <td>
-          <%= link_to participation_path(TournamentPlayer.find(p.tournament_players(:tournament_id => @tournament.id).first.id)),
+        <% if @tournament.status == 'Open' and @tournament.rounds.empty?%>
+          <%= link_to participation_path(TournamentPlayer.find(p.tournament_players.where(:tournament_id => @tournament.id).first.id)),
             confirm: 'Are you sure?', method: :delete, :class => "btn btn-warning" do %>
             <i class="icon-white icon-remove-sign"></i>
             Remove from competition
           <% end %>
+        <% end %>
         </td>
       </tr>
       <% end %>

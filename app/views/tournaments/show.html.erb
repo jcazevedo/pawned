@@ -37,7 +37,7 @@
         </tbody>
       </table>
 
-      <% if @tournament.status == 'Open' %>
+      <% if @tournament.status == 'Open' and @tournament.rounds.empty?%>
       <hr>
       <div style="margin-bottom:45px;">
       <% if @tournament.players.include?(current_player) %>
@@ -237,4 +237,3 @@
   <%= link_to 'Edit', edit_tournament_path(@tournament), :class => "btn" %>
   <%= link_to 'Back', tournaments_path, :class => "btn" %>
 </div>
-
