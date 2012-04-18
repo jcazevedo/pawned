@@ -5,10 +5,11 @@ class TournamentPlayer < ActiveRecord::Base
   before_destroy :validate_withdrawal
 
   validates :tournament_id, :player_id, :presence => true
-  validates_with TournamentPlayerDateValidator
+  validates_with TournamentPlayerStatusValidator
 
   # don't allow a player to withdraw a tournament if it has already begun
   def validate_withdrawal
-    return false if self.tournament.date_started <= Date.today
+    self.tournament.status == 'Open' and self.tournament.rounds.empty?
   end
 end
+

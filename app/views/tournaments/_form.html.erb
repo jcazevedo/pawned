@@ -18,8 +18,6 @@
     <%= f.input :date_finished, :as => :string, :input_html => { :value => (
       if @tournament.date_finished != nil then
         @tournament.date_finished.strftime("%d-%m-%Y")
-      else
-        Time.now.strftime("%d-%m-%Y")
       end )} %>
 
     <%= f.input :status, :default => 0, :collection => Tournament::STATUSES %>
