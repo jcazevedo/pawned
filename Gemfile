@@ -26,6 +26,8 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem 'quiet_assets', :group => :development
+
 # The all purpose dom manipulation javascript library
 gem 'jquery-rails'
 
