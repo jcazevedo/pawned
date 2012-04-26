@@ -49,13 +49,15 @@ class Rating < ActiveRecord::Base
 
   def self.k(n_previous_games, rating)
     prior_games = 50
-    prior_games /= Math.sqrt((1 + (2200 - rating)**2) / 100000) if rating < 2200
+    if rating < 2200
+      prior_games /= Math.sqrt((1 + (2200 - rating)**2) / 100000.0)
+    end
     prior_games = [prior_games, n_previous_games].min
     800.0 / (prior_games + 1)
   end
 
   def self.winning_expectancy(player_rating, opponent_rating)
-    1.0 / (10**((opponent_rating - player_rating) / 400) + 1.0)
+    1.0 / (10**((opponent_rating - player_rating) / 400.0) + 1.0)
   end
 end
 
