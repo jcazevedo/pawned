@@ -44,7 +44,10 @@ class Rating < ActiveRecord::Base
   def self.standard_rating(n_previous_games, player_rating, opponent_rating, player_result)
     k = self.k(n_previous_games, player_rating)
     e = self.winning_expectancy(player_rating, opponent_rating)
-    (player_rating + k * (player_result - e)).round
+    rating = (player_rating + k * (player_result - e))
+    r = 0.4999
+    r = -0.4999 if player_rating >= rating
+    (rating + r).round
   end
 
   def self.k(n_previous_games, rating)
