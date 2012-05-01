@@ -9,7 +9,6 @@ class Tournament < ActiveRecord::Base
 
   validates :name, :date_started, :presence => true, :on => :create
   validates :name, :date_started, :status, :matches_per_duel, :presence => true, :on => :update
-  validates :matches_per_duel, :presence => true
   before_create :set_default_values
 
   default_scope order('date_started desc')

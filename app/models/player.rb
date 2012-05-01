@@ -22,12 +22,14 @@ class Player < ActiveRecord::Base
 
   after_create :set_initial_rating
 
+  # needed so we can login with both email and username
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     login = conditions.delete(:login)
     where(conditions).where("lower(username) = ? OR lower(email) = ?", login.strip.downcase, login.strip.downcase).first
   end
 
+  # for the roles system
   def roles
     ROLES.reject do |r|
       ((roles_mask || 0) & 2**ROLES.index(r)).zero?
@@ -46,10 +48,12 @@ class Player < ActiveRecord::Base
     roles.include?("admin")
   end
 
+  # returns either the full name, preferably, or the username
   def given_name
     name.blank? ? username : name
   end
 
+  # needed so admin can do whatever it wants without prompting for user confirmation
   def skip_confirmation!
     self.confirmed_at = Time.now.utc
   end
@@ -58,6 +62,7 @@ class Player < ActiveRecord::Base
     @bypass_postpone = true
   end
 
+  # matches control
   def matches
     self.duels_as_white.map { |d| d.matches }.flatten.compact +
     self.duels_as_black.map { |d| d.matches }.flatten.compact

@@ -1,48 +1,39 @@
-<%= simple_form_for(@tournament) do |f| %>
+<%= simple_form_for(@tournament, html: {class: "form-horizontal"}) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :name %>
+    <%= f.input :name, label: "Tournament name", hint: "The name of this tournament" %>
 
-    <%= f.input :matches_per_duel %>
+    <%= f.input :matches_per_duel, label: "Matches per Duel", hint: "Number of matches per opponent confrontation" %>
 
-    <%= f.input :date_started, :as => :string, :input_html => { :value => (
+    <%= f.input :date_started, label: "Start date", hint: "The date at which this tournament starts",
+      :as => :string, :input_html => { :value => (
       if @tournament.date_started != nil then
         @tournament.date_started.strftime("%d-%m-%Y")
       else
         Time.now.strftime("%d-%m-%Y")
       end )} %>
 
-    <% if !@tournament.new_record? %>
+    <% unless @tournament.new_record? %>
+      <%= f.input :date_finished, label: "End date", hint: "The date at which this tournament ends",
+        :as => :string, :input_html => { :value => (
+        if @tournament.date_finished != nil then
+          @tournament.date_finished.strftime("%d-%m-%Y")
+        end )} %>
 
-    <%= f.input :date_finished, :as => :string, :input_html => { :value => (
-      if @tournament.date_finished != nil then
-        @tournament.date_finished.strftime("%d-%m-%Y")
-      end )} %>
-
-    <%= f.input :status, :default => 0, :collection => Tournament::STATUSES %>
-
+      <%= f.input :status, label: "Status", hint: "This shouldn't even be here",
+        :default => 0, :collection => Tournament::STATUSES %>
     <% end %>
 
-
     <% if current_player.admin? %>
-    <%= f.input :admin_id, :collection => Player.all.map { |p| [p.given_name, p.id] }.sort! { |a, b| a.first.upcase <=> b.first.upcase }, :include_blank => false %>
-    <% else %>
-    <%= f.hidden_field :admin_id, :value => current_player.id %>
+      <%= f.input :admin_id, label: "Administrator", hint: "Player responsible for managing this tournament", :collection => Player.all.map { |p| [p.given_name, p.id] }.sort! { |a, b| a.first.upcase <=> b.first.upcase }, :include_blank => false %>
+      <% else %>
+      <%= f.hidden_field :admin_id, :value => current_player.id %>
     <% end %>
   </div>
 
-  <script>
-    $('#tournament_date_started').datepicker({
-      format: 'dd-mm-yyyy'
-    })
-    $('#tournament_date_finished').datepicker({
-      format: 'dd-mm-yyyy'
-    })
-  </script>
-
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, class: "btn btn-primary" %>
     <%= link_to "Back", session[:return_to], :class => "btn" %>
   </div>
 <% end %>
