@@ -34,4 +34,12 @@ class Tournament < ActiveRecord::Base
     self.status_index ||= 0
     self.matches_per_duel ||= 2
   end
+
+  def sign_up(player)
+    self.players << player
+  end
+
+  def withdraw(player)
+    self.players.find(id: player.id)
+  end
 end

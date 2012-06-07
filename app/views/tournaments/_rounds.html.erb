@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="span12">
+  <h2>Rounds</h2>
+  <hr>
+  <% unless @tournament.rounds.empty? %>
+  <div class="accordion" id="rounds-accordion">
+    <% @tournament.rounds.reverse.each do |round| %>
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#rounds-accordion" href="#collapse<%= round.tournament_round_id %>">Round #<%= round.tournament_round_id %></a>
+      </div>
+      <div id="collapse<%= round.tournament_round_id %>" class="accordion-body collapse <%= 'in' if round.tournament_round_id == @tournament.rounds.count %>">
+        <div class="accordion-inner">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th><span class="pull-right">White</span></th>
+                <th></th>
+                <th></th>
+                <th>Black</th>
+                <th></th>
+                <% if can? :manage, @tournament %>
+                <th></th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <% round.duels.each do |duel| %>
+              <tr>
+                <td><span class="pull-right"><%= duel.white_player.given_name %></span></td>
+                <td><span class="pull-right"><%= duel.white_result %></span></td>
+                <td><%= duel.black_result %></td>
+                <td><%= duel.black_player.given_name %></td>
+                <td><%= link_to "View", tournament_round_duel_path(@tournament, round, duel) %></td>
+                <% if can? :manage, @tournament %>
+                <td><%= link_to "Edit", edit_tournament_round_duel_path(@tournament, round, duel) %></td>
+                <% end %>
+              </tr>
+              <% end %>
+              <% unless round.bye.nil? %>
+              <tr>
+                <td><span class="pull-right"><%= round.bye.given_name %></span></td>
+                <td><span class="pull-right">1.0</span></td>
+                <td>0.0</td>
+                <td>BYE</td>
+                <td></td>
+                <% if can? :manage, @tournament %>
+                <td></td>
+                <% end %>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <% if can? :manage, @tournament %>
+          <div class="row">
+            <div class="span3">
+              <%= link_to "View Details", tournament_round_path(@tournament, round) %>
+              <%= link_to "Destroy Round", [@tournament,round], confirm: 'Are you sure?', method: :delete, :class => "pull-right" %>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+    </div>
+  <% else %>
+  <p class="alert alert-info">This tournament has no rounds defined, yet.</p>
+  <% end %>
+  <% if can? :manage, @tournament %>
+    <%= simple_form_for [@tournament, Round.new() ] do |f| %>
+      <%= f.hidden_field :tournament_round_id, :value => Round.new(:tournament_id => @tournament.id).new_round_id %>
+      <%= submit_tag "Create new round", :class => "btn btn-primary" %>
+    <% end %>
+  <% end %>
+
+  </div>
+</div>
+

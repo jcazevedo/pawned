@@ -30,7 +30,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments/new
   # GET /tournaments/new.json
   def new
-    @tournament = Tournament.new
+    @tournament = Tournament.new(:date_started => Date.today)
     authorize! :create, @tournament
 
     respond_to do |format|
@@ -52,6 +52,7 @@ class TournamentsController < ApplicationController
   # POST /tournaments.json
   def create
     @tournament = Tournament.new(params[:tournament])
+    @tournament.admin ||= current_player
     authorize! :create, @tournament
 
     respond_to do |format|
