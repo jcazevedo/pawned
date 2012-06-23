@@ -8,7 +8,7 @@ class Round < ActiveRecord::Base
 
   accepts_nested_attributes_for :standings
   accepts_nested_attributes_for :duels
-  validates :tournament_id, :tournament_round_id, presence: true
+  validates :tournament_id, :tournament_round_id, :presence => true
   validates :standings, :standings_position_uniqueness => true
   validates :standings, :standings_player_uniqueness => true
 
