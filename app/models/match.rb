@@ -139,7 +139,9 @@ class Match < ActiveRecord::Base
   private
 
   def check_for_rating_update
-    if (white_result_changed? or black_result_changed?) and
+    if (white_result_changed? or
+        black_result_changed? or
+        reverse_positions_changed?) and
         !white_result.nil? and
         !black_result.nil?
       update_ratings
