@@ -1,6 +1,6 @@
 class Duel < ActiveRecord::Base
   attr_accessor :matches_to_create
-  attr_accessible :white_id, :black_id, :round_id, :result, :matches_to_create
+  attr_accessible :white_id, :black_id, :round_id, :result, :matches_to_create, :matches_attributes
 
   belongs_to :round
   belongs_to :white_player, :class_name => "Player", :foreign_key => "white_id"
@@ -10,6 +10,8 @@ class Duel < ActiveRecord::Base
 
   validates :white_id, :black_id, :presence => true
   validates :matches_to_create, :numericality => {:only_integer => true, :greater_than_or_equal_to => 0}
+
+  accepts_nested_attributes_for :matches
 
   after_save :create_matches
   after_save :update_bye

@@ -1,7 +1,7 @@
-<%= simple_form_for([@tournament, @round, @duel], :html => {:class => 'form-horizontal'}) do |f| %>
+<%= simple_form_for([@tournament, @round, @duel], :html => {:class => 'form-inline'}) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="form-inputs form-horizontal">
     <% players = (@tournament.players - (@round.duels.reject { |d| d == @duel }.map { |r| r.black_player } + @round.duels.reject { |d| d == @duel }.map { |r| r.white_player })).sort! { |a, b| a.given_name <=> b.given_name } %>
     <%= f.association :white_player, :collection => players, :include_blank => false, :label_method => lambda { |player| "#{player.given_name}" } %>
     <%= f.association :black_player, :collection => players, :include_blank => false, :label_method => lambda { |player| "#{player.given_name}" } %>
@@ -14,6 +14,92 @@
 
     <%= f.input :result, :as => :select, :collection => ["1.0-0.0", "0.0-1.0", "0.5-0.5"] %>
   </div>
+
+  <% if @duel.matches.length > 0 %>
+  <h2>Matches</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date played</th>
+        <th>Time played</th>
+        <th>White</th>
+        <th>Result</th>
+        <th>Black</th>
+        <th>Reverse</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= f.simple_fields_for :matches do |s| %>
+      <tr>
+        <td>
+          <%= s.input :date, :as => :string, :label => false,
+                :input_html => { :value => (
+                  if s.object.date != nil
+                    s.object.date.strftime("%d-%m-%Y")
+                  else
+                    Time.now.strftime("%d-%m-%Y")
+                  end ),
+                  :class => 'input-small' } %>
+        </td>
+        <td>
+          <%= s.input :time_played,
+                      :as => :time,
+                      :label => false,
+                      :input_html => {
+                        :class => 'input-mini'
+                      } %>
+        </td>
+        <td>
+          <%= s.input :white_player,
+                      :disabled => true,
+                      :label => false,
+                      :input_html => {
+                        :value => s.object.white_player.given_name
+                      } %>
+        </td>
+        <td>
+          <%= s.input :result,
+                      :as => :select,
+                      :collection => ["1.0-0.0", "0.0-1.0", "0.5-0.5"],
+                      :label => false,
+                      :input_html => { :class => 'input-small' } %>
+        </td>
+        <td>
+          <%= s.input :black_player,
+                      :disabled => true,
+                      :label => false,
+                      :input_html => {
+                        :value => s.object.black_player.given_name
+                      } %>
+        </td>
+        <td><%= s.input :reverse_positions, :label => false %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <script>
+    $("[id$=_date]").each(function () {
+      $(this).datepicker({
+        format: 'dd-mm-yyyy'
+      })
+    })
+    $("[id$=_reverse_positions]").each(function () {
+      $(this).change(function () {
+        var id = $(this).attr('id');
+        var string_end = "_reverse_positions";
+        var string_beginning = id.substring(0, id.length - string_end.length);
+        var white_player_id = "#" + string_beginning + "_white_player";
+        var black_player_id = "#" + string_beginning + "_black_player";
+
+        var white_player_name = $(white_player_id).val();
+        var black_player_name = $(black_player_id).val();
+        $(white_player_id).val(black_player_name);
+        $(black_player_id).val(white_player_name);
+      })
+    })
+  </script>
+  <% end %>
 
   <div class="form-actions">
     <%= f.button :submit %>
