@@ -1,6 +1,11 @@
 class Duel < ActiveRecord::Base
   attr_accessor :matches_to_create
-  attr_accessible :white_id, :black_id, :round_id, :result, :matches_to_create, :matches_attributes
+  attr_accessible :white_id,
+                  :black_id,
+                  :round_id,
+                  :result,
+                  :matches_to_create,
+                  :matches_attributes
 
   belongs_to :round
   belongs_to :white_player, :class_name => "Player", :foreign_key => "white_id"
@@ -10,6 +15,7 @@ class Duel < ActiveRecord::Base
 
   validates :white_id, :black_id, :presence => true
   validates :matches_to_create, :numericality => {:only_integer => true, :greater_than_or_equal_to => 0}
+  validate :different_players
 
   accepts_nested_attributes_for :matches
 
@@ -83,6 +89,16 @@ class Duel < ActiveRecord::Base
         self.round.bye = nil
         self.round.save
       end
+    end
+  end
+
+  private
+
+  def different_players
+    error_msg = "The players must be different."
+    unless self.white_id != self.black_id
+      errors[:white_id] << error_msg
+      errors[:black_id] << error_msg
     end
   end
 end
