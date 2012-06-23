@@ -1,6 +1,40 @@
 <%= simple_form_for([@tournament, @round, @duel, @match], :html => {:class => 'form-horizontal'}) do |f| %>
   <%= f.error_notification %>
 
+  <% if @match.reverse_positions %>
+  <% @white_player_name = @duel.black_player.given_name %>
+  <% @black_player_name = @duel.white_player.given_name %>
+  <% else %>
+  <% @white_player_name = @duel.white_player.given_name %>
+  <% @black_player_name = @duel.black_player.given_name %>
+  <% end %>
+
+  <div class="control-group optional">
+    <label class="control-label">
+      &#9817;
+    </label>
+    <div class="controls">
+      <input type="text"
+             id="white_player_name"
+             value="<%= @white_player_name %>"
+             disabled="disabled" />
+    </div>
+  </div>
+
+  <div class="control-group optional">
+    <label class="control-label">
+      &#9823;
+    </label>
+    <div class="controls">
+      <input type="text"
+             id="black_player_name"
+             value="<%= @black_player_name %>"
+             disabled="disabled" />
+    </div>
+  </div>
+
+  <%= f.input :reverse_positions %>
+
   <%= f.input :date, :as => :string, :input_html => { :value => (
       if @match.date != nil then
         @match.date.strftime("%d-%m-%Y")
@@ -8,8 +42,6 @@
         Time.now.strftime("%d-%m-%Y")
       end )} %>
   <%= f.input :time_played, :as => :time %>
-
-  <%= f.input :reverse_positions %>
 
   <%= f.input :result, :as => :select, :collection => ["1.0-0.0", "0.0-1.0", "0.5-0.5"] %>
   <%= f.input :pgn_text %>
@@ -28,6 +60,13 @@
          $('#match_time_played_5i').removeAttr("disabled");
          $('#match_result').removeAttr("disabled");
       }
+    })
+    $('#match_reverse_positions').change(function () {
+      var white_player_name = $('#white_player_name').val();
+      var black_player_name = $('#black_player_name').val();
+
+      $('#white_player_name').val(black_player_name);
+      $('#black_player_name').val(white_player_name);
     })
   </script>
 
