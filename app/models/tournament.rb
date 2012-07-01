@@ -42,4 +42,8 @@ class Tournament < ActiveRecord::Base
   def withdraw(player)
     self.players.find(id: player.id)
   end
+
+  def open?
+    self.status.eql?("Open")
+  end
 end

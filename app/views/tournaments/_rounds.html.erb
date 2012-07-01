@@ -30,22 +30,14 @@
                 <td><span class="pull-right"><%= duel.white_player.given_name %></span></td>
                 <td><span class="pull-right"><%= duel.white_result %></span></td>
                 <td><%= duel.black_result %></td>
+                <% if duel.bye %>
+                <td>BYE</td>
+                <% else %>
                 <td><%= duel.black_player.given_name %></td>
+                <% end %>
                 <td><%= link_to "View", tournament_round_duel_path(@tournament, round, duel) %></td>
                 <% if can? :manage, @tournament %>
                 <td><%= link_to "Edit", edit_tournament_round_duel_path(@tournament, round, duel) %></td>
-                <% end %>
-              </tr>
-              <% end %>
-              <% unless round.bye.nil? %>
-              <tr>
-                <td><span class="pull-right"><%= round.bye.given_name %></span></td>
-                <td><span class="pull-right">1.0</span></td>
-                <td>0.0</td>
-                <td>BYE</td>
-                <td></td>
-                <% if can? :manage, @tournament %>
-                <td></td>
                 <% end %>
               </tr>
               <% end %>

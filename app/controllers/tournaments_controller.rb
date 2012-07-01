@@ -97,27 +97,63 @@ class TournamentsController < ApplicationController
     end
   end
 
-  # GET /tournaments/open
-  # GET /tournaments/open.json
-  def open
-    @tournaments = Tournament.where(:status_index => 0)
-    @index_type = "Open"
+  # GET /tournaments/:id/enroll
+  # GET /tournaments/:id/enroll.json
+  def enroll
+    @tournament = Tournament.find(params[:id])
+    @participation = TournamentPlayer.new(player: current_player, tournament: @tournament)
+    authorize! :create, @participation
 
     respond_to do |format|
-      format.html { render action: "index" } # index.html.erb
-      format.json { render json: @tournament }
+      if @participation.save
+        format.html { redirect_to request.referer, notice: 'Successfully signed up to the tournament.' }
+        format.json { render json: @participation, status: :created, location: @participation }
+      else
+        format.html { redirect_to request.referer, :alert => "Can't sign up for this tournament." }
+        format.json { render json: @participation.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # GET /tournaments/:id/withdraw
+  # GET /tournaments/:id/withdraw.json
+  def withdraw
+    @tournament = Tournament.find(params[:id])
+    @participation = @tournament.tournament_players.where(player_id: current_player.id).first
+    authorize! :destroy, @participation
+
+    respond_to do |format|
+      if(@participation.destroy)
+        format.html { redirect_to request.referer, :notice => "Successfully withdrew from tournament." }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to request.referer, :alert => "Couldn't withdraw from tournament." }
+        format.json { head :no_content }
+      end
     end
   end
 
   # GET /tournaments/open
   # GET /tournaments/open.json
-  def ongoing
-    @tournaments = Tournament.where(:status_index => 1)
-    @index_type = "Ongoing"
+  # def open
+  #   @tournaments = Tournament.where(:status_index => 0)
+  #   @index_type = "Open"
 
-    respond_to do |format|
-      format.html { render action: "index" } # index.html.erb
-      format.json { render json: @tournament }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html { render action: "index" } # index.html.erb
+  #     format.json { render json: @tournament }
+  #   end
+  # end
+
+  # GET /tournaments/open
+  # GET /tournaments/open.json
+  # def ongoing
+  #   @tournaments = Tournament.where(:status_index => 1)
+  #   @index_type = "Ongoing"
+
+  #   respond_to do |format|
+  #     format.html { render action: "index" } # index.html.erb
+  #     format.json { render json: @tournament }
+  #   end
+  # end
 end

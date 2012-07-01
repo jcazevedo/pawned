@@ -19,12 +19,14 @@
         Rounds
       </a>
     </li>
-    <li>
-      <a href="#tournament-tab-admin" data-toggle="tab">
-        <i class="icon icon-cog"></i>
-        Admin
-      </a>
-    </li>
+    <% if @tournament.admin.eql?(current_player) %>
+      <li>
+        <a href="#tournament-tab-admin" data-toggle="tab">
+          <i class="icon icon-cog"></i>
+          Admin
+        </a>
+      </li>
+    <% end %>
   </ul>
 
   <div class="tab-content">
@@ -40,13 +42,17 @@
       <%= render 'rounds' %>
     </div>
 
+    <% if @tournament.admin.eql?(current_player) %>
     <div class="tab-pane" id="tournament-tab-admin">
       <%= render 'admin' %>
     </div>
+    <% end %>
   </div>
 </div>
 
-<div class="form-actions">
-  <%= link_to 'Edit', edit_tournament_path(@tournament), :class => "btn" %>
-  <%= link_to 'Back', tournaments_path, :class => "btn" %>
-</div>
+<% if can? :manage, @tournament %>
+  <div class="form-actions">
+    <%= link_to 'Edit', edit_tournament_path(@tournament), :class => "btn" %>
+    <%= link_to 'Back', tournaments_path, :class => "btn" %>
+  </div>
+<% end %>

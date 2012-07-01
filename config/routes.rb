@@ -1,6 +1,4 @@
 Pawned::Application.routes.draw do
-
-
   # route for the user profile
   match "profile/(:username)" => "profile#show", :as => :profile
 
@@ -8,8 +6,8 @@ Pawned::Application.routes.draw do
   match "matches" => "upcoming_matches#show"
 
   # route for all open, ongoing tournaments
-  match "tournaments/open" => "tournaments#open", :as => :open_tournaments
-  match "tournaments/ongoing" => "tournaments#ongoing", :as => :ongoing_tournaments
+  # match "tournaments/open" => "tournaments#open", :as => :open_tournaments
+  # match "tournaments/ongoing" => "tournaments#ongoing", :as => :ongoing_tournaments
 
   # Route for ratings
   match "ratings" => "ratings#index", :as => :ratings
@@ -21,6 +19,8 @@ Pawned::Application.routes.draw do
   # nested routing for tournaments > rounds > duels > matches
   # and routing for tournaments > rounds > standings
   resources :tournaments do
+    get 'enroll', on: :member, as: 'enroll'
+    get 'withdraw', on: :member, as: 'withdraw'
     resources :rounds do
       resources :duels do
         resources :matches
