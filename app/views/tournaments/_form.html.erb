@@ -7,7 +7,7 @@
     <%= f.input :matches_per_duel, label: "Matches per Duel", hint: "Number of matches per opponent confrontation" %>
 
     <%= f.input :date_started, label: "Start date", hint: "The date at which this tournament starts",
-      as: :string, input_html: { value: @tournament.date_started.strftime("%d-%m-%Y") } %>
+      as: :string, input_html: { value: @tournament.date_started.strftime("%d-%m-%Y"), data: {toggle: "datepicker"} } %>
 
     <% if current_player.admin? %>
       <%= f.input :admin_id, label: "Administrator", hint: "Player responsible for managing this tournament", :collection => Player.all.map { |p| [p.given_name, p.id] }.sort! { |a, b| a.first.upcase <=> b.first.upcase }, :include_blank => false %>

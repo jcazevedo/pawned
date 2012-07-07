@@ -3,56 +3,29 @@
 </div>
 
 <div class="tabbable">
-  <ul class="nav nav-tabs">
-    <li class="active">
-      <a href="#tournament-tab-overview" data-toggle="tab">
-        Overview
-      </a>
-    </li>
-    <li>
-      <a href="#tournament-tab-standings" data-toggle="tab">
-        Standings
-      </a>
-    </li>
-    <li>
-      <a href="#tournament-tab-rounds" data-toggle="tab">
-        Rounds
-      </a>
-    </li>
-    <% if @tournament.admin.eql?(current_player) %>
-      <li>
-        <a href="#tournament-tab-admin" data-toggle="tab">
-          <i class="icon icon-cog"></i>
-          Admin
-        </a>
+  <ul id='tournament-tabs' class="nav nav-tabs">
+    <% %w[overview standings rounds].each do |tab| %>
+      <li class="<%= @tab.eql?(tab) ? 'active' : '' %>">
+        <%= link_to tab.humanize, send("#{tab}_tournament_path"), {data: {"tab-id" => "##{tab}"}} %>
       </li>
     <% end %>
   </ul>
 
   <div class="tab-content">
-    <div class="tab-pane active" id="tournament-tab-overview">
-      <%= render 'overview' %>
-    </div>
-
-    <div class="tab-pane" id="tournament-tab-standings">
-      <%= render 'standings' %>
-    </div>
-
-    <div class="tab-pane" id="tournament-tab-rounds">
-      <%= render 'rounds' %>
-    </div>
-
-    <% if @tournament.admin.eql?(current_player) %>
-    <div class="tab-pane" id="tournament-tab-admin">
-      <%= render 'admin' %>
-    </div>
+    <% %w[overview standings rounds].each do |tab| %>
+      <div class="tab-pane <%= @tab.eql?(tab) ? 'active' : '' %>" id="<%= tab %>">
+        <% if @tab.eql?(tab) %>
+          <%= render tab.to_s %>
+        <% else %>
+          <p>
+            Loading..
+          </p>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </div>
 
-<% if can? :manage, @tournament %>
-  <div class="form-actions">
-    <%= link_to 'Edit', edit_tournament_path(@tournament), :class => "btn" %>
-    <%= link_to 'Back', tournaments_path, :class => "btn" %>
-  </div>
-<% end %>
+<div class="form-actions">
+  <%= link_to 'Back', tournaments_path, :class => "btn" %>
+</div>

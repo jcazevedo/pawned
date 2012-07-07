@@ -14,15 +14,24 @@ class TournamentsController < ApplicationController
   end
 
   # GET /tournaments/1
+  # GET /tournaments/1.js
   # GET /tournaments/1.json
   def show
     @tournament = Tournament.find(params[:id])
     @latest_standings = @tournament.latest_standings.nil? ? nil : @tournament.latest_standings.paginate(:page => params[:page], :per_page => 6)
+
+    @tab = params[:tab] || 'overview'
+
     authorize! :read, @tournament
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.js # show.html.erb
+      # show.html.erb
+      format.html
+
+      # send only the a single tab's partial
+      format.js { render :partial => @tab }
+
+      # send the @tournament's json representation
       format.json { render json: @tournament }
     end
   end

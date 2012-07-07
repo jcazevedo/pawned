@@ -33,6 +33,7 @@ gem 'jquery-rails'
 
 # Authentication and authorization, respectively
 gem 'devise'
+gem 'devise-encryptable'
 gem 'cancan'
 
 # Simple forms and awesome graphs
