@@ -2,238 +2,30 @@
   <h1><%= @tournament.name %></h1>
 </div>
 
-<div class="row">
-  <div class="span5">
-    <div class="well">
-      <h2>Details</h2>
-      <table class="table">
-        <thead>
-        </thead>
-        <tbody>
-          <tr>
-            <td><b>Name</b></td>
-            <td><%= @tournament.name %></td>
-          </tr>
-          <tr>
-            <td><b>Date started</b></td>
-            <td><%= @tournament.date_started %></td>
-          </tr>
-          <tr>
-            <td><b>Date finished</b></td>
-            <td><%= @tournament.date_finished %></td>
-          </tr>
-          <tr>
-            <td><b>Status</b></td>
-            <td><%= @tournament.status %></td>
-          </tr>
-          <tr>
-            <td><b>Matches per Duel</b></td>
-            <td><%= @tournament.matches_per_duel %></td>
-          </tr>
-          <tr>
-            <td><b>Admin</b></td>
-            <td><%= @tournament.admin.given_name %></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <% if @tournament.status == 'Open' and @tournament.rounds.empty?%>
-      <hr>
-      <div style="margin-bottom:45px;">
-      <% if @tournament.players.include?(current_player) %>
-      <!-- this is one of the ugliest things I've ever seen, seconded perhaps only by your momma.. -->
-
-        <%= link_to participation_path(TournamentPlayer.find(current_player.tournament_players(:tournament_id => @tournament.id).first.id)),
-          confirm: 'Are you sure?', method: :delete, :class => "btn btn-warning pull-right" do %>
-          <i class="icon-white icon-remove-sign"></i>
-          Withdraw from this tournament
-        <% end %>
-
-      <% else %>
-
-        <%= form_for TournamentPlayer.new, :url => participations_path do |f| %>
-          <%= f.hidden_field :tournament_id, :value => @tournament.id %>
-          <%= f.hidden_field :player_id, :value => current_player.id %>
-          <button type="submit" class="btn btn-success pull-right">
-            <i class="icon-white icon-ok-sign"></i>
-            Sign up for this tournament
-          </button>
-        <% end %>
-
-      <% end %>
-      </div>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="span7">
-    <% if @latest_standings %>
-    <h2>Current Standings</h2>
-    <div id="standings">
-      <%= render("standings") %>
-    </div>
-    <% else %>
-    <h2>Players</h2>
-    <% if @tournament.players.empty? %>
-    <p class="alert alert-block alert-info">
-      There are no players signed up for this tournament yet.
-    </p>
-    <% else %>
-    <table class="table">
-      <tr>
-        <th>Name</th>
-        <th>e-mail</th>
-        <th>Rating</th>
-      </tr>
-        <% @tournament.players.each do |p| %>
-      <tr>
-        <td><%= p.name %></td>
-        <td><%= p.email %></td>
-        <td><%= p.ratings.last.value %></td>
-      </tr>
-        <% end %>
-    </table>
+<div class="tabbable">
+  <ul id='tournament-tabs' class="nav nav-tabs">
+    <% %w[overview standings rounds].each do |tab| %>
+      <li class="<%= @tab.eql?(tab) ? 'active' : '' %>">
+        <%= link_to tab.humanize, send("#{tab}_tournament_path"), {data: {"tab-id" => "##{tab}"}} %>
+      </li>
     <% end %>
-  <% end %>
-  </div>
+  </ul>
 
-</div>
-
-<hr>
-
-<% if @tournament.latest_standings %>
-<div class="row">
-  <div class="span12">
-    <div id="container"></div>
-    <script type="text/javascript">
-      var chart1; // globally available
-      $(document).ready(function() {
-        chart1 = new Highcharts.Chart({
-          chart: {
-            renderTo: 'container',
-              type: 'line'
-          },
-          title: {
-            text: 'Player Standings Evolution'
-          },
-          xAxis: {
-            categories: [
-              <% rounds = @tournament.rounds.map {|r| r if !r.standings.empty? }.compact %>
-              <% rounds.each do |round| %>
-              <%= '\'Round #' + round.tournament_round_id.to_s + '\', ' %>
-              <% end %>
-            ]
-          },
-          yAxis: {
-            min: 1,
-            max: <%= @tournament.players.count %>,
-            reversed: true,
-            allowDecimals: false,
-            title: {
-              text: 'Position'
-            }
-          },
-          series: [
-            <% @tournament.players.each do |player| %>
-            {
-              name: "<%= player.given_name.to_s %>",
-              data: [
-                <% rounds.each do |round| %>
-                  <%= player.standings.map { |s| s.position if s.round == round }.compact.first.to_s + ',' %>
-                <% end %>
-              ]
-            },
-          <% end %>
-          ]
-        });
-      });
-    </script>
-  </div>
-</div>
-
-<hr>
-<% end %>
-
-<div class="row">
-  <div class="span12">
-  <h2>Rounds</h2>
-  <hr>
-  <% unless @tournament.rounds.empty? %>
-  <div class="accordion" id="rounds-accordion">
-    <% @tournament.rounds.reverse.each do |round| %>
-    <div class="accordion-group">
-      <div class="accordion-heading">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#rounds-accordion" href="#collapse<%= round.tournament_round_id %>">Round #<%= round.tournament_round_id %></a>
+  <div class="tab-content">
+    <% %w[overview standings rounds].each do |tab| %>
+      <div class="tab-pane <%= @tab.eql?(tab) ? 'active' : '' %>" id="<%= tab %>">
+        <% if @tab.eql?(tab) %>
+          <%= render tab.to_s %>
+        <% else %>
+          <p>
+            Loading..
+          </p>
+        <% end %>
       </div>
-      <div id="collapse<%= round.tournament_round_id %>" class="accordion-body collapse <%= 'in' if round.tournament_round_id == @tournament.rounds.count %>">
-        <div class="accordion-inner">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th><span class="pull-right">White</span></th>
-                <th></th>
-                <th></th>
-                <th>Black</th>
-                <th></th>
-                <% if can? :manage, @tournament %>
-                <th></th>
-                <% end %>
-              </tr>
-            </thead>
-            <tbody>
-              <% round.duels.each do |duel| %>
-              <tr>
-                <td><span class="pull-right"><%= duel.white_player.given_name %></span></td>
-                <td><span class="pull-right"><%= duel.white_result %></span></td>
-                <td><%= duel.black_result %></td>
-                <td><%= duel.black_player.given_name %></td>
-                <td><%= link_to "View", tournament_round_duel_path(@tournament, round, duel) %></td>
-                <% if can? :manage, @tournament %>
-                <td><%= link_to "Edit", edit_tournament_round_duel_path(@tournament, round, duel) %></td>
-                <% end %>
-              </tr>
-              <% end %>
-              <% unless round.bye.nil? %>
-              <tr>
-                <td><span class="pull-right"><%= round.bye.given_name %></span></td>
-                <td><span class="pull-right">1.0</span></td>
-                <td>0.0</td>
-                <td>BYE</td>
-                <td></td>
-                <% if can? :manage, @tournament %>
-                <td></td>
-                <% end %>
-              </tr>
-              <% end %>
-            </tbody>
-          </table>
-          <% if can? :manage, @tournament %>
-          <div class="row">
-            <div class="span3">
-              <%= link_to "View Details", tournament_round_path(@tournament, round) %>
-              <%= link_to "Destroy Round", [@tournament,round], confirm: 'Are you sure?', method: :delete, :class => "pull-right" %>
-            </div>
-          </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
     <% end %>
-    </div>
-  <% else %>
-  <p class="alert alert-info">This tournament has no rounds defined, yet.</p>
-  <% end %>
-  <% if can? :manage, @tournament %>
-    <%= simple_form_for [@tournament, Round.new() ] do |f| %>
-      <%= f.hidden_field :tournament_round_id, :value => Round.new(:tournament_id => @tournament.id).new_round_id %>
-      <%= submit_tag "Create new round", :class => "btn btn-primary" %>
-    <% end %>
-  <% end %>
-
   </div>
 </div>
 
 <div class="form-actions">
-  <%= link_to 'Edit', edit_tournament_path(@tournament), :class => "btn" %>
   <%= link_to 'Back', tournaments_path, :class => "btn" %>
 </div>

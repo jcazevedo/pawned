@@ -9,7 +9,6 @@ class Tournament < ActiveRecord::Base
 
   validates :name, :date_started, :presence => true, :on => :create
   validates :name, :date_started, :status, :matches_per_duel, :presence => true, :on => :update
-  validates :matches_per_duel, :presence => true
   before_create :set_default_values
 
   default_scope order('date_started desc')
@@ -34,5 +33,17 @@ class Tournament < ActiveRecord::Base
   def set_default_values
     self.status_index ||= 0
     self.matches_per_duel ||= 2
+  end
+
+  def sign_up(player)
+    self.players << player
+  end
+
+  def withdraw(player)
+    self.players.find(id: player.id)
+  end
+
+  def open?
+    self.status.eql?("Open")
   end
 end

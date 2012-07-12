@@ -1,6 +1,4 @@
 Pawned::Application.routes.draw do
-
-
   # route for the user profile
   match "profile/(:username)" => "profile#show", :as => :profile
 
@@ -21,6 +19,15 @@ Pawned::Application.routes.draw do
   # nested routing for tournaments > rounds > duels > matches
   # and routing for tournaments > rounds > standings
   resources :tournaments do
+    member do
+      get 'enroll', as: 'enroll'
+      get 'withdraw', as: 'withdraw'
+
+      %w[overview standings rounds admin].each do |t|
+        get t, as: t, action: 'show', tab: t
+      end
+    end
+
     resources :rounds do
       resources :duels do
         resources :matches

@@ -1,0 +1,101 @@
+<div class="row">
+  <div class="span12">
+    <% if @tournament.open? %>
+      <div class="well">
+        <h4>Welcome to <%= @tournament.name %>'s page</h4>
+        <p>Here you may check out the progression of this tournament, round pairings, results, and a lot of other information.</p>
+        <p>This tournament is currently <b>open for new players</b>, which means it hasn't started yet, and you may still enroll to play.</p>
+        <% if @tournament.players.include?(current_player) %>
+          <%= link_to withdraw_tournament_path, confirm: 'Are you sure?', :class => "btn btn-warning" do %>
+            <i class="icon-white icon-remove-sign"></i>
+            Withdraw from this tournament
+          <% end %>
+        <% else %>
+          <%= link_to enroll_tournament_path, :class => "btn btn-success" do %>
+            <i class="icon-white icon-ok"></i>
+            Enroll in this tournament
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="span6">
+    <h2>Details</h2>
+    <table class="table">
+      <tbody>
+        <tr>
+          <td><b>Name</b></td>
+          <td><%= @tournament.name %></td>
+        </tr>
+        <tr>
+          <td><b>Start date</b></td>
+          <td><%= @tournament.date_started %></td>
+        </tr>
+        <tr>
+          <td><b>Status</b></td>
+          <td><%= @tournament.status %></td>
+        </tr>
+        <tr>
+          <td><b>Administrator</b></td>
+          <td><%= link_to @tournament.admin.given_name, profile_path(@tournament.admin.username) %></td>
+        </tr>
+        <tr>
+          <td><b>Arbiter</b></td>
+          <td><%= link_to @tournament.admin.given_name, profile_path(@tournament.admin.username) %></td>
+        </tr>
+        <tr>
+          <td><b>Format</b></td>
+          <td>Swiss FIDE</td>
+        </tr>
+        <tr>
+          <td><b>Matches per Duel</b></td>
+          <td><%= @tournament.matches_per_duel %></td>
+        </tr>
+        <tr>
+          <td><b>Tie breaks</b></td>
+          <td>Bocholtz</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Mean Bocholtz</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Progression</td>
+        </tr>
+      </tbody>
+    </table>
+
+    </div>
+
+  <div class="span6">
+    <% if @latest_standings %>
+    <h2>Standings overview</h2>
+    <div id="standings">
+      <%= render("standings") %>
+    </div>
+    <% else %>
+    <h2>Enrolled players</h2>
+    <% if @tournament.players.empty? %>
+    <p class="alert alert-block alert-info">
+      There are no players signed up for this tournament yet.
+    </p>
+    <% else %>
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th class="span2">Local Rating</th>
+      </tr>
+        <% @tournament.players.each do |p| %>
+      <tr>
+        <td><%= link_to p.given_name, profile_path(p.username) %></td>
+        <td class="span2"><%= p.ratings.last.value %></td>
+      </tr>
+        <% end %>
+    </table>
+    <% end %>
+  <% end %>
+  </div>
+
+</div>
