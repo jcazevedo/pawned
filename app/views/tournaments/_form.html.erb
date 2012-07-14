@@ -12,6 +12,12 @@
     <% if current_player.admin? %>
       <%= f.input :admin_id, label: "Administrator", hint: "Player responsible for managing this tournament", :collection => Player.all.map { |p| [p.given_name, p.id] }.sort! { |a, b| a.first.upcase <=> b.first.upcase }, :include_blank => false %>
     <% end %>
+
+    <%= f.input :pairing_system, :collection => @tournament.available_pairing_systems.map { |ps| [ps.underscore.humanize, ps] }, :include_blank => false %>
+    
+    
+    <%= f.input :tiebreakers_selection, :collection => @tournament.available_tiebreakers.map { |t| [t.underscore.humanize, t] }, :input_html => { :multiple => true } %>
+
   </div>
 
   <div class="form-actions">

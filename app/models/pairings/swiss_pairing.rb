@@ -1,0 +1,2 @@
+class SwissPairing < Pairing
+end

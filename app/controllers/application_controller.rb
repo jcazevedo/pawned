@@ -1,4 +1,12 @@
 class ApplicationController < ActionController::Base
+  if(Rails.env.development?)
+    RandomPairing
+    SwissPairing
+
+    RandomTiebreaker
+    AlphabeticalTiebreaker
+  end
+
   protect_from_forgery
 
   # overriding cancan's current_ability method due to our "user"

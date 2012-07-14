@@ -1,0 +1,21 @@
+<% unless @latest_standings.blank? %>
+  <table class="table">
+    <tr>
+      <th>Pos.</th>
+      <th>Name</th>
+      <th>Points</th>
+      <th>Rating</th>
+    </tr>
+    <% @latest_standings.each do |s| %>
+    <tr>
+      <td><%= s.position %></td>
+      <td><%= s.player.given_name %></td>
+      <td><%= s.points %></td>
+      <td><%= s.player.ratings.last.value %></td>
+    </tr>
+    <% end %>
+  </table>
+
+  <%= javascript_include_tag "pagination" %>
+  <%= will_paginate @latest_standings %>
+<% end %>

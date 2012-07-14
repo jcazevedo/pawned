@@ -33,6 +33,27 @@ class Tournament < ActiveRecord::Base
   def set_default_values
     self.status_index ||= 0
     self.matches_per_duel ||= 2
+    self.pairing_system = RandomPairing.name
+  end
+
+  def available_pairing_systems
+    Pairing.subclasses.map { |p| p.name }
+  end
+
+  def new_round
+    pairing_system.constantize.generate(self)
+  end
+
+  def available_tiebreakers
+    Tiebreaker.subclasses.map { |p| p.name }
+  end
+  
+  def tiebreakers_selection=(tiebreakers)
+    self.tiebreakers = tiebreakers.reject { |t| t.blank? }.join(",")
+  end
+
+  def tiebreakers_selection
+    self.tiebreakers.split(",")
   end
 
   def sign_up(player)
