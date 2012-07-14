@@ -30,6 +30,12 @@
     <% else %>
     <%= f.hidden_field :admin_id, :value => current_player.id %>
     <% end %>
+
+    <%= f.input :pairing_system, :collection => @tournament.available_pairing_systems.map { |ps| [ps.underscore.humanize, ps] }, :include_blank => false %>
+    
+    
+    <%= f.input :tiebreakers_selection, :collection => @tournament.available_tiebreakers.map { |t| [t.underscore.humanize, t] }, :input_html => { :multiple => true } %>
+
   </div>
 
   <script>

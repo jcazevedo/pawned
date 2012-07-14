@@ -1,0 +1,2 @@
+class RandomTiebreaker < Tiebreaker
+end
