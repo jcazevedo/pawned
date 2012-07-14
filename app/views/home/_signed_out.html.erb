@@ -1,0 +1,48 @@
+<div class="hero-unit">
+  <!-- Chess board photo from: http://www.flickr.com/photos/eivindw/4873333202/ -->
+  <div style="margin-bottom:70px;">
+    <img class="thumbnail span4" style="margin-right:20px;" src="img/board_small.jpg" />
+    <h1>Pawned</h1>
+    <p>Also known as:</p>
+    <p class="pull-right">“<a>I can’t believe it’s not an online chess club manager</a>”</p>
+    <!-- ouch -->
+    <br/>
+    <br/>
+    <br/>
+    <!-- /ouch -->
+    <h2>Welcome</h2>
+    <p>Get your chess skills to exciting new hights. We're here to help you manage your climb to the top!</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="span4">
+    <h2>Sign in here</h2>
+    <%= form_tag(player_session_path, class: "well", id: "signin-form") do %>
+      <div><%= text_field_tag('player[login]', '', class: "input-small span3", placeholder: "Username or email") %></div>
+      <div>
+        <%= password_field_tag('player[password]', '', class: "input-small span2", placeholder: "Password") %>
+        <button type="submit" class="btn btn-success" style="margin: 0 10px 9px;" >Submit</button>
+      </div>
+      <label class="checkbox"><%= check_box_tag('player[remember_me]', '', false, class: "checkbox") %> Remember me</label>
+     <%= link_to "Forgot your password?", new_password_path('player') %>
+    <% end %>
+  </div>
+
+  <div class="span4">
+    <h2>Free and Open</h2>
+    <p>Pawned is an open-source community project. We are always waiting for enthusiastic new people to help out. Are going to miss this chance? Get your paws on the code now!</p>
+    <p><a class="btn btn-primary" href="https://github.com/jcazevedo/pawned">Check source on github</a></p>
+  </div>
+
+  <div class="span4">
+    <h2>New to Pawned?</h2>
+    <%= form_tag(player_registration_path, class: "well", id: "signin-form") do %>
+      <div><%= text_field_tag('player[username]', '', class: "input-small span3", placeholder: "Username") %></div>
+      <div><%= text_field_tag('player[email]', '', class: "input-small span3", placeholder: "Email") %></div>
+      <%= password_field_tag('player[password]', '', class: "input-small span2", placeholder: "Password") %>
+      <button type="submit" class="btn btn-danger" style="margin: 0 10px 9px;">Submit</button>
+    <% end %>
+  </div>
+
+</div>

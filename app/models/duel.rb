@@ -8,16 +8,12 @@ class Duel < ActiveRecord::Base
   has_one :tournament, :through => :round
   has_many :matches, :dependent => :destroy
 
-  # validates :white_id, :presence => true
-  # validates :black_id, :presence => true, :unless => :bye
+  validates :white_id, :black_id, :presence => true
   validates :matches_to_create, :numericality => {:only_integer => true, :greater_than_or_equal_to => 0}
   validate :different_players
 
   accepts_nested_attributes_for :matches
-
   after_save :create_matches
-  # after_save :update_bye
-  # after_destroy :destroy_bye
 
   # TODO The winner might be determined by something other than this comparison
   def winner
@@ -66,25 +62,4 @@ class Duel < ActiveRecord::Base
       end
     end
   end
-
-  # def update_bye
-  #   unless self.round.nil?
-  #     if self.round.tournament.players.count % 2 == 1 and
-  #         self.round.duels.count == (self.round.tournament.players.count - 1)/2
-  #       self.round.bye = (self.round.tournament.players -
-  #         (self.round.duels.map { |r| r.black_player } +
-  #           self.round.duels.map { |r| r.white_player })).first
-  #       self.round.save()
-  #     end
-  #   end
-  # end
-
-  # def destroy_bye
-  #   unless self.round.nil?
-  #     unless self.round.bye.nil?
-  #       self.round.bye = nil
-  #       self.round.save
-  #     end
-  #   end
-  # end
 end

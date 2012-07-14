@@ -4,7 +4,7 @@ class Round < ActiveRecord::Base
   has_many :duels, :dependent => :destroy
   has_many :standings, :dependent => :destroy, :order => "position ASC"
 
-  # belongs_to :bye, :class_name => "Player", :foreign_key => "bye_id"
+  belongs_to :bye, :class_name => "Player", :foreign_key => "bye_id"
 
   accepts_nested_attributes_for :standings
   accepts_nested_attributes_for :duels
